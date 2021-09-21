@@ -1,0 +1,9 @@
+library(devtools)
+load("pams/cas9/cas9.pams.rda")
+load("pams/cas12a/cas12a.pams.rda")
+load("genomes/genomes.rda")
+use_data(cas9.pams, 
+         cas12a.pams,
+         genomes,
+         internal=TRUE,
+         overwrite=TRUE)
