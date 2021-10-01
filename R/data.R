@@ -1,3 +1,15 @@
+#' List of Nuclease objects representing common restriction enzymes
+#'
+#' List of Nuclease objects representing common restriction enzymes
+#'     from REBASE database. 
+#' 
+#' @format List of Nuclease objects. 
+#' 
+#' @details List of Nuclease objects representing common restriction enzymes
+#'     from REBASE database. 
+"restrictionEnzymes"
+
+
 #' SpCas9 CrisprNuclease object
 #'
 #' CrisprNuclease object for the wildtype Streptococcus pyogenes Cas9 (SpCas9)

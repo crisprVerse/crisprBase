@@ -188,11 +188,18 @@ Nuclease <- function(name,
     grepl("\\^", rebaseMotif)
 }
 
+.isCutNotSpecified <- function(rebaseMotif){
+    !.isCutUpstream(rebaseMotif) & 
+    !.isCutDownstream(rebaseMotif) &
+    !.isCutWithin(rebaseMotif) 
+}
+
 
 
 #' @importFrom stringr str_match
 .extractSequencesFromRebaseMotifs <- function(rebaseMotifs){
-    pattern <- "([A-Z]+\\^?[A-Z]+)"
+    #pattern <- "([A-Z]+\\^?[A-Z]+)"
+    pattern <- "([A-Z]+)"
     seqs <- vapply(rebaseMotifs, function(xx){
         xx <- gsub("\\^", "", xx)
         return(str_match(xx, pattern)[1])
@@ -223,10 +230,17 @@ Nuclease <- function(name,
         cutSites <- .getCutSites_upstream(rebaseMotif)
     } else if (.isCutDownstream(rebaseMotif)){
         cutSites <- .getCutSites_downstream(rebaseMotif)
+    } else if (.isCutNotSpecified(rebaseMotif)){
+        cutSites <- .getCutSites_unspecified(rebaseMotif)
     }
     return(cutSites)
 }
 
+
+.getCutSites_unspecified <- function(rebaseMotif){
+    out <- c(fwd=NA, rev=NA)
+    return(out)
+}
 
 .getCutSites_upstream <- function(rebaseMotif){
     stopifnot(.isCutUpstream(rebaseMotif))

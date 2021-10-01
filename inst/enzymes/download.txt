@@ -1,0 +1,19 @@
+* Downloaded on Jan 28 2020. Version 101 of REBASE
+(ftp://ftp.neb.com/pub/rebase)
+
+
+DISTRIBUTING REBASE:
+
+Those seeking to distribute REBASE files with their software packages
+are welcome to do so, providing it is clear to your users that they
+are not being charged for the REBASE data.  It should be transparent
+that REBASE is a free and independent resource, citing the following
+bibliographical reference:
+
+Roberts, R.J., Vincze, T., Posfai, J., Macelis, D. (2010)
+REBASE--a database for DNA restriction and modification: enzymes, genes and genomes.
+Nucl. Acids Res. 38: D234-D236.
+
+Official REBASE web site - http://rebase.neb.com 
+
+
