@@ -17,9 +17,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
-biocViews:
-    CRISPR,
-    FunctionalGenomics
+biocViews: CRISPR, FunctionalGenomics
 Description: Provides S4 classes for general nucleases and CRISPR nucleases.
     Several CRISPR-specific genome arithmetic functions are implemented to
     help extract genomic coordinates of spacer and protospacer sequences. 
