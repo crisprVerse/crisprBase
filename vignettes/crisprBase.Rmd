@@ -19,7 +19,7 @@ bibliography: references.bib
 ---
 
 ```{r, echo=FALSE, results="hide"}
-options("knitr.graphics.auto_pdf"=TRUE)
+options("knitr.graphics.auto_pdf"=TRUE, eval=TRUE)
 ```
 
 

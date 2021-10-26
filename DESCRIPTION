@@ -1,11 +1,12 @@
 Package: crisprBase
 Version: 0.0.9999
-Date: 2021-08-06
+Date: 2021-10-25
 Title: Base functions and classes for CRISPR gRNA design
 Authors@R: person("Jean-Philippe", "Fortin", email = "fortin946@gmail.com", role = c("aut", "cre"))
 Depends: 
+    utils,
     methods,
-    R (>= 2.10)
+    R (>= 4.1)
 Imports:
     BiocGenerics,
     Biostrings,
@@ -27,7 +28,7 @@ Description: Provides S4 classes for general nucleases and CRISPR nucleases.
 License: MIT + file LICENSE
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Collate: 
     'AllGenerics.R'

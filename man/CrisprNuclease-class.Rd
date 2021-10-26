@@ -142,6 +142,9 @@ be returned, irrespetively of the PAM sequence motifs stored in the
 \item{as.character}{Should the PAM sequences be returned as a 
 character vector? FALSE by default.}
 }
+\value{
+A CrisprNuclease object
+}
 \description{
 An S4 class to represent a CRISPR nuclease.
 }

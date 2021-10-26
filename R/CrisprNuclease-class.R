@@ -56,6 +56,8 @@
 #'                          spacer_side="5prime",
 #'                          spacer_length=20)
 #' 
+#' @return A CrisprNuclease object
+#' 
 #' @export
 setClass("CrisprNuclease", 
     contains = "Nuclease", 

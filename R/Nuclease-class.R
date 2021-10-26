@@ -28,7 +28,7 @@
 #'                   motifs=c("G^AATTC"),
 #'                   info="EcoRI restriction enzyme")
 #' 
-#' 
+#' @return A Nuclease object
 #' @export
 #' @importFrom Biostrings DNAStringSet
 setClass("Nuclease", 

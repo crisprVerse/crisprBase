@@ -122,6 +122,9 @@ TRUE by default.}
 the cut on the forward strand and the cut on the reverse strand
 be considered as the cut site? FALSE by default.}
 }
+\value{
+A Nuclease object
+}
 \description{
 Return motif string representations of recognition sites.
 
@@ -169,7 +172,6 @@ for the motifs corresponding to cleavage probabilities.}
 EcoRI <- Nuclease("EcoRI",
                   motifs=c("G^AATTC"),
                   info="EcoRI restriction enzyme")
-
 
 }
 \seealso{
