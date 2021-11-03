@@ -25,9 +25,10 @@ options("knitr.graphics.auto_pdf"=TRUE, eval=TRUE)
 
 # Introduction
 
-```crisprBase``` provides S4 classes to represent nucleases, and more 
+`crisprBase` provides S4 classes to represent nucleases, and more 
 specifically CRISPR-specific nucleases. It also provides arithmetic 
-functions to extract genomic ranges to help with the design and manipulation of CRISPR guide-RNAs (gRNAs). The classes and functions are designed to work 
+functions to extract genomic ranges to help with the design and manipulation 
+of CRISPR guide-RNAs (gRNAs). The classes and functions are designed to work 
 with a broad spectrum of nucleases and applications, including 
 PAM-free CRISPR nucleases and the more general class of
 restriction enzymes. 
@@ -35,36 +36,36 @@ restriction enzymes.
 
 # Nuclease class
 
-The ```Nuclease``` class is designed to store minimal information about the
+The `Nuclease` class is designed to store minimal information about the
 recognition sites of general nucleases, such as restriction enzymes. The class
 does not make the distinction between deoxyribonucleases (DNA-targeting
 nucleases) and ribonucleases (RNA-targeting nucleases); for both types of
 nucleases, DNA nucleotides are used to represent recognition sequences for
 simplicity.
 
-The ```Nuclease``` class has 4 fields: ```name```, ```info```, ```motifs```
-and ```weights```. The ```name``` and ```info``` fields specify a name for the
+The `Nuclease` class has 4 fields: `name`, `info`, `motifs`
+and `weights`. The `name` and `info` fields specify a name for the
 nuclease, and some additional information about the nuclease, respectively. 
-The ```motifs``` field is a character vector that specify one of several DNA
+The `motifs` field is a character vector that specify one of several DNA
 sequence motifs that are recognized by the nuclease for cleavage (always in 
-the 5' to 3' direction). The optional ```weights``` field is a numeric vector
+the 5' to 3' direction). The optional `weights` field is a numeric vector
 specifying relative cleavage probabilities corresponding to the motifs 
-specified by ```motifs```.
+specified by `motifs`.
 
 We use the Rebase convention to represent motif sequences [@rebase]. 
 For enzymes that cleave within the recognition site, 
-we add the symbol ```^``` within the recognition sequence to specify 
+we add the symbol `^` within the recognition sequence to specify 
 the cleavage site, always in the 5' to 3' direction. For enzymes that 
 cleave away from the recognition site, we specify the distance of the cleavage
-site using a ```(x/y)``` notation where `x`
+site using a `(x/y)` notation where `x`
 represents the number of nucleotides away from the recognition sequence on the
 original strand, and `y` represents the number of nucleotides away from the
 recognition sequence on the reverse strand. 
 
 ## Examples 
 
-The EcoRI enzyme recognizes the palindromic motif ```GAATTC```, and cuts after
-the first nucleotide, which is specified using the ```^``` below:
+The EcoRI enzyme recognizes the palindromic motif `GAATTC`, and cuts after
+the first nucleotide, which is specified using the `^` below:
 
 
 ```{r, warning=FALSE, message=FALSE}
@@ -75,7 +76,7 @@ EcoRI <- Nuclease("EcoRI",
                   info="EcoRI restriction enzyme")
 ```
 
-The HgaI enzyme recognizes the motif ```GACGC```, and cleaves DNA at 5
+The HgaI enzyme recognizes the motif `GACGC`, and cleaves DNA at 5
 nucleotides downstream of the recognition sequence on the original strand, 
 and at 10 nucleotides downstream of the recognition sequence on the reverse
 strand:
@@ -87,11 +88,11 @@ HgaI <- Nuclease("HgaI",
 ```
 
 In case the cleavage site was upstream of the recognition sequence, we would
-instead specify ```(5/10)GACGC```. 
+instead specify `(5/10)GACGC`. 
 
 Note that any nucleotide letter that is part of the extended IUPAC nucleic acid
-code can be used to represent recognition motifs. For instance, we use ```Y```
-and ```R``` (pyrimidine and purine, respectively) to specify the possible
+code can be used to represent recognition motifs. For instance, we use `Y`
+and `R` (pyrimidine and purine, respectively) to specify the possible
 recognition sequences for PfaAI:
 
 ```{r}
@@ -102,7 +103,7 @@ PfaAI <- Nuclease("PfaAI",
 
 ## Accessor functions
 
-The accessor function ```motifs``` retrieve the motif
+The accessor function `motifs` retrieve the motif
 sequences:
 
 
