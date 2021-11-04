@@ -40,13 +40,13 @@ Construct a protospacer GRanges from a list of PAM sites
     using information stored in a CrisprNuclease object.
 }
 \examples{
-if (require(GenomicRanges)){
+library(GenomicRanges)
 gr <- GRanges("chr10",
               IRanges(start=c(100,120), width=1),
               strand=c("+","-"))
 getProtospacerRanges(gr, nuclease=SpCas9)
 getProtospacerRanges(gr, nuclease=AsCas12a)
-}
+
 
 }
 \author{

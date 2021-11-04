@@ -1,6 +1,6 @@
 Package: crisprBase
-Version: 0.99.1
-Date: 2021-11-03
+Version: 0.99.2
+Date: 2021-11-04
 Title: Base functions and classes for CRISPR gRNA design
 Authors@R: person("Jean-Philippe", "Fortin", email = "fortin946@gmail.com", role = c("aut", "cre"))
 Depends: 
@@ -12,6 +12,7 @@ Imports:
     Biostrings,
     GenomicRanges,
     IRanges,
+    S4Vectors,
     stringr
 Suggests:
     knitr,
@@ -22,12 +23,14 @@ Description: Provides S4 classes for general nucleases and CRISPR nucleases.
     Several CRISPR-specific genome arithmetic functions are implemented to
     help extract genomic coordinates of spacer and protospacer sequences. 
     Commonly-used CRISPR nuclease objects are provided that can be readily
-    used in other packages. 
+    used in other packages.
+LazyData: TRUE 
 License: MIT + file LICENSE
-LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
+BugReports: https://github.com/Jfortin1/crisprBase/issues
+URL: https://github.com/Jfortin1/crisprBase
 Collate: 
     'AllGenerics.R'
     'Nuclease-class.R'    

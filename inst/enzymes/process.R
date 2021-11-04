@@ -28,8 +28,8 @@ resEnzymes <- enzymes
 
 
 nucs <- lapply(1:nrow(resEnzymes), function(i){
-    Nuclease(name=resEnzymes$name[i],
-             info=paste0(resEnzymes$name[i], " from REBASE."),
+    Nuclease(nucleaseName=resEnzymes$name[i],
+             metadata=paste0(resEnzymes$name[i], " from REBASE."),
              motifs=resEnzymes$motif[i])
 })
 names(nucs) <- resEnzymes$name

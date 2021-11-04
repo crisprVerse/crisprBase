@@ -52,7 +52,7 @@ test_that('Extracting motif cut sites (upstream)', {
                 "(3/5)AGG")
     nucleases <- lapply(motifs,
                         function(motif){
-        Nuclease(name="", info="", motifs=motif)
+        Nuclease(nucleaseName="", metadata="", motifs=motif)
     })
     expectedCutSitesFwdStrand <- c(-3,-2,-1,-3,-3,-3)
     expectedCutSitesRevStrand <- c(-3,-2,-1,-1,-2,-5)
@@ -84,7 +84,7 @@ test_that('Extracting motif cut sites (downstream)', {
                 "AGG(3/5)")
     nucleases <- lapply(motifs,
                         function(motif){
-        Nuclease(name="", info="", motifs=motif)
+        Nuclease(nucleaseName="", metadata="", motifs=motif)
     })
     expectedCutSitesFwdStrand <- c(4,5,6,6,6,6)
     expectedCutSitesRevStrand <- c(4,5,6,5,4,8)
@@ -114,7 +114,7 @@ test_that('Extracting motif cut sites (within)', {
                 "AAG^")
     nucleases <- lapply(motifs,
                         function(motif){
-        Nuclease(name="", info="", motifs=motif)
+        Nuclease(nucleaseName="", metadata="", motifs=motif)
     })
     expectedCutSitesFwdStrand <- c(0,1,2,3)
     expectedCutSitesRevStrand <- c(3,2,1,0)

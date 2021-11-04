@@ -60,10 +60,10 @@ spacerIndices(object, ...)
 prototypeSequence(object, ...)
 
 CrisprNuclease(
-  name,
+  nucleaseName,
   pams = NA_character_,
   weights = rep(1, length(pams)),
-  info = NA_character_,
+  metadata = NA_character_,
   spacer_side = NA_character_,
   spacer_gap = 0L,
   spacer_length = NA_integer_
@@ -106,7 +106,7 @@ a non-negative integer. For \code{spacerSide}, must be either
 
 \item{...}{Additional arguments for class-specific methods}
 
-\item{name}{Name of the CRISPR nuclease.}
+\item{nucleaseName}{Name of the CRISPR nuclease.}
 
 \item{pams}{Character vector of PAM sequence motifs
 written from 5' to 3. If the point of cleavage has
@@ -119,7 +119,7 @@ in parentheses. See details for more information.}
 \item{weights}{Optional numeric vector specifying relative weights
 of the PAM sequences to specify cleavage probabilities.}
 
-\item{info}{Optional string providing a description of the CRISPR nuclease.}
+\item{metadata}{Optional string providing a description of the CRISPR nuclease.}
 
 \item{spacer_side}{String specifying the side of the gRNA spacer
 sequence with respect to the PAM motif. Must be either 
@@ -177,7 +177,7 @@ between the spacer sequence and the PAM sequence
 \section{Accessors}{
 
 \describe{
-    \item{\code{name}:}{To get the name of the CRISPR nuclease.} 
+    \item{\code{nucleaseName}:}{To get the name of the CRISPR nuclease.} 
     \item{\code{spacerLength}:}{To return the length of the
         spacer sequence.}
     \item{\code{protospacerLength}:}{To return the length of the
@@ -219,7 +219,7 @@ between the spacer sequence and the PAM sequence
 SpCas9 <- CrisprNuclease("SpCas9",
                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
                          weights=c(1, 0.2593, 0.0694),
-                         info="Wildtype Streptococcus pyogenes Cas9 
+                         metadata="Wildtype Streptococcus pyogenes Cas9 
                               (SpCas9) nuclease",
                          spacer_side="5prime",
                          spacer_length=20)

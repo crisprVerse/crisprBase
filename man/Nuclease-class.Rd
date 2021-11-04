@@ -4,19 +4,18 @@
 \name{motifs}
 \alias{motifs}
 \alias{motifLength}
-\alias{name}
-\alias{info}
+\alias{nucleaseName}
 \alias{weights}
-\alias{name<-}
-\alias{info<-}
+\alias{nucleaseName<-}
 \alias{weights<-}
 \alias{cutSites}
 \alias{Nuclease-class}
 \alias{Nuclease}
 \alias{show,Nuclease-method}
-\alias{name,Nuclease-method}
-\alias{name<-,Nuclease-method}
-\alias{info<-,Nuclease-method}
+\alias{nucleaseName,Nuclease-method}
+\alias{nucleaseName<-,Nuclease-method}
+\alias{metadata,Nuclease-method}
+\alias{metadata<-,Nuclease-method}
 \alias{weights,Nuclease-method}
 \alias{weights<-,Nuclease-method}
 \alias{motifs,Nuclease-method}
@@ -28,35 +27,33 @@ motifs(object, ...)
 
 motifLength(object, ...)
 
-name(object)
-
-info(object)
+nucleaseName(object)
 
 weights(object, ...)
 
-name(object) <- value
-
-info(object) <- value
+nucleaseName(object) <- value
 
 weights(object) <- value
 
 cutSites(object, ...)
 
 Nuclease(
-  name,
+  nucleaseName,
   motifs = NULL,
   cutSites = NULL,
   weights = rep(1, length(motifs)),
-  info = NA_character_
+  metadata = NA_character_
 )
 
 \S4method{show}{Nuclease}(object)
 
-\S4method{name}{Nuclease}(object)
+\S4method{nucleaseName}{Nuclease}(object)
 
-\S4method{name}{Nuclease}(object) <- value
+\S4method{nucleaseName}{Nuclease}(object) <- value
 
-\S4method{info}{Nuclease}(object) <- value
+\S4method{metadata}{Nuclease}(x)
+
+\S4method{metadata}{Nuclease}(x) <- value
 
 \S4method{weights}{Nuclease}(object, expand = FALSE)
 
@@ -72,7 +69,7 @@ Nuclease(
 
 \S4method{motifLength}{Nuclease}(object)
 
-\S4method{cutSites}{Nuclease}(object, strand = c("+", "-"), combine = TRUE, middle = FALSE)
+\S4method{cutSites}{Nuclease}(object, strand = c("+", "-", "both"), combine = TRUE, middle = FALSE)
 }
 \arguments{
 \item{object}{\linkS4class{Nuclease} object.}
@@ -81,7 +78,7 @@ Nuclease(
 
 \item{value}{New value to pass to the setter functions.}
 
-\item{name}{Name of the nuclease.}
+\item{nucleaseName}{Name of the nuclease.}
 
 \item{motifs}{Character vector of recognition sequence motifs
 written from 5' to 3' written in Rebase convention.
@@ -100,7 +97,10 @@ to a motif specified in the \code{motifs} slot.}
 \item{weights}{Optional numeric vector specifying relative weights
 for the recognition motifs to specify cleavage probabilities.}
 
-\item{info}{Optional string providing a description of the nuclease.}
+\item{metadata}{Optional string providing a description of the nuclease.}
+
+\item{x}{Object of class \linkS4class{Nuclease} or
+\linkS4class{CrisprNuclease}}
 
 \item{expand}{Should sequences be expanded to only contain ATCG nucleotides?
 FALSE by default.}
@@ -138,7 +138,7 @@ Return length of the recognition sites sequences.
 \section{Slots}{
 
 \describe{
-\item{\code{name}}{Name of the nuclease.}
+\item{\code{nucleaseName}}{Name of the nuclease.}
 
 \item{\code{motifs}}{DNAStringSet of recognition sequence motifs
 written from 5' to 3'.}
@@ -151,7 +151,7 @@ to a motif specified in the \code{motifs} slot.}
 \item{\code{weights}}{Optional numeric vector specifying relative weights
 for the motifs corresponding to cleavage probabilities.}
 
-\item{\code{info}}{Optional string providing a description of the nuclease.}
+\item{\code{metadata}}{Optional string providing a description of the nuclease.}
 }}
 
 \section{Constructors}{
@@ -162,7 +162,7 @@ for the motifs corresponding to cleavage probabilities.}
 \section{Accessors}{
 
 \describe{
-    \item{\code{name}:}{To get the name of the nuclease.} 
+    \item{\code{nucleaseName}:}{To get the name of the nuclease.} 
     \item{\code{motifs}:}{To get the recognition mofif
          nucleotide sequences.}
 }
@@ -171,7 +171,7 @@ for the motifs corresponding to cleavage probabilities.}
 \examples{
 EcoRI <- Nuclease("EcoRI",
                   motifs=c("G^AATTC"),
-                  info="EcoRI restriction enzyme")
+                  metadata="EcoRI restriction enzyme")
 
 }
 \seealso{

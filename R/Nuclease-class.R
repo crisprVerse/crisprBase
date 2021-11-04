@@ -1,6 +1,6 @@
 #' An S4 class to represent a nuclease.
 #' 
-#' @slot name Name of the nuclease.
+#' @slot nucleaseName Name of the nuclease.
 #' @slot motifs DNAStringSet of recognition sequence motifs
 #'           written from 5' to 3'.
 #' @slot cutSites Matrix with 2 rows (+ and - strand, respectively)
@@ -9,7 +9,7 @@
 #'     to a motif specified in the \code{motifs} slot. 
 #' @slot weights Optional numeric vector specifying relative weights
 #'           for the motifs corresponding to cleavage probabilities. 
-#' @slot info Optional string providing a description of the nuclease.
+#' @slot metadata Optional string providing a description of the nuclease.
 #' 
 #' @seealso See the \linkS4class{CrisprNuclease} for CRISPR-specific nucleases.
 #' 
@@ -18,7 +18,7 @@
 #' 
 #' @section Accessors:
 #' \describe{
-#'     \item{\code{name}:}{To get the name of the nuclease.} 
+#'     \item{\code{nucleaseName}:}{To get the name of the nuclease.} 
 #'     \item{\code{motifs}:}{To get the recognition mofif
 #'          nucleotide sequences.}
 #' }
@@ -26,25 +26,30 @@
 #' @examples
 #' EcoRI <- Nuclease("EcoRI",
 #'                   motifs=c("G^AATTC"),
-#'                   info="EcoRI restriction enzyme")
+#'                   metadata="EcoRI restriction enzyme")
 #' 
 #' @return A Nuclease object
 #' @export
 #' @importFrom Biostrings DNAStringSet
 setClass("Nuclease", 
     slots = c(
-        name = "character", 
+        nucleaseName = "character", 
         motifs = "DNAStringSet",
         cutSites = "matrix",
         weights = "numeric", 
-        info = "character"),
+        metadata = "character"),
     prototype = list(
-        name = NA_character_,
+        nucleaseName = NA_character_,
         motifs = NULL,
         cutSites = NULL,
         weights = NA_real_,
-        info = NA_character_)
+        metadata = NA_character_)
 )
+
+
+
+
+
 
 
 
@@ -52,24 +57,27 @@ setClass("Nuclease",
 
 setValidity("Nuclease", function(object){
     out <- TRUE
-    if (length(object@name)!=1){
-       out <- "@name must be of length 1"
+    if (length(nucleaseName(object))!=1){
+       out <- "Slot nucleaseName must be a character vector of length 1."
     } 
-    if (length(object@info)!=1){
-       out <- "@info must be of length 1"
+    if (length(metadata(object))!=1){
+       out <- "Slot metadata must be a character vector of length 1."
     } 
 
-    if (length(object@weights)>1){
-        if (length(object@weights) != length(object@motifs)){
-            out <- "object@weights and object@motifs must be of the same length"
+    if (length(weights(object))>1){
+        if (length(weights(object)) != length(motifs(object))){
+            out <- "Slots weights and motifs must be of the same length."
         } 
     } 
 
-    if (ncol(object@cutSites) != length(object@motifs)){
-        out <- "Number of columns in object@cutSites must be equal to the length of object@motifs"
+    sites <- cutSites(object,
+                      strand="both",
+                      combine=FALSE)
+    if (ncol(sites) != length(motifs(object))){
+        out <- "Number of columns in cutSites must be equal to the length of motifs."
     }
-    if (nrow(object@cutSites)!=2){
-        out <- "Number of rows in object@cutSites must be equal to 2"
+    if (nrow(sites)!=2){
+        out <- "Number of rows in cutSites must be equal to 2."
     }
 
     return(out)
@@ -77,8 +85,12 @@ setValidity("Nuclease", function(object){
 
 
 
+
+
+
+
 #' @describeIn Nuclease Create a \linkS4class{Nuclease} object
-#' @param name Name of the nuclease.
+#' @param nucleaseName Name of the nuclease.
 #' @param motifs Character vector of recognition sequence motifs
 #'           written from 5' to 3' written in Rebase convention.
 #'           If the point of cleavage has been determined, the
@@ -93,18 +105,18 @@ setValidity("Nuclease", function(object){
 #'     to a motif specified in the \code{motifs} slot. 
 #' @param weights Optional numeric vector specifying relative weights
 #'           for the recognition motifs to specify cleavage probabilities. 
-#' @param info Optional string providing a description of the nuclease.
+#' @param metadata Optional string providing a description of the nuclease.
 #' @export
-Nuclease <- function(name,
-    motifs = NULL,
-    cutSites = NULL,
-    weights = rep(1, length(motifs)),
-    info = NA_character_
+Nuclease <- function(nucleaseName,
+                     motifs = NULL,
+                     cutSites = NULL,
+                     weights = rep(1, length(motifs)),
+                     metadata = NA_character_
 ){
 
-    name    <- as.character(name)
+    nucleaseName <- as.character(nucleaseName)
     weights <- as.numeric(weights)
-    info <- as.character(info)
+    metadata <- as.character(metadata)
 
     if (is(motifs, "DNAStringSet")){    
         if (is.null(cutSites)){
@@ -125,11 +137,11 @@ Nuclease <- function(name,
     }
     
     new("Nuclease",
-        name=name,
+        nucleaseName=nucleaseName,
         motifs=sequences,
         cutSites=cutSites,
         weights=weights,
-        info=info)
+        metadata=metadata)
 }
 
 
@@ -289,10 +301,6 @@ Nuclease <- function(name,
 
 
 
-# Functions to write:
-#.validateCutSites()
-
-
 
 
 
@@ -303,8 +311,8 @@ Nuclease <- function(name,
 #' @param object \linkS4class{Nuclease} object.
 setMethod("show", "Nuclease", function(object){
     cat(paste0("Class: ", is(object)[[1]]), "\n",
-      "  Name: ", object@name, "\n",
-      "  Info: ", object@info, "\n",
+      "  Name: ", object@nucleaseName, "\n",
+      "  Metadata: ", object@metadata, "\n",
       "  Motifs: ", .printVectorNicely(object@motifs), "\n",
       "  Weights: ", .printVectorNicely(object@weights), "\n",
       sep = "")
@@ -313,26 +321,38 @@ setMethod("show", "Nuclease", function(object){
 
 #' @rdname Nuclease-class
 #' @export
-setMethod("name", "Nuclease", 
+setMethod("nucleaseName", "Nuclease", 
     function(object){
-    return(object@name)
+    return(object@nucleaseName)
 })
 
 #' @rdname Nuclease-class
 #' @param value New value to pass to the setter functions.
 #' @export
-setMethod("name<-", "Nuclease", 
+setMethod("nucleaseName<-", "Nuclease", 
     function(object, value){
-    object@name <- as.character(value)
+    object@nucleaseName <- as.character(value)
     return(object)
 })
 
+
 #' @rdname Nuclease-class
+#' @importFrom S4Vectors metadata 
 #' @export
-setMethod("info<-", "Nuclease", 
-    function(object, value){
-    object@info <- as.character(value)
-    return(object)
+setMethod("metadata", "Nuclease", 
+    function(x){
+    return(x@metadata)
+})
+
+
+
+#' @rdname Nuclease-class
+#' @importFrom S4Vectors metadata<-
+#' @export
+setMethod("metadata<-", "Nuclease", 
+    function(x, value){
+    x@metadata <- as.character(value)
+    return(x)
 })
 
 #' @rdname Nuclease-class
@@ -468,7 +488,7 @@ setMethod("motifLength",
 #' @export
 setMethod("cutSites", "Nuclease", 
     function(object,
-             strand=c("+", "-"),
+             strand=c("+", "-", "both"),
              combine=TRUE,
              middle=FALSE
 ){
@@ -482,14 +502,16 @@ setMethod("cutSites", "Nuclease",
         sites <- sites["fwd",]
     } else if (strand=="-"){
         sites <- sites["rev",]
-    }
+    } 
     
-    names(sites) <- motifs
-    if (combine){
-        choices <- unique(sites)
-        if (length(choices)==1){
-            sites <- choices
-            names(sites) <- NULL
+    if (strand!="both"){
+        names(sites) <- motifs
+        if (combine){
+            choices <- unique(sites)
+            if (length(choices)==1){
+                sites <- choices
+                names(sites) <- NULL
+            }
         }
     }
     return(sites)

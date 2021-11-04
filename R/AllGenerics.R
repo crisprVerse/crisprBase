@@ -4,6 +4,8 @@
 #' @rdname Nuclease-class
 #' @param object Object of class \linkS4class{Nuclease} or
 #'     \linkS4class{CrisprNuclease}
+#' @param x Object of class \linkS4class{Nuclease} or
+#'     \linkS4class{CrisprNuclease}
 #' @param ... Additional arguments for class-specific methods
 #' 
 #' @export
@@ -19,11 +21,9 @@ setGeneric("motifLength",
 
 #' @rdname Nuclease-class
 #' @export
-setGeneric("name", function(object) standardGeneric("name"))
+setGeneric("nucleaseName", function(object) standardGeneric("nucleaseName"))
 
-#' @rdname Nuclease-class
-#' @export
-setGeneric("info", function(object) standardGeneric("info"))
+
 
 #' @rdname Nuclease-class
 #' @export
@@ -33,11 +33,8 @@ setGeneric("weights", function(object) standardGeneric("weights"))
 
 #' @rdname Nuclease-class
 #' @export
-setGeneric("name<-", function(object, value) standardGeneric("name<-"))
+setGeneric("nucleaseName<-", function(object, value) standardGeneric("nucleaseName<-"))
 
-#' @rdname Nuclease-class
-#' @export
-setGeneric("info<-", function(object, value) standardGeneric("info<-"))
 
 #' @rdname Nuclease-class
 #' @export

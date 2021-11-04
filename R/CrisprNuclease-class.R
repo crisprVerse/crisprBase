@@ -15,7 +15,7 @@
 #' 
 #' @section Accessors:
 #' \describe{
-#'     \item{\code{name}:}{To get the name of the CRISPR nuclease.} 
+#'     \item{\code{nucleaseName}:}{To get the name of the CRISPR nuclease.} 
 #'     \item{\code{spacerLength}:}{To return the length of the
 #'         spacer sequence.}
 #'     \item{\code{protospacerLength}:}{To return the length of the
@@ -51,7 +51,7 @@
 #' SpCas9 <- CrisprNuclease("SpCas9",
 #'                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
 #'                          weights=c(1, 0.2593, 0.0694),
-#'                          info="Wildtype Streptococcus pyogenes Cas9 
+#'                          metadata="Wildtype Streptococcus pyogenes Cas9 
 #'                               (SpCas9) nuclease",
 #'                          spacer_side="5prime",
 #'                          spacer_length=20)
@@ -75,7 +75,7 @@ setClass("CrisprNuclease",
 
 
 #' @describeIn CrisprNuclease Create a \linkS4class{CrisprNuclease} object
-#' @param name Name of the CRISPR nuclease.
+#' @param nucleaseName Name of the CRISPR nuclease.
 #' @param pams Character vector of PAM sequence motifs
 #'           written from 5' to 3. If the point of cleavage has
 #'           been determined, the precise site is marked with ^.
@@ -85,7 +85,7 @@ setClass("CrisprNuclease",
 #'           in parentheses. See details for more information.
 #' @param weights Optional numeric vector specifying relative weights
 #'           of the PAM sequences to specify cleavage probabilities. 
-#' @param info Optional string providing a description of the CRISPR nuclease.
+#' @param metadata Optional string providing a description of the CRISPR nuclease.
 #' @param spacer_side String specifying the side of the gRNA spacer
 #'     sequence with respect to the PAM motif. Must be either 
 #'     '5prime' (e.g. Cas9) or '3prime' (e.g. Cas12a)
@@ -94,19 +94,19 @@ setClass("CrisprNuclease",
 #'     the spacer sequence and the PAM sequence (e.g. 0 for Cas9 and Cas12a).
 #' @export
 #' @export
-CrisprNuclease <- function(name,
+CrisprNuclease <- function(nucleaseName,
                            pams = NA_character_,
                            weights = rep(1, length(pams)),
-                           info = NA_character_,
+                           metadata = NA_character_,
                            spacer_side = NA_character_,
                            spacer_gap = 0L,
                            spacer_length = NA_integer_
 ){
 
-    nuc <- Nuclease(name=name,
+    nuc <- Nuclease(nucleaseName=nucleaseName,
                     motifs=pams,
                     weights=weights,
-                    info=info)
+                    metadata=metadata)
     new("CrisprNuclease",
         nuc,
         spacer_side = as.character(spacer_side),
@@ -120,8 +120,8 @@ CrisprNuclease <- function(name,
 #' @export
 setMethod("show", "CrisprNuclease", function(object) {
     cat(paste0("Class: ", is(object)[[1]]), "\n",
-        "  Name: ", object@name, "\n",
-        "  Info: ", object@info, "\n",
+        "  Name: ", object@nucleaseName, "\n",
+        "  Metadata: ", object@metadata, "\n",
         "  Motifs: ", .printVectorNicely(object@motifs), "\n",
         "  Weights: ", .printVectorNicely(object@weights), "\n",
         "  Spacer: \n",
@@ -134,25 +134,27 @@ setMethod("show", "CrisprNuclease", function(object) {
 
 
 
+
+
 setValidity("CrisprNuclease", function(object) {
     out <- TRUE
-    if (length(object@spacer_side)!=1){
-        out <- "@spacer_side must be of length 1"
+    if (length(spacerSide(object))!=1){
+        out <- "Slot spacer_side must be a character vector of length 1."
     } 
-    if (!object@spacer_side %in% c("5prime", "3prime")){
-        out <- "@spacer_side must be either 5prime or 3 prime"
+    if (!spacerSide(object) %in% c("5prime", "3prime")){
+        out <- "Slot spacer_side must be either '5prime' or '3prime'."
     } 
-    if (length(object@spacer_length)!=1){
-        out <- "@spacer_length must be of length 1"
+    if (length(spacerLength(object))!=1){
+        out <- "Slot spacer_length must be an integer vector of length 1."
     } 
-    if (object@spacer_length<0){
-        out <- "@spacer_length must be a positive integer"
+    if (spacerLength(object)<0){
+        out <- "Slot spacer_length must be a positive integer."
     } 
-    if (length(object@spacer_gap)!=1){
-        out <- "@spacer_gap must be of length 1"
+    if (length(spacerGap(object))!=1){
+        out <- "Slot spacer_gap must be an integer vector of length 1."
     } 
-    if (object@spacer_gap<0){
-        out <- "@spacer_gap must be either 0 or a positive integer"
+    if (spacerGap(object)<0){
+        out <- "Slot spacer_gap must be either 0 or a positive integer."
     } 
     return(out)
 })

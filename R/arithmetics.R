@@ -101,13 +101,13 @@ extractSpacerFromProtospacer <- function(protospacers,
 #' @author Jean-Philippe Fortin
 #' 
 #' @examples 
-#' if (require(GenomicRanges)){
+#' library(GenomicRanges)
 #' gr <- GRanges("chr10",
 #'               IRanges(start=c(100,120), width=1),
 #'               strand=c("+","-"))
 #' getProtospacerRanges(gr, nuclease=SpCas9)
 #' getProtospacerRanges(gr, nuclease=AsCas12a)
-#' }
+#' 
 #' 
 #' @export
 #' @importFrom BiocGenerics start end start<- end<- strand
@@ -316,7 +316,7 @@ getPamRanges <- function(gr=NULL,
     if (n!=protospacer.len){
         stop("provided protospacers are of length ",n,
              ", but it should be ", protospacer.len, 
-             " for the provided ", name(object))  
+             " for the provided ", nucleaseName(object))  
     } 
     return(protospacers)
 }

@@ -5,27 +5,25 @@ library(devtools)
 SpCas9 <- CrisprNuclease("SpCas9",
                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
                          weights=c(1, 0.2593, 0.0694),
-                         info="Wildtype Streptococcus pyogenes Cas9 (SpCas9) nuclease",
+                         metadata="Wildtype Streptococcus pyogenes Cas9 (SpCas9) nuclease",
                          spacer_side="5prime",
                          spacer_length=20)
 
 SaCas9 <- CrisprNuclease("SaCas9",
                          pams=c("(3/3)NNGRRT"),
-                         info="Wildtype Staphylococcus aureus Cas9 (SaCas9) nuclease",
+                         metadata="Wildtype Staphylococcus aureus Cas9 (SaCas9) nuclease",
                          spacer_side="5prime",
                          spacer_length=21)
 
 SpGCas9 <- CrisprNuclease("SpGCas9",
                           pams=c("(3/3)NGN"),
-                          info="Engineered Streptococcus pyogenes Cas9 (SpCas9) nuclease named SpG",
+                          metadata="Engineered Streptococcus pyogenes Cas9 (SpCas9) nuclease named SpG",
                           spacer_side="5prime",
                           spacer_length=20)
 
-
-
 AsCas12a <- CrisprNuclease("AsCas12a",
                            pams="TTTV(18/23)",
-                           info="Wildtype Acidaminococcus Cas12a (AsCas12a) nuclease.",
+                           metadata="Wildtype Acidaminococcus Cas12a (AsCas12a) nuclease.",
                            spacer_side="3prime",
                            spacer_length=23)
 
@@ -39,7 +37,7 @@ motifs <- paste0(pams$PAM, "(18/23)")
 enAsCas12a <- CrisprNuclease("enAsCas12a",
                              pams=motifs,
                              weights=pams$Score_Doench,
-                             info="Enhanced Acidaminococcus Cas12a (AsCas12a) nuclease.",
+                             metadata="Enhanced Acidaminococcus Cas12a (AsCas12a) nuclease.",
                              spacer_side="3prime",
                              spacer_length=23)
 
@@ -56,19 +54,19 @@ use_data(SpCas9,
 # Enzymes:
 EcoRI <- Nuclease("EcoRI",
                   motifs=c("G^AATTC"),
-                  info="EcoRI restriction enzyme")
+                  metadata="EcoRI restriction enzyme")
 
 SmaI <- Nuclease("SmaI",
                   motifs=c("CCC^GGG"),
-                  info="SmaI restriction enzyme")
+                  metadata="SmaI restriction enzyme")
 
 HgaI <- Nuclease("HgaI",
                  motifs=c("GACGC(5/10)"),
-                 info="HgaI restriction enzyme")
+                 metadata="HgaI restriction enzyme")
 
 PfaAI <- Nuclease("PfaAI",
                   motifs=c("G^GYRCC"),
-                  info="PfaAI restriction enzyme")
+                  metadata="PfaAI restriction enzyme")
 
 
 
