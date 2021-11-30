@@ -366,6 +366,7 @@ setMethod("weights", "Nuclease",
     if (expand){
         motifs <- .expandMotifs(names(ws))
         ws <- ws[names(motifs)]
+        names(ws) <- as.character(motifs)
     }
     return(ws)
 })
