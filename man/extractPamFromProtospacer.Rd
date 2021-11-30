@@ -21,6 +21,7 @@ Extract PAM sequences from protospacer sequences using
     information stored in a CrisprNuclease object.
 }
 \examples{
+data(SpCas9, AsCas12a, package="crisprBase")
 # Extracting PAM sequences from Cas9 protospacers:
 protospacers <- c("AGGTGCTGATTGTAGTGCTGCGG",
                   "AGGTGCTGATTGTAGTGCTGAGG")

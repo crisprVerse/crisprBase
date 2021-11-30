@@ -24,7 +24,6 @@ Description: Provides S4 classes for general nucleases and CRISPR nucleases.
     help extract genomic coordinates of spacer and protospacer sequences. 
     Commonly-used CRISPR nuclease objects are provided that can be readily
     used in other packages.
-LazyData: TRUE 
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.1.2

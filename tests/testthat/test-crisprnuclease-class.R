@@ -1,5 +1,9 @@
 context('Testing CrisprNuclease class')
 
+data(SpCas9, package="crisprBase")
+data(AsCas12a, package="crisprBase")
+data(enAsCas12a, package="crisprBase")
+
 test_that('PAM', {
     pams_cas9 <- c("AGG", "CGG", "GGG", "TGG")
     pams_cas9_extended <- c("AGG", "CGG", "GGG", "TGG",

@@ -1,5 +1,8 @@
 context('Testing arithmetic functions')
 
+data(SpCas9, package="crisprBase")
+data(AsCas12a, package="crisprBase")
+data(enAsCas12a, package="crisprBase")
 
 protospacers_cas9   <- c("ATGGTGGTAGTCTCTCGATACGG",
                          "ATGGGTTTAGTCTAAACGATAGG")

@@ -8,7 +8,7 @@
 List of Nuclease objects.
 }
 \usage{
-restrictionEnzymes
+data(restrictionEnzymes, package="crisprBase")
 }
 \description{
 List of Nuclease objects representing common restriction enzymes

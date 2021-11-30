@@ -1,5 +1,9 @@
 context('Testing Nuclease class')
 
+data(SpCas9, package="crisprBase")
+data(AsCas12a, package="crisprBase")
+data(enAsCas12a, package="crisprBase")
+
 test_that('Motif representations', {
     expect_error(crisprBase:::.checkRebaseMotif("(9/10)AHT^HCT(9/10)"))
     expect_error(crisprBase:::.checkRebaseMotif("AHT^^HCT"))

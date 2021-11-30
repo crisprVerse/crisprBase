@@ -13,6 +13,7 @@
 #' @author Jean-Philippe Fortin
 #'
 #' @examples
+#' data(SpCas9, AsCas12a, package="crisprBase")
 #' # Extracting PAM sequences from Cas9 protospacers:
 #' protospacers <- c("AGGTGCTGATTGTAGTGCTGCGG",
 #'                   "AGGTGCTGATTGTAGTGCTGAGG")
@@ -52,6 +53,7 @@ extractPamFromProtospacer <- function(protospacers,
 #' @author Jean-Philippe Fortin
 #'
 #' @examples
+#' data(SpCas9, AsCas12a, package="crisprBase")
 #' # Extracting spacer sequences from Cas9 protospacers:
 #' protospacers <- c("AGGTGCTGATTGTAGTGCTGCGG",
 #'                   "AGGTGCTGATTGTAGTGCTGAGG")
@@ -101,6 +103,7 @@ extractSpacerFromProtospacer <- function(protospacers,
 #' @author Jean-Philippe Fortin
 #' 
 #' @examples 
+#' data(SpCas9, AsCas12a, package="crisprBase")
 #' library(GenomicRanges)
 #' gr <- GRanges("chr10",
 #'               IRanges(start=c(100,120), width=1),
@@ -187,6 +190,7 @@ getProtospacerRanges <- function(gr=NULL,
 #' @author Jean-Philippe Fortin
 #' 
 #' @examples 
+#' data(SpCas9, AsCas12a, package="crisprBase")
 #' if (require(GenomicRanges)){
 #' gr <- GRanges("chr10",
 #'               IRanges(start=c(100,120), width=1),
@@ -266,6 +270,7 @@ getSpacerRanges <- function(gr=NULL,
 #' @author Jean-Philippe Fortin
 #' 
 #' @examples
+#' data(SpCas9, AsCas12a, package="crisprBase")
 #' if (require(GenomicRanges)){
 #' gr <- GRanges("chr10",
 #'               IRanges(start=c(100,120), width=1),

@@ -8,7 +8,7 @@
 CrisprNuclease object.
 }
 \usage{
-SaCas9
+data(SaCas9, package="crisprBase")
 }
 \description{
 CrisprNuclease object for the wildtype Staphylococcus aureus Cas9 (SaCas9)

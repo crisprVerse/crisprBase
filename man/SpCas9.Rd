@@ -8,7 +8,7 @@
 CrisprNuclease object.
 }
 \usage{
-SpCas9
+data(SpCas9, package="crisprBase")
 }
 \description{
 CrisprNuclease object for the wildtype Streptococcus pyogenes Cas9 (SpCas9)

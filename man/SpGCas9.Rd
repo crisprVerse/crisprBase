@@ -8,7 +8,7 @@
 CrisprNuclease object.
 }
 \usage{
-SpGCas9
+data(SpGCas9, package="crisprBase")
 }
 \description{
 CrisprNuclease object for the engineered Streptococcus pyogenes Cas9

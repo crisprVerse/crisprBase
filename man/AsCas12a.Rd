@@ -8,7 +8,7 @@
 CrisprNuclease object.
 }
 \usage{
-AsCas12a
+data(AsCas12a, package="crisprBase")
 }
 \description{
 CrisprNuclease object for the Wildtype Acidaminococcus Cas12a (AsCas12a)
