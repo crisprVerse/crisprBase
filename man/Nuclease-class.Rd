@@ -9,6 +9,7 @@
 \alias{nucleaseName<-}
 \alias{weights<-}
 \alias{cutSites}
+\alias{isCutting}
 \alias{Nuclease-class}
 \alias{Nuclease}
 \alias{show,Nuclease-method}
@@ -18,6 +19,7 @@
 \alias{metadata<-,Nuclease-method}
 \alias{weights,Nuclease-method}
 \alias{weights<-,Nuclease-method}
+\alias{isCutting,Nuclease-method}
 \alias{motifs,Nuclease-method}
 \alias{motifLength,Nuclease-method}
 \alias{cutSites,Nuclease-method}
@@ -36,6 +38,8 @@ nucleaseName(object) <- value
 weights(object) <- value
 
 cutSites(object, ...)
+
+isCutting(object)
 
 Nuclease(
   nucleaseName,
@@ -58,6 +62,8 @@ Nuclease(
 \S4method{weights}{Nuclease}(object, expand = FALSE)
 
 \S4method{weights}{Nuclease}(object) <- value
+
+\S4method{isCutting}{Nuclease}(object)
 
 \S4method{motifs}{Nuclease}(
   object,

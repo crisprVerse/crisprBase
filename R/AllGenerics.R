@@ -46,6 +46,12 @@ setGeneric("weights<-", function(object, value) standardGeneric("weights<-"))
 setGeneric("cutSites", function(object, ...) standardGeneric("cutSites"))
 
 
+#' @rdname Nuclease-class
+#' @export
+setGeneric("isCutting", function(object) standardGeneric("isCutting"))
+
+
+
 
 
 
@@ -67,24 +73,35 @@ setGeneric("pamLength", function(object) standardGeneric("pamLength"))
 #' @export
 setGeneric("spacerSide", function(object) standardGeneric("spacerSide"))
 
-#' @rdname CrisprNuclease-class
-#' @export
-setGeneric("spacerGap", function(object) standardGeneric("spacerGap"))
-
-#' @rdname CrisprNuclease-class
-#' @export
-setGeneric("spacerLength<-",
-           function(object, value) standardGeneric("spacerLength<-"))
 
 #' @rdname CrisprNuclease-class
 #' @export
 setGeneric("spacerSide<-",
            function(object, value) standardGeneric("spacerSide<-"))
 
+
+#' @rdname CrisprNuclease-class
+#' @export
+setGeneric("spacerGap", function(object) standardGeneric("spacerGap"))
+
+
+#' @rdname CrisprNuclease-class
+#' @export
+setGeneric("hasSpacerGap", function(object) standardGeneric("hasSpacerGap"))
+
+
+
 #' @rdname CrisprNuclease-class
 #' @export
 setGeneric("spacerGap<-",
            function(object, value) standardGeneric("spacerGap<-"))
+
+
+#' @rdname CrisprNuclease-class
+#' @export
+setGeneric("spacerLength<-",
+           function(object, value) standardGeneric("spacerLength<-"))
+
 
 #' @rdname CrisprNuclease-class
 #' @export

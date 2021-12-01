@@ -215,13 +215,6 @@ setMethod("spacerSide<-", "CrisprNuclease", function(object, value){
 })
 
 
-#' @rdname CrisprNuclease-class
-#' @export
-setMethod("spacerGap",
-          "CrisprNuclease",function(object){
-    return(object@spacer_gap)
-})
-
 
 #' @rdname CrisprNuclease-class
 #' @export
@@ -230,6 +223,15 @@ setMethod("pamSide",
     side <- object@spacer_side
     ifelse(side=="3prime", "5prime", "3prime")
 })
+
+
+#' @rdname CrisprNuclease-class
+#' @export
+setMethod("spacerGap",
+          "CrisprNuclease",function(object){
+    return(object@spacer_gap)
+})
+
 
 #' @rdname CrisprNuclease-class
 #' @export
@@ -241,10 +243,23 @@ setMethod("spacerGap<-", "CrisprNuclease", function(object, value){
 
 #' @rdname CrisprNuclease-class
 #' @export
+setMethod("hasSpacerGap",
+          "CrisprNuclease",function(object){
+    object@spacer_gap>0
+})
+
+
+
+
+#' @rdname CrisprNuclease-class
+#' @export
 setMethod("protospacerLength",
           "CrisprNuclease",function(object){
     pamLength(object) + spacerLength(object) + spacerGap(object)
 })
+
+
+
 
 
 

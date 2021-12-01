@@ -390,6 +390,16 @@ setMethod("weights<-", "Nuclease",
 
 
 #' @rdname Nuclease-class
+#' @export
+setMethod("isCutting", "Nuclease", 
+    function(object){
+    cuts <- cutSites(object)
+    !all(is.na(c(cuts)))
+})
+
+
+
+#' @rdname Nuclease-class
 #' @param primary Should only the motif with the highest weight be returned?
 #'     FALSE by default. Only relevant if weights are stored in the 
 #'     \linkS4class{Nuclease} object.

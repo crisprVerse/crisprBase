@@ -6,10 +6,11 @@
 \alias{protospacerLength}
 \alias{pamLength}
 \alias{spacerSide}
-\alias{spacerGap}
-\alias{spacerLength<-}
 \alias{spacerSide<-}
+\alias{spacerGap}
+\alias{hasSpacerGap}
 \alias{spacerGap<-}
+\alias{spacerLength<-}
 \alias{pamSide}
 \alias{pams}
 \alias{pamIndices}
@@ -23,9 +24,10 @@
 \alias{spacerLength<-,CrisprNuclease-method}
 \alias{spacerSide,CrisprNuclease-method}
 \alias{spacerSide<-,CrisprNuclease-method}
-\alias{spacerGap,CrisprNuclease-method}
 \alias{pamSide,CrisprNuclease-method}
+\alias{spacerGap,CrisprNuclease-method}
 \alias{spacerGap<-,CrisprNuclease-method}
+\alias{hasSpacerGap,CrisprNuclease-method}
 \alias{protospacerLength,CrisprNuclease-method}
 \alias{pams,CrisprNuclease-method}
 \alias{pamIndices,CrisprNuclease-method}
@@ -41,13 +43,15 @@ pamLength(object)
 
 spacerSide(object)
 
-spacerGap(object)
-
-spacerLength(object) <- value
-
 spacerSide(object) <- value
 
+spacerGap(object)
+
+hasSpacerGap(object)
+
 spacerGap(object) <- value
+
+spacerLength(object) <- value
 
 pamSide(object)
 
@@ -81,11 +85,13 @@ CrisprNuclease(
 
 \S4method{spacerSide}{CrisprNuclease}(object) <- value
 
-\S4method{spacerGap}{CrisprNuclease}(object)
-
 \S4method{pamSide}{CrisprNuclease}(object)
 
+\S4method{spacerGap}{CrisprNuclease}(object)
+
 \S4method{spacerGap}{CrisprNuclease}(object) <- value
+
+\S4method{hasSpacerGap}{CrisprNuclease}(object)
 
 \S4method{protospacerLength}{CrisprNuclease}(object)
 
