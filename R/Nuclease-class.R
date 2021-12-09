@@ -311,10 +311,10 @@ Nuclease <- function(nucleaseName,
 #' @param object \linkS4class{Nuclease} object.
 setMethod("show", "Nuclease", function(object){
     cat(paste0("Class: ", is(object)[[1]]), "\n",
-      "  Name: ", object@nucleaseName, "\n",
-      "  Metadata: ", object@metadata, "\n",
-      "  Motifs: ", .printVectorNicely(object@motifs), "\n",
-      "  Weights: ", .printVectorNicely(object@weights), "\n",
+      "  Name: ", nucleaseName(object), "\n",
+      "  Metadata: ", metadata(object), "\n",
+      "  Motifs: ", .printVectorNicely(motifs(motifs)), "\n",
+      "  Weights: ", .printVectorNicely(weights(object)), "\n",
       sep = "")
 })
 
@@ -334,6 +334,7 @@ setMethod("nucleaseName<-", "Nuclease",
     object@nucleaseName <- as.character(value)
     return(object)
 })
+
 
 
 #' @rdname Nuclease-class

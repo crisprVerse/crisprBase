@@ -120,14 +120,14 @@ CrisprNuclease <- function(nucleaseName,
 #' @export
 setMethod("show", "CrisprNuclease", function(object) {
     cat(paste0("Class: ", is(object)[[1]]), "\n",
-        "  Name: ", object@nucleaseName, "\n",
-        "  Metadata: ", object@metadata, "\n",
-        "  Motifs: ", .printVectorNicely(object@motifs), "\n",
-        "  Weights: ", .printVectorNicely(object@weights), "\n",
+        "  Name: ", nucleaseName(object), "\n",
+        "  Metadata: ", metadata(object), "\n",
+        "  Motifs: ", .printVectorNicely(motifs(object)), "\n",
+        "  Weights: ", .printVectorNicely(weights(object)), "\n",
         "  Spacer: \n",
-        "    Side: ", object@spacer_side, "\n",
-        "    Length: ", object@spacer_length, "\n",
-        "    Distance from PAM: ", object@spacer_gap, "\n",
+        "    Side: ", spacerSide(object), "\n",
+        "    Length: ", spacerLength(object), "\n",
+        "    Distance from PAM: ", spacerGap(object), "\n",
         sep = "")
 })
 
