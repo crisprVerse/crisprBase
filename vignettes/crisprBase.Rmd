@@ -57,8 +57,11 @@ nucleases, DNA nucleotides are used to represent recognition sequences for
 simplicity.
 
 The `Nuclease` class has 4 fields: `nucleaseName`, `metadata`, `motifs`
-and `weights`. The `nucleaseName` and `metadata` fields specify a name for the
-nuclease, and some additional information about the nuclease, respectively. 
+and `weights`. The `nucleaseName` field is a string specifying a name
+for the nuclease. The `metadata` field is a `list` of arbitrary length
+to store additional information about the nuclease.
+
+
 The `motifs` field is a character vector that specify one of several DNA
 sequence motifs that are recognized by the nuclease for cleavage (always in 
 the 5' to 3' direction). The optional `weights` field is a numeric vector
@@ -87,7 +90,7 @@ data(crisprBase)
 
 EcoRI <- Nuclease("EcoRI",
                   motifs=c("G^AATTC"),
-                  metadata="EcoRI restriction enzyme")
+                  metadata=list(description="EcoRI restriction enzyme"))
 ```
 
 The HgaI enzyme recognizes the motif `GACGC`, and cleaves DNA at 5
@@ -98,7 +101,7 @@ strand:
 ```{r}
 HgaI <- Nuclease("HgaI",
                   motifs=c("GACGC(5/10)"),
-                  metadata="HgaI restriction enzyme")
+                  metadata=list(description="HgaI restriction enzyme"))
 ```
 
 In case the cleavage site was upstream of the recognition sequence, we would
@@ -112,7 +115,7 @@ recognition sequences for PfaAI:
 ```{r}
 PfaAI <- Nuclease("PfaAI",
                   motifs=c("G^GYRCC"),
-                  metadata="PfaAI restriction enzyme")
+                  metadata=list(description="PfaAI restriction enzyme"))
 ```
 
 ## Accessor functions
@@ -169,8 +172,7 @@ nuclease (Streptococcus pyogenes Cas9):
 SpCas9 <- CrisprNuclease("SpCas9",
                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
                          weights=c(1, 0.2593, 0.0694),
-                         metadata="Wildtype Streptococcus pyogenes Cas9 (SpCas9)
-                                  nuclease",
+                         metadata=list(description="Wildtype Streptococcus pyogenes Cas9 (SpCas9) nuclease"),
                          spacer_side="5prime",
                          spacer_length=20)
 SpCas9
@@ -182,8 +184,8 @@ extended nucleotide code. SaCas9 serves as a good example:
 ```{r}
 SaCas9 <- CrisprNuclease("SaCas9",
                          pams=c("(3/3)NNGRRT"),
-                         metadata="Wildtype Staphylococcus aureus Cas9 (SaCas9)
-                                  nuclease",
+                         metadata=list(description="Wildtype Staphylococcus 
+                         aureus Cas9 (SaCas9) nuclease"),
                          spacer_side="5prime",
                          spacer_length=21)
 SaCas9
@@ -196,8 +198,8 @@ commonly-used Cas12a nuclease (AsCas12a):
 ```{r}
 AsCas12a <- CrisprNuclease("AsCas12a",
                            pams="TTTV(18/23)",
-                           metadata="Wildtype Acidaminococcus Cas12a (AsCas12a)
-                                    nuclease.",
+                           metadata=list(description="Wildtype Acidaminococcus
+                           Cas12a (AsCas12a) nuclease."),
                            spacer_side="3prime",
                            spacer_length=23)
 AsCas12a

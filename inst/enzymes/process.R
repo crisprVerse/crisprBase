@@ -29,11 +29,14 @@ resEnzymes <- enzymes
 
 nucs <- lapply(1:nrow(resEnzymes), function(i){
     Nuclease(nucleaseName=resEnzymes$name[i],
-             metadata=paste0(resEnzymes$name[i], " from REBASE."),
+             metadata=list(description=paste0(resEnzymes$name[i], " from REBASE.")),
              motifs=resEnzymes$motif[i])
 })
 names(nucs) <- resEnzymes$name
 restrictionEnzymes <- nucs
 save(restrictionEnzymes,
      file="../../data/restrictionEnzymes.rda")
+
+
+
 

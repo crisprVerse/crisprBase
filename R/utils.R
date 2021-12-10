@@ -3,6 +3,19 @@ NULL
 
 
 
+
+#' @export
+#' @importFrom S4Vectors metadata
+S4Vectors::metadata
+
+
+#' @export
+#' @importFrom S4Vectors metadata<-
+S4Vectors::`metadata<-`
+
+
+
+
 .checkDNAAlphabet <- function(x){
     chars <- unlist(strsplit(x, split=""))
     choices <- names(Biostrings::IUPAC_CODE_MAP)

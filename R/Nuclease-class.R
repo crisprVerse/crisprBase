@@ -19,31 +19,34 @@
 #' @section Accessors:
 #' \describe{
 #'     \item{\code{nucleaseName}:}{To get the name of the nuclease.} 
+#'     \item{\code{metadata}:}{To get the metadata list of the nuclease.} 
 #'     \item{\code{motifs}:}{To get the recognition mofif
 #'          nucleotide sequences.}
+#'     \item{\code{weights}:}{To get nuclease weights.} 
+#'     \item{\code{cutSites}:}{To get nuclease cut sites.} 
 #' }
 #' 
 #' @examples
 #' EcoRI <- Nuclease("EcoRI",
 #'                   motifs=c("G^AATTC"),
-#'                   metadata="EcoRI restriction enzyme")
+#'                   metadata=list(description="EcoRI restriction enzyme"))
 #' 
 #' @return A Nuclease object
 #' @export
 #' @importFrom Biostrings DNAStringSet
-setClass("Nuclease", 
+#' @importClassesFrom S4Vectors Annotated
+setClass("Nuclease",
+    contains = "Annotated",
     slots = c(
         nucleaseName = "character", 
         motifs = "DNAStringSet",
         cutSites = "matrix",
-        weights = "numeric", 
-        metadata = "character"),
+        weights = "numeric"),
     prototype = list(
         nucleaseName = NA_character_,
         motifs = NULL,
         cutSites = NULL,
-        weights = NA_real_,
-        metadata = NA_character_)
+        weights = NA_real_)
 )
 
 
@@ -60,9 +63,7 @@ setValidity("Nuclease", function(object){
     if (length(nucleaseName(object))!=1){
        out <- "Slot nucleaseName must be a character vector of length 1."
     } 
-    if (length(metadata(object))!=1){
-       out <- "Slot metadata must be a character vector of length 1."
-    } 
+  
 
     if (length(weights(object))>1){
         if (length(weights(object)) != length(motifs(object))){
@@ -105,18 +106,18 @@ setValidity("Nuclease", function(object){
 #'     to a motif specified in the \code{motifs} slot. 
 #' @param weights Optional numeric vector specifying relative weights
 #'           for the recognition motifs to specify cleavage probabilities. 
-#' @param metadata Optional string providing a description of the nuclease.
+#' @param metadata Optional list providing global metadata information.
 #' @export
+#' @importFrom S4Vectors metadata metadata<-
 Nuclease <- function(nucleaseName,
                      motifs = NULL,
                      cutSites = NULL,
                      weights = rep(1, length(motifs)),
-                     metadata = NA_character_
+                     metadata = list()
 ){
 
     nucleaseName <- as.character(nucleaseName)
     weights <- as.numeric(weights)
-    metadata <- as.character(metadata)
 
     if (is(motifs, "DNAStringSet")){    
         if (is.null(cutSites)){
@@ -136,12 +137,16 @@ Nuclease <- function(nucleaseName,
              "DNAStringSet.")
     }
     
-    new("Nuclease",
-        nucleaseName=nucleaseName,
-        motifs=sequences,
-        cutSites=cutSites,
-        weights=weights,
-        metadata=metadata)
+    if (!is.list(metadata)){
+        stop("metadata must be a list.")
+    }
+    out <- new("Nuclease",
+               nucleaseName=nucleaseName,
+               motifs=sequences,
+               cutSites=cutSites,
+               weights=weights)
+    metadata(out) <- metadata
+    return(out)
 }
 
 
@@ -310,13 +315,15 @@ Nuclease <- function(nucleaseName,
 #' @rdname Nuclease-class
 #' @param object \linkS4class{Nuclease} object.
 setMethod("show", "Nuclease", function(object){
+    len <- length(metadata(object))
     cat(paste0("Class: ", is(object)[[1]]), "\n",
       "  Name: ", nucleaseName(object), "\n",
-      "  Metadata: ", metadata(object), "\n",
-      "  Motifs: ", .printVectorNicely(motifs(motifs)), "\n",
+      "  Metadata: list of length ", len, "\n",
+      "  Motifs: ", .printVectorNicely(motifs(object)), "\n",
       "  Weights: ", .printVectorNicely(weights(object)), "\n",
       sep = "")
 })
+
 
 
 #' @rdname Nuclease-class
@@ -337,24 +344,10 @@ setMethod("nucleaseName<-", "Nuclease",
 
 
 
-#' @rdname Nuclease-class
-#' @importFrom S4Vectors metadata 
-#' @export
-setMethod("metadata", "Nuclease", 
-    function(x){
-    return(x@metadata)
-})
 
 
 
-#' @rdname Nuclease-class
-#' @importFrom S4Vectors metadata<-
-#' @export
-setMethod("metadata<-", "Nuclease", 
-    function(x, value){
-    x@metadata <- as.character(value)
-    return(x)
-})
+
 
 #' @rdname Nuclease-class
 #' @export

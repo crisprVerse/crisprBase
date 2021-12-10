@@ -67,7 +67,7 @@ CrisprNuclease(
   nucleaseName,
   pams = NA_character_,
   weights = rep(1, length(pams)),
-  metadata = NA_character_,
+  metadata = list(),
   spacer_side = NA_character_,
   spacer_gap = 0L,
   spacer_length = NA_integer_
@@ -125,7 +125,7 @@ in parentheses. See details for more information.}
 \item{weights}{Optional numeric vector specifying relative weights
 of the PAM sequences to specify cleavage probabilities.}
 
-\item{metadata}{Optional string providing a description of the CRISPR nuclease.}
+\item{metadata}{Optional list providing global metadata information.}
 
 \item{spacer_side}{String specifying the side of the gRNA spacer
 sequence with respect to the PAM motif. Must be either 
@@ -225,8 +225,8 @@ between the spacer sequence and the PAM sequence
 SpCas9 <- CrisprNuclease("SpCas9",
                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
                          weights=c(1, 0.2593, 0.0694),
-                         metadata="Wildtype Streptococcus pyogenes Cas9 
-                              (SpCas9) nuclease",
+                         metadata=list(description="Wildtype Streptococcus
+                                       pyogenes Cas9 (SpCas9) nuclease"),
                          spacer_side="5prime",
                          spacer_length=20)
 

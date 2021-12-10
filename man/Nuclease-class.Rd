@@ -15,8 +15,6 @@
 \alias{show,Nuclease-method}
 \alias{nucleaseName,Nuclease-method}
 \alias{nucleaseName<-,Nuclease-method}
-\alias{metadata,Nuclease-method}
-\alias{metadata<-,Nuclease-method}
 \alias{weights,Nuclease-method}
 \alias{weights<-,Nuclease-method}
 \alias{isCutting,Nuclease-method}
@@ -46,7 +44,7 @@ Nuclease(
   motifs = NULL,
   cutSites = NULL,
   weights = rep(1, length(motifs)),
-  metadata = NA_character_
+  metadata = list()
 )
 
 \S4method{show}{Nuclease}(object)
@@ -54,10 +52,6 @@ Nuclease(
 \S4method{nucleaseName}{Nuclease}(object)
 
 \S4method{nucleaseName}{Nuclease}(object) <- value
-
-\S4method{metadata}{Nuclease}(x)
-
-\S4method{metadata}{Nuclease}(x) <- value
 
 \S4method{weights}{Nuclease}(object, expand = FALSE)
 
@@ -103,10 +97,7 @@ to a motif specified in the \code{motifs} slot.}
 \item{weights}{Optional numeric vector specifying relative weights
 for the recognition motifs to specify cleavage probabilities.}
 
-\item{metadata}{Optional string providing a description of the nuclease.}
-
-\item{x}{Object of class \linkS4class{Nuclease} or
-\linkS4class{CrisprNuclease}}
+\item{metadata}{Optional list providing global metadata information.}
 
 \item{expand}{Should sequences be expanded to only contain ATCG nucleotides?
 FALSE by default.}
@@ -169,15 +160,18 @@ for the motifs corresponding to cleavage probabilities.}
 
 \describe{
     \item{\code{nucleaseName}:}{To get the name of the nuclease.} 
+    \item{\code{metadata}:}{To get the metadata list of the nuclease.} 
     \item{\code{motifs}:}{To get the recognition mofif
          nucleotide sequences.}
+    \item{\code{weights}:}{To get nuclease weights.} 
+    \item{\code{cutSites}:}{To get nuclease cut sites.} 
 }
 }
 
 \examples{
 EcoRI <- Nuclease("EcoRI",
                   motifs=c("G^AATTC"),
-                  metadata="EcoRI restriction enzyme")
+                  metadata=list(description="EcoRI restriction enzyme"))
 
 }
 \seealso{

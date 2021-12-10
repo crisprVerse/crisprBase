@@ -4,8 +4,6 @@
 #' @rdname Nuclease-class
 #' @param object Object of class \linkS4class{Nuclease} or
 #'     \linkS4class{CrisprNuclease}
-#' @param x Object of class \linkS4class{Nuclease} or
-#'     \linkS4class{CrisprNuclease}
 #' @param ... Additional arguments for class-specific methods
 #' 
 #' @export
