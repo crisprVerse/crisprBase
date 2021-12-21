@@ -5,19 +5,27 @@
 \alias{motifs}
 \alias{motifLength}
 \alias{nucleaseName}
+\alias{targetType}
 \alias{weights}
 \alias{nucleaseName<-}
+\alias{targetType<-}
 \alias{weights<-}
 \alias{cutSites}
 \alias{isCutting}
+\alias{isRnase}
+\alias{isDnase}
 \alias{Nuclease-class}
 \alias{Nuclease}
 \alias{show,Nuclease-method}
 \alias{nucleaseName,Nuclease-method}
 \alias{nucleaseName<-,Nuclease-method}
+\alias{targetType,Nuclease-method}
+\alias{targetType<-,Nuclease-method}
 \alias{weights,Nuclease-method}
 \alias{weights<-,Nuclease-method}
 \alias{isCutting,Nuclease-method}
+\alias{isRnase,Nuclease-method}
+\alias{isDnase,Nuclease-method}
 \alias{motifs,Nuclease-method}
 \alias{motifLength,Nuclease-method}
 \alias{cutSites,Nuclease-method}
@@ -29,9 +37,13 @@ motifLength(object, ...)
 
 nucleaseName(object)
 
+targetType(object)
+
 weights(object, ...)
 
 nucleaseName(object) <- value
+
+targetType(object) <- value
 
 weights(object) <- value
 
@@ -39,8 +51,13 @@ cutSites(object, ...)
 
 isCutting(object)
 
+isRnase(object)
+
+isDnase(object)
+
 Nuclease(
   nucleaseName,
+  targetType = c("DNA", "RNA"),
   motifs = NULL,
   cutSites = NULL,
   weights = rep(1, length(motifs)),
@@ -53,11 +70,19 @@ Nuclease(
 
 \S4method{nucleaseName}{Nuclease}(object) <- value
 
+\S4method{targetType}{Nuclease}(object)
+
+\S4method{targetType}{Nuclease}(object) <- value
+
 \S4method{weights}{Nuclease}(object, expand = FALSE)
 
 \S4method{weights}{Nuclease}(object) <- value
 
 \S4method{isCutting}{Nuclease}(object)
+
+\S4method{isRnase}{Nuclease}(object)
+
+\S4method{isDnase}{Nuclease}(object)
 
 \S4method{motifs}{Nuclease}(
   object,
@@ -137,6 +162,8 @@ Return length of the recognition sites sequences.
 \describe{
 \item{\code{nucleaseName}}{Name of the nuclease.}
 
+\item{\code{targetType}}{Character string indicationg target type ("DNA" or "RNA").}
+
 \item{\code{motifs}}{DNAStringSet of recognition sequence motifs
 written from 5' to 3'.}
 
@@ -160,6 +187,7 @@ for the motifs corresponding to cleavage probabilities.}
 
 \describe{
     \item{\code{nucleaseName}:}{To get the name of the nuclease.} 
+    \item{\code{targetType}:}{To get the target type ("DNA" or "RNA").}
     \item{\code{metadata}:}{To get the metadata list of the nuclease.} 
     \item{\code{motifs}:}{To get the recognition mofif
          nucleotide sequences.}

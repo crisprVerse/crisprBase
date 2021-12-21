@@ -65,6 +65,7 @@ prototypeSequence(object, ...)
 
 CrisprNuclease(
   nucleaseName,
+  targetType = c("DNA", "RNA"),
   pams = NA_character_,
   weights = rep(1, length(pams)),
   metadata = list(),
@@ -113,6 +114,8 @@ a non-negative integer. For \code{spacerSide}, must be either
 \item{...}{Additional arguments for class-specific methods}
 
 \item{nucleaseName}{Name of the CRISPR nuclease.}
+
+\item{targetType}{String specifying target type ("DNA" or "RNA").}
 
 \item{pams}{Character vector of PAM sequence motifs
 written from 5' to 3. If the point of cleavage has

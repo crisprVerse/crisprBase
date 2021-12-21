@@ -28,6 +28,17 @@ AsCas12a <- CrisprNuclease("AsCas12a",
                            spacer_length=23)
 
 
+CasRx <- CrisprNuclease("CasRx",
+                        targetType="RNA",
+                        pams="N",
+                        metadata=list(description="Cas13d-NLS from Ruminococcus flavefaciens strain XPD3002.",
+                                      doi="10.1016/j.cell.2018.02.033"),
+                        spacer_side="5prime",
+                        spacer_length=22)
+
+
+
+
 load("pams/cas12a/cas12a.pams.rda")
 pams <- cas12a.pams[, c("PAM", "Score_Doench")]
 pams <- pams[!is.na(pams$Score_Doench),]
@@ -48,6 +59,7 @@ use_data(SpCas9,
          SpGCas9,
          AsCas12a,
          enAsCas12a,
+         CasRx,
          compress="xz", internal=FALSE, overwrite=TRUE)
 
 

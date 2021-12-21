@@ -25,6 +25,14 @@ setGeneric("nucleaseName", function(object) standardGeneric("nucleaseName"))
 
 #' @rdname Nuclease-class
 #' @export
+setGeneric("targetType", function(object) standardGeneric("targetType"))
+
+
+
+
+
+#' @rdname Nuclease-class
+#' @export
 setGeneric("weights", function(object) standardGeneric("weights"))
 
 
@@ -32,6 +40,12 @@ setGeneric("weights", function(object) standardGeneric("weights"))
 #' @rdname Nuclease-class
 #' @export
 setGeneric("nucleaseName<-", function(object, value) standardGeneric("nucleaseName<-"))
+
+
+#' @rdname Nuclease-class
+#' @export
+setGeneric("targetType<-", function(object, value) standardGeneric("targetType<-"))
+
 
 
 #' @rdname Nuclease-class
@@ -47,6 +61,17 @@ setGeneric("cutSites", function(object, ...) standardGeneric("cutSites"))
 #' @rdname Nuclease-class
 #' @export
 setGeneric("isCutting", function(object) standardGeneric("isCutting"))
+
+
+#' @rdname Nuclease-class
+#' @export
+setGeneric("isRnase", function(object) standardGeneric("isRnase"))
+
+
+#' @rdname Nuclease-class
+#' @export
+setGeneric("isDnase", function(object) standardGeneric("isDnase"))
+
 
 
 

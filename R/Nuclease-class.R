@@ -1,6 +1,7 @@
 #' An S4 class to represent a nuclease.
 #' 
 #' @slot nucleaseName Name of the nuclease.
+#' @slot targetType Character string indicationg target type ("DNA" or "RNA").
 #' @slot motifs DNAStringSet of recognition sequence motifs
 #'           written from 5' to 3'.
 #' @slot cutSites Matrix with 2 rows (+ and - strand, respectively)
@@ -19,6 +20,7 @@
 #' @section Accessors:
 #' \describe{
 #'     \item{\code{nucleaseName}:}{To get the name of the nuclease.} 
+#'     \item{\code{targetType}:}{To get the target type ("DNA" or "RNA").}
 #'     \item{\code{metadata}:}{To get the metadata list of the nuclease.} 
 #'     \item{\code{motifs}:}{To get the recognition mofif
 #'          nucleotide sequences.}
@@ -39,11 +41,13 @@ setClass("Nuclease",
     contains = "Annotated",
     slots = c(
         nucleaseName = "character", 
+        targetType = "character",
         motifs = "DNAStringSet",
         cutSites = "matrix",
         weights = "numeric"),
     prototype = list(
         nucleaseName = NA_character_,
+        targetType = NA_character_,
         motifs = NULL,
         cutSites = NULL,
         weights = NA_real_)
@@ -64,6 +68,9 @@ setValidity("Nuclease", function(object){
        out <- "Slot nucleaseName must be a character vector of length 1."
     } 
   
+    if (!targetType(object) %in% c("DNA", "RNA")){
+        out <- "Slot targetType must be either 'DNA' or 'RNA'"
+    }
 
     if (length(weights(object))>1){
         if (length(weights(object)) != length(motifs(object))){
@@ -110,12 +117,14 @@ setValidity("Nuclease", function(object){
 #' @export
 #' @importFrom S4Vectors metadata metadata<-
 Nuclease <- function(nucleaseName,
+                     targetType=c("DNA", "RNA"),
                      motifs = NULL,
                      cutSites = NULL,
                      weights = rep(1, length(motifs)),
                      metadata = list()
 ){
 
+    targetType <- match.arg(targetType)
     nucleaseName <- as.character(nucleaseName)
     weights <- as.numeric(weights)
 
@@ -142,6 +151,7 @@ Nuclease <- function(nucleaseName,
     }
     out <- new("Nuclease",
                nucleaseName=nucleaseName,
+               targetType=targetType,
                motifs=sequences,
                cutSites=cutSites,
                weights=weights)
@@ -318,11 +328,14 @@ setMethod("show", "Nuclease", function(object){
     len <- length(metadata(object))
     cat(paste0("Class: ", is(object)[[1]]), "\n",
       "  Name: ", nucleaseName(object), "\n",
+      "  Target type: ", targetType(object), "\n",
       "  Metadata: list of length ", len, "\n",
       "  Motifs: ", .printVectorNicely(motifs(object)), "\n",
       "  Weights: ", .printVectorNicely(weights(object)), "\n",
       sep = "")
 })
+
+
 
 
 
@@ -342,6 +355,22 @@ setMethod("nucleaseName<-", "Nuclease",
     return(object)
 })
 
+
+#' @rdname Nuclease-class
+#' @export
+setMethod("targetType", "Nuclease", 
+    function(object){
+    return(object@targetType)
+})
+
+
+#' @rdname Nuclease-class
+#' @export
+setMethod("targetType<-", "Nuclease", 
+    function(object){
+    object@targetType <- as.character(value)
+    return(object)
+})
 
 
 
@@ -390,6 +419,26 @@ setMethod("isCutting", "Nuclease",
     cuts <- cutSites(object)
     !all(is.na(c(cuts)))
 })
+
+
+#' @rdname Nuclease-class
+#' @export
+setMethod("isRnase", "Nuclease", 
+    function(object){
+    target <- targetType(object)
+    target=="RNA"
+})
+
+
+#' @rdname Nuclease-class
+#' @export
+setMethod("isDnase", "Nuclease", 
+    function(object){
+    target <- targetType(object)
+    target=="DNA"
+})
+
+
 
 
 

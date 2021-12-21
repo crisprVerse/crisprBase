@@ -76,6 +76,7 @@ setClass("CrisprNuclease",
 
 #' @describeIn CrisprNuclease Create a \linkS4class{CrisprNuclease} object
 #' @param nucleaseName Name of the CRISPR nuclease.
+#' @param targetType String specifying target type ("DNA" or "RNA").
 #' @param pams Character vector of PAM sequence motifs
 #'           written from 5' to 3. If the point of cleavage has
 #'           been determined, the precise site is marked with ^.
@@ -95,6 +96,7 @@ setClass("CrisprNuclease",
 #' @export
 #' @export
 CrisprNuclease <- function(nucleaseName,
+                           targetType=c("DNA", "RNA"),
                            pams = NA_character_,
                            weights = rep(1, length(pams)),
                            metadata = list(),
@@ -104,6 +106,7 @@ CrisprNuclease <- function(nucleaseName,
 ){
 
     nuc <- Nuclease(nucleaseName=nucleaseName,
+                    targetType=targetType,
                     motifs=pams,
                     weights=weights,
                     metadata=metadata)
@@ -122,6 +125,7 @@ setMethod("show", "CrisprNuclease", function(object) {
     len <- length(metadata(object))
     cat(paste0("Class: ", is(object)[[1]]), "\n",
         "  Name: ", nucleaseName(object), "\n",
+        "  Target type: ", targetType(object), "\n",
         "  Metadata: list of length ", len, "\n",
         "  Motifs: ", .printVectorNicely(motifs(object)), "\n",
         "  Weights: ", .printVectorNicely(weights(object)), "\n",
