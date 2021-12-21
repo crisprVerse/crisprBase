@@ -367,7 +367,7 @@ setMethod("targetType", "Nuclease",
 #' @rdname Nuclease-class
 #' @export
 setMethod("targetType<-", "Nuclease", 
-    function(object){
+    function(object, value){
     object@targetType <- as.character(value)
     return(object)
 })
