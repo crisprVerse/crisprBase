@@ -99,6 +99,7 @@ setValidity("Nuclease", function(object){
 
 #' @describeIn Nuclease Create a \linkS4class{Nuclease} object
 #' @param nucleaseName Name of the nuclease.
+#' @param targetType String specifying target type ("DNA" or "RNA").
 #' @param motifs Character vector of recognition sequence motifs
 #'           written from 5' to 3' written in Rebase convention.
 #'           If the point of cleavage has been determined, the

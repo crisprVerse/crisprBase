@@ -105,6 +105,8 @@ Nuclease(
 
 \item{nucleaseName}{Name of the nuclease.}
 
+\item{targetType}{String specifying target type ("DNA" or "RNA").}
+
 \item{motifs}{Character vector of recognition sequence motifs
 written from 5' to 3' written in Rebase convention.
 If the point of cleavage has been determined, the

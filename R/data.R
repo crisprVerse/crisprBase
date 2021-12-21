@@ -80,3 +80,19 @@
 
 
 
+#' CasRx CrisprNuclease object
+#'
+#' CrisprNuclease object for the Cas13d-NLS from Ruminococcus
+#'     flavefaciens strain XPD3002 nuclease (RNase). 
+#' 
+#' @format CrisprNuclease object.
+#' @details The CasRx nuclease was derived from Cas13d Ruminococcus
+#'     flavefaciens string XPD3002. See \url{10.1016/j.cell.2018.02.033}.
+#' @usage data(CasRx, package="crisprBase")
+"CasRx"
+
+
+
+
+
+
