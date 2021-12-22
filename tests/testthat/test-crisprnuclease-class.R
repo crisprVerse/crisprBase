@@ -29,8 +29,8 @@ test_that('Spacer', {
     expect_true(spacerLength(AsCas12a)==23)
     expect_equal(spacerIndices(SpCas9), 1:20)
     expect_equal(spacerIndices(AsCas12a), 5:27)
-    expect_true(spacerSide(SpCas9)=="5prime")
-    expect_true(spacerSide(AsCas12a)=="3prime")
+    expect_true(pamSide(SpCas9)=="3prime")
+    expect_true(pamSide(AsCas12a)=="5prime")
 })
 
 test_that('Protospacer', {

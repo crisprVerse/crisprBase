@@ -92,15 +92,7 @@ setGeneric("protospacerLength",
 #' @export
 setGeneric("pamLength", function(object) standardGeneric("pamLength"))
 
-#' @rdname CrisprNuclease-class
-#' @export
-setGeneric("spacerSide", function(object) standardGeneric("spacerSide"))
 
-
-#' @rdname CrisprNuclease-class
-#' @export
-setGeneric("spacerSide<-",
-           function(object, value) standardGeneric("spacerSide<-"))
 
 
 #' @rdname CrisprNuclease-class
@@ -129,6 +121,13 @@ setGeneric("spacerLength<-",
 #' @rdname CrisprNuclease-class
 #' @export
 setGeneric("pamSide", function(object) standardGeneric("pamSide"))
+
+
+#' @rdname CrisprNuclease-class
+#' @export
+setGeneric("pamSide<-", function(object, value) standardGeneric("pamSide<-"))
+
+
 
 #' @rdname CrisprNuclease-class
 #' @param ... Additional arguments for class-specific methods

@@ -151,9 +151,10 @@ constant nucleotide motif in the target DNA called the protospacer adjacent
 motif (PAM) sequence. Second, the guide-RNA (gRNA), which guides the nuclease
 to the target sequence, needs to bind to a complementary sequence adjacent
 to the PAM sequence. The latter can be thought of a variable binding motif 
-that can be specified by designing corresponding gRNA sequences.For CRISPR
+that can be specified by designing corresponding gRNA sequences. For CRISPR
 nucleases targeting RNA, the equivalent of the PAM sequence is 
-called the Protospacer Flanking Sequence (PFS).
+called the Protospacer Flanking Sequence (PFS). We use the terms PAM and PFS
+interchangeably as it should be clear from context. 
 
 The `CrisprNuclease` class allows to characterize both binding components by
 extending the `Nuclease` class to contain information about the gRNA
@@ -161,12 +162,17 @@ sequences.The PAM sequence characteristics, and the cleavage distance with
 respect to the PAM sequence, are specified using the motif nomenclature
 described in the Nuclease section above. 
 
-3 additional fields are required: `spacer_side`, `spacer_length` and
-`spacer_gap`. The `spacer_side` field can only take 2 values, `5prime` and
-`3prime`, and specifies on which side the spacer sequence is located with 
-respect to the PAM or PFS sequence. The `spacer_length` specified a default
-spacer length, and the `spacer_gap` specifies a distance (in nucleotides)
-between the PAM (or PFS) sequence and spacer sequence.
+3 additional fields are required: `pam_side`, `spacer_length` and
+`spacer_gap`. The `pam_side` field can only take 2 values, `5prime` and
+`3prime`, and specifies on which side the PAM sequence is located with 
+respect to the protospacer sequence. While it would be more appropriate to use
+the terminology `pfs_side` for RNA-targeting nucleases, we still use the term
+`pam_side` for simplicity.
+
+
+The `spacer_length` specifies
+a default spacer length, and the `spacer_gap` specifies a distance
+(in nucleotides) between the PAM (or PFS) sequence and spacer sequence.
 For most nucleases,`spacer_gap=0` as the spacer sequence is located directly
 next to the PAM/PFS sequence. 
 
@@ -179,7 +185,7 @@ SpCas9 <- CrisprNuclease("SpCas9",
                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
                          weights=c(1, 0.2593, 0.0694),
                          metadata=list(description="Wildtype Streptococcus pyogenes Cas9 (SpCas9) nuclease"),
-                         spacer_side="5prime",
+                         pam_side="3prime",
                          spacer_length=20)
 SpCas9
 ```
@@ -193,7 +199,7 @@ SaCas9 <- CrisprNuclease("SaCas9",
                          pams=c("(3/3)NNGRRT"),
                          metadata=list(description="Wildtype Staphylococcus 
                          aureus Cas9 (SaCas9) nuclease"),
-                         spacer_side="5prime",
+                         pam_side="3prime",
                          spacer_length=21)
 SaCas9
 ```
@@ -208,7 +214,7 @@ AsCas12a <- CrisprNuclease("AsCas12a",
                            pams="TTTV(18/23)",
                            metadata=list(description="Wildtype Acidaminococcus
                            Cas12a (AsCas12a) nuclease."),
-                           spacer_side="3prime",
+                           pam_side="5prime",
                            spacer_length=23)
 AsCas12a
 ```
@@ -228,10 +234,11 @@ in `crisprBase`, see `data(package="crisprBase")`.
 
 The terms **spacer** and **protospacer** are not interchangeable. **spacer**
 refers to the sequence used in the gRNA construct to guide the Cas nuclease to
-the target **protospacer** sequence in the host genome. Therefore, the spacer
-sequence does not contain a PAM sequence (which prevents the nuclease from
-cutting the gRNA) while the protospacer sequence in the host genome includes 
-the PAM sequence. 
+the target **protospacer** sequence in the host genome / transcriptome.
+Therefore, the spacer sequence does not contain a PAM sequence (which prevents
+the nuclease from cutting the gRNA itself).
+By convention, when we refer to the protospacer sequence
+in the target DNA or target RNA, it includes the PAM/PFS sequence.
 
 An gRNA spacer sequence does not always uniquely target the host genome 
 (a given sgRNA spacer can map to multiple protospacers in the genome). 
@@ -244,9 +251,11 @@ identified using a combination of 3 attributes:
 nuclease-specific PAM sequence. For SpCas9, this corresponds to the genomic
 coordinate of N in the NGG PAM sequence. For AsCas12a, this corresponds to the
 genomic coordinate of the first T nucleotide in the TTTV PAM sequence. 
+For RNA-targeting nucleases, this corresponds to the first nucleotide of 
+the PFS (we do not use `pfs_site` for simplicity).
 
 
-```{r, echo=FALSE, fig.cap="Examples of DNA-targeting CRISPR nucleases"}
+```{r, echo=FALSE, fig.cap="Examples of CRISPR nucleases"}
 knitr::include_graphics("./figures/nucleases.svg")
 ```
 
@@ -367,7 +376,22 @@ unchanged in terms of spacer sequence search and genomic coordinates. Therefore
 it is convenient to use the fully-active version of the nuclease throughout
 `crisprBase`. 
 
-## Considerations for RNA-targeting CRISPR nucleases
+## RNA-targeting CRISPR nucleases
+
+RNA-targeting CRISPR nucleases, such as the Cas13 family of nucleases,
+target single-stranded RNA (ssRNA) instead of dsDNA as the name suggests. 
+The equivalent of the PAM sequence is called
+Protospacer Flanking Sequence (PFS). 
+
+For RNA-targeting CRISPR nucleases, the spacer sequence is 
+the reverse complement of the protospacer sequence. This differs from 
+DNA-targeting CRISPR nucleases, for which the spacer and 
+protospacer sequences are identical (minus the PAM sequence). 
+
+We can construct an RNA-targeting nuclease in way similar to a 
+DNA-targeting nuclease by specifying `target="RNA"`. As an example,
+we construct below a CrisprNuclease object for the CasRx nuclease (Cas13d 
+from Ruminococcus flavefaciens strain XPD3002):
 
 
 ```{r}
@@ -375,11 +399,9 @@ CasRx <- CrisprNuclease("CasRx",
                         targetType="RNA",
                         pams="N",
                         metadata=list(description="CasRx nuclease"),
-                        spacer_side="3prime",
+                        pam_side="3prime",
                         spacer_length=22)
 CasRx
-isCutting(CasRx)
-isDnase(CasRx)
 ```
 
 

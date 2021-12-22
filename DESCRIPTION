@@ -1,6 +1,6 @@
 Package: crisprBase
 Version: 0.99.7
-Date: 2021-12-10
+Date: 2021-12-22
 Title: Base functions and classes for CRISPR gRNA design
 Authors@R: person("Jean-Philippe", "Fortin", email = "fortin946@gmail.com", role = c("aut", "cre"))
 Depends: 

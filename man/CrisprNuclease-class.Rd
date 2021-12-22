@@ -5,13 +5,12 @@
 \alias{spacerLength}
 \alias{protospacerLength}
 \alias{pamLength}
-\alias{spacerSide}
-\alias{spacerSide<-}
 \alias{spacerGap}
 \alias{hasSpacerGap}
 \alias{spacerGap<-}
 \alias{spacerLength<-}
 \alias{pamSide}
+\alias{pamSide<-}
 \alias{pams}
 \alias{pamIndices}
 \alias{spacerIndices}
@@ -22,9 +21,8 @@
 \alias{pamLength,CrisprNuclease-method}
 \alias{spacerLength,CrisprNuclease-method}
 \alias{spacerLength<-,CrisprNuclease-method}
-\alias{spacerSide,CrisprNuclease-method}
-\alias{spacerSide<-,CrisprNuclease-method}
 \alias{pamSide,CrisprNuclease-method}
+\alias{pamSide<-,CrisprNuclease-method}
 \alias{spacerGap,CrisprNuclease-method}
 \alias{spacerGap<-,CrisprNuclease-method}
 \alias{hasSpacerGap,CrisprNuclease-method}
@@ -41,10 +39,6 @@ protospacerLength(object)
 
 pamLength(object)
 
-spacerSide(object)
-
-spacerSide(object) <- value
-
 spacerGap(object)
 
 hasSpacerGap(object)
@@ -54,6 +48,8 @@ spacerGap(object) <- value
 spacerLength(object) <- value
 
 pamSide(object)
+
+pamSide(object) <- value
 
 pams(object, ...)
 
@@ -69,7 +65,7 @@ CrisprNuclease(
   pams = NA_character_,
   weights = rep(1, length(pams)),
   metadata = list(),
-  spacer_side = NA_character_,
+  pam_side = NA_character_,
   spacer_gap = 0L,
   spacer_length = NA_integer_
 )
@@ -82,11 +78,9 @@ CrisprNuclease(
 
 \S4method{spacerLength}{CrisprNuclease}(object) <- value
 
-\S4method{spacerSide}{CrisprNuclease}(object)
-
-\S4method{spacerSide}{CrisprNuclease}(object) <- value
-
 \S4method{pamSide}{CrisprNuclease}(object)
+
+\S4method{pamSide}{CrisprNuclease}(object) <- value
 
 \S4method{spacerGap}{CrisprNuclease}(object)
 
@@ -108,7 +102,7 @@ CrisprNuclease(
 \item{object}{\linkS4class{CrisprNuclease} object.}
 
 \item{value}{For \code{spacerLength<-} and \code{gapLength<-}, must be 
-a non-negative integer. For \code{spacerSide}, must be either
+a non-negative integer. For \code{pamSide}, must be either
 '5prime' or '3prime'.}
 
 \item{...}{Additional arguments for class-specific methods}
@@ -130,9 +124,9 @@ of the PAM sequences to specify cleavage probabilities.}
 
 \item{metadata}{Optional list providing global metadata information.}
 
-\item{spacer_side}{String specifying the side of the gRNA spacer
-sequence with respect to the PAM motif. Must be either 
-'5prime' (e.g. Cas9) or '3prime' (e.g. Cas12a)}
+\item{pam_side}{String specifying the side of the PAM sequence
+sequence with respect to the protospacer sequence. Must be either 
+'3prime' (e.g. Cas9) or '5prime' (e.g. Cas12a)}
 
 \item{spacer_gap}{Integer specifying the length (in nucleotides) between
 the spacer sequence and the PAM sequence (e.g. 0 for Cas9 and Cas12a).}
@@ -165,16 +159,16 @@ An S4 class to represent a CRISPR nuclease.
 \section{Slots}{
 
 \describe{
-\item{\code{spacer_side}}{String specifying the side of the gRNA spacer
-sequence with respect to the PAM motif. Must be either 
-'5prime' (e.g. Cas9) or '3prime' (e.g. Cas12a)}
+\item{\code{pam_side}}{String specifying the side of the PAM sequence
+with respect to the protospacer sequence. Must be either 
+'3prime' (e.g. SpCas9) or '5prime' (e.g. AsCas12a)}
 
 \item{\code{spacer_length}}{Integer specifying the
 length of the spacer sequence}
 
 \item{\code{spacer_gap}}{Integer specifying the length (in nucleotides)
 between the spacer sequence and the PAM sequence
-(e.g. 0 for Cas9 and Cas12a).}
+(e.g. 0 for SpCas9 and AsCas12a).}
 }}
 
 \section{Constructors}{
@@ -192,8 +186,6 @@ between the spacer sequence and the PAM sequence
     \item{\code{protospacerLength}:}{To return the length of the
         protospacer sequence.}
     \item{\code{pamLength}:}{To return the length of the PAM sequence.}
-    \item{\code{spacerSide}:}{To return the side of the spacer sequence
-        with respect to the PAM sequence.}
     \item{\code{pamSide}:}{To return the side of the PAM sequence with
         respect to the spacer sequence.}
     \item{\code{spacerGap}:}{To return the length of the gap between the
@@ -207,8 +199,8 @@ between the spacer sequence and the PAM sequence
 \describe{
     \item{\code{spacerGap<-}:}{To change the length of the gap between the
         PAM and spacer sequences.}
-    \item{\code{spacerSide<-}:}{To change the side of the spacer sequence
-        with respect to the PAM sequence.}
+    \item{\code{pamSide<-}:}{To change the side of the PAM sequence
+        with respect to the protospacer sequence.}
     \item{\code{spacerLength<-}:}{To change the length of the spacer
         sequence.}
 }
@@ -230,7 +222,7 @@ SpCas9 <- CrisprNuclease("SpCas9",
                          weights=c(1, 0.2593, 0.0694),
                          metadata=list(description="Wildtype Streptococcus
                                        pyogenes Cas9 (SpCas9) nuclease"),
-                         spacer_side="5prime",
+                         pam_side="3prime",
                          spacer_length=20)
 
 }

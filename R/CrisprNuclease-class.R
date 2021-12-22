@@ -1,13 +1,13 @@
 #' An S4 class to represent a CRISPR nuclease.
 #' 
-#' @slot spacer_side String specifying the side of the gRNA spacer
-#'     sequence with respect to the PAM motif. Must be either 
-#'     '5prime' (e.g. Cas9) or '3prime' (e.g. Cas12a)
+#' @slot pam_side String specifying the side of the PAM sequence
+#'     with respect to the protospacer sequence. Must be either 
+#'     '3prime' (e.g. SpCas9) or '5prime' (e.g. AsCas12a)
 #' @slot spacer_length Integer specifying the
 #'     length of the spacer sequence
 #' @slot spacer_gap Integer specifying the length (in nucleotides)
 #'     between the spacer sequence and the PAM sequence
-#'     (e.g. 0 for Cas9 and Cas12a).
+#'     (e.g. 0 for SpCas9 and AsCas12a).
 #' 
 #' @section Constructors:
 #'     Use the constructor \code{link{CrisprNuclease}} to create
@@ -21,8 +21,6 @@
 #'     \item{\code{protospacerLength}:}{To return the length of the
 #'         protospacer sequence.}
 #'     \item{\code{pamLength}:}{To return the length of the PAM sequence.}
-#'     \item{\code{spacerSide}:}{To return the side of the spacer sequence
-#'         with respect to the PAM sequence.}
 #'     \item{\code{pamSide}:}{To return the side of the PAM sequence with
 #'         respect to the spacer sequence.}
 #'     \item{\code{spacerGap}:}{To return the length of the gap between the
@@ -34,8 +32,8 @@
 #' \describe{
 #'     \item{\code{spacerGap<-}:}{To change the length of the gap between the
 #'         PAM and spacer sequences.}
-#'     \item{\code{spacerSide<-}:}{To change the side of the spacer sequence
-#'         with respect to the PAM sequence.}
+#'     \item{\code{pamSide<-}:}{To change the side of the PAM sequence
+#'         with respect to the protospacer sequence.}
 #'     \item{\code{spacerLength<-}:}{To change the length of the spacer
 #'         sequence.}
 #' }
@@ -53,7 +51,7 @@
 #'                          weights=c(1, 0.2593, 0.0694),
 #'                          metadata=list(description="Wildtype Streptococcus
 #'                                        pyogenes Cas9 (SpCas9) nuclease"),
-#'                          spacer_side="5prime",
+#'                          pam_side="3prime",
 #'                          spacer_length=20)
 #' 
 #' @return A CrisprNuclease object
@@ -62,11 +60,11 @@
 setClass("CrisprNuclease", 
     contains = "Nuclease", 
     slots = c(
-        spacer_side = "character",
+        pam_side = "character",
         spacer_gap = "integer",
         spacer_length = "integer"),
     prototype = list(
-        spacer_side = NA_character_,
+        pam_side = NA_character_,
         spacer_gap = 0L,
         spacer_length =NA_integer_
     )
@@ -87,9 +85,9 @@ setClass("CrisprNuclease",
 #' @param weights Optional numeric vector specifying relative weights
 #'           of the PAM sequences to specify cleavage probabilities. 
 #' @param metadata Optional list providing global metadata information.
-#' @param spacer_side String specifying the side of the gRNA spacer
-#'     sequence with respect to the PAM motif. Must be either 
-#'     '5prime' (e.g. Cas9) or '3prime' (e.g. Cas12a)
+#' @param pam_side String specifying the side of the PAM sequence
+#'     sequence with respect to the protospacer sequence. Must be either 
+#'     '3prime' (e.g. Cas9) or '5prime' (e.g. Cas12a)
 #' @param spacer_length Integer specifying the length of the spacer sequence
 #' @param spacer_gap Integer specifying the length (in nucleotides) between
 #'     the spacer sequence and the PAM sequence (e.g. 0 for Cas9 and Cas12a).
@@ -100,7 +98,7 @@ CrisprNuclease <- function(nucleaseName,
                            pams = NA_character_,
                            weights = rep(1, length(pams)),
                            metadata = list(),
-                           spacer_side = NA_character_,
+                           pam_side = NA_character_,
                            spacer_gap = 0L,
                            spacer_length = NA_integer_
 ){
@@ -112,7 +110,7 @@ CrisprNuclease <- function(nucleaseName,
                     metadata=metadata)
     new("CrisprNuclease",
         nuc,
-        spacer_side = as.character(spacer_side),
+        pam_side = as.character(pam_side),
         spacer_gap = as.integer(spacer_gap),
         spacer_length = as.integer(spacer_length))
 }
@@ -127,9 +125,11 @@ setMethod("show", "CrisprNuclease", function(object) {
     if (dnase){
         pams.line <- ("  PAMs: ")
         pams.line.distance <- "    Distance from PAM: "
+        pam.side.line <- "  PAM side: "
     } else {
         pams.line <- ("  PFS: ")
         pams.line.distance <- "    Distance from PFS: "
+        pam.side.line <- "  PFS side: "
     }
     cat(paste0("Class: ", is(object)[[1]]), "\n",
         "  Name: ", nucleaseName(object), "\n",
@@ -137,9 +137,8 @@ setMethod("show", "CrisprNuclease", function(object) {
         "  Metadata: list of length ", len, "\n",
         pams.line, .printVectorNicely(motifs(object)), "\n",
         "  Weights: ", .printVectorNicely(weights(object)), "\n",
-        "  Spacer: \n",
-        "    Side: ", spacerSide(object), "\n",
-        "    Length: ", spacerLength(object), "\n",
+        "  Spacer length: ",  spacerLength(object), "\n",
+        pam.side.line,  pamSide(object), "\n",
         pams.line.distance, spacerGap(object), "\n",
         "  Prototype protospacers: ",
         .printVectorNicely(prototypeSequence(object, primary=FALSE)),
@@ -154,11 +153,11 @@ setMethod("show", "CrisprNuclease", function(object) {
 
 setValidity("CrisprNuclease", function(object) {
     out <- TRUE
-    if (length(spacerSide(object))!=1){
-        out <- "Slot spacer_side must be a character vector of length 1."
+    if (length(pamSide(object))!=1){
+        out <- "Slot pam_side must be a character vector of length 1."
     } 
-    if (!spacerSide(object) %in% c("5prime", "3prime")){
-        out <- "Slot spacer_side must be either '5prime' or '3prime'."
+    if (!pamSide(object) %in% c("5prime", "3prime")){
+        out <- "Slot pam_side must be either '5prime' or '3prime'."
     } 
     if (length(spacerLength(object))!=1){
         out <- "Slot spacer_length must be an integer vector of length 1."
@@ -202,7 +201,7 @@ setMethod("spacerLength", "CrisprNuclease", function(object){
 
 #' @rdname CrisprNuclease-class
 #' @param value For \code{spacerLength<-} and \code{gapLength<-}, must be 
-#'     a non-negative integer. For \code{spacerSide}, must be either
+#'     a non-negative integer. For \code{pamSide}, must be either
 #'     '5prime' or '3prime'.
 #' 
 #' @export
@@ -215,30 +214,23 @@ setMethod("spacerLength<-", "CrisprNuclease", function(object, value){
 
 #' @rdname CrisprNuclease-class
 #' @export
-setMethod("spacerSide",
+setMethod("pamSide",
           "CrisprNuclease",function(object){
-    return(object@spacer_side)
+    return(object@pam_side)
 })
 
 #' @rdname CrisprNuclease-class
 #' @export
-setMethod("spacerSide<-", "CrisprNuclease", function(object, value){
+setMethod("pamSide<-", "CrisprNuclease", function(object, value){
     if (!value %in% c("5prime", "3prime")){
         stop("value must be either '5prime' or '3prime'")
     }
-    object@spacer_side <- value
+    object@pam_side <- value
     return(object)
 })
 
 
 
-#' @rdname CrisprNuclease-class
-#' @export
-setMethod("pamSide",
-          "CrisprNuclease",function(object){
-    side <- object@spacer_side
-    ifelse(side=="3prime", "5prime", "3prime")
-})
 
 
 #' @rdname CrisprNuclease-class
@@ -343,8 +335,8 @@ setMethod("spacerIndices", "CrisprNuclease",
     function(object){
     indices <- seq_len(protospacerLength(object))
     spacer_len <- spacerLength(object)
-    spacer_side <- spacerSide(object)
-    if (spacer_side=="5prime"){
+    pam_side <- pamSide(object)
+    if (pam_side=="3prime"){
         indices <- indices[seq_len(spacer_len)]
     } else {
         indices <- rev(rev(indices)[seq_len(spacer_len)])
@@ -362,10 +354,6 @@ setMethod("prototypeSequence",
     gap_len    <- spacerGap(object)
     pam_side   <- pamSide(object)
     target <- targetType(object)
-    if (target=="RNA"){
-        pam_side <- ifelse(pam_side=="3prime",
-                           "5prime", "3prime")
-    }
     # Building sequence:
     spacer <- paste0(rep("S", spacer_len), collapse="")
     gap <- paste0(rep("-", gap_len), collapse="")
