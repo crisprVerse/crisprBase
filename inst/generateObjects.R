@@ -33,8 +33,9 @@ CasRx <- CrisprNuclease("CasRx",
                         pams="N",
                         metadata=list(description="Cas13d-NLS from Ruminococcus flavefaciens strain XPD3002.",
                                       doi="10.1016/j.cell.2018.02.033"),
-                        spacer_side="5prime",
+                        spacer_side="3prime",
                         spacer_length=22)
+
 
 
 

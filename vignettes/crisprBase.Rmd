@@ -50,23 +50,21 @@ restriction enzymes.
 # Nuclease class
 
 The `Nuclease` class is designed to store minimal information about the
-recognition sites of general nucleases, such as restriction enzymes. The class
-does not make the distinction between deoxyribonucleases (DNA-targeting
-nucleases) and ribonucleases (RNA-targeting nucleases); for both types of
-nucleases, DNA nucleotides are used to represent recognition sequences for
-simplicity.
-
-The `Nuclease` class has 4 fields: `nucleaseName`, `metadata`, `motifs`
-and `weights`. The `nucleaseName` field is a string specifying a name
-for the nuclease. The `metadata` field is a `list` of arbitrary length
+recognition sites of general nucleases, such as restriction enzymes. 
+The `Nuclease` class has 5 fields: `nucleaseName`, `targetType`,
+`metadata`, `motifs` and `weights`. 
+The `nucleaseName` field is a string specifying a name
+for the nuclease.
+The `targetType` specifies if the nuclease targets "DNA" (deoxyribonucleases)
+or "RNA" (ribonucleases). The `metadata` field is a `list` of arbitrary length
 to store additional information about the nuclease.
-
 
 The `motifs` field is a character vector that specify one of several DNA
 sequence motifs that are recognized by the nuclease for cleavage (always in 
 the 5' to 3' direction). The optional `weights` field is a numeric vector
 specifying relative cleavage probabilities corresponding to the motifs 
-specified by `motifs`.
+specified by `motifs`. Note that we use DNA to represent motifs irrespectively
+of the target type for simplicity. 
 
 We use the Rebase convention to represent motif sequences [@rebase]. 
 For enzymes that cleave within the recognition site, 
@@ -89,6 +87,7 @@ library(crisprBase)
 data(crisprBase)
 
 EcoRI <- Nuclease("EcoRI",
+                  targetType="DNA",
                   motifs=c("G^AATTC"),
                   metadata=list(description="EcoRI restriction enzyme"))
 ```
@@ -100,8 +99,9 @@ strand:
 
 ```{r}
 HgaI <- Nuclease("HgaI",
-                  motifs=c("GACGC(5/10)"),
-                  metadata=list(description="HgaI restriction enzyme"))
+                 targetType="DNA",
+                 motifs=c("GACGC(5/10)"),
+                 metadata=list(description="HgaI restriction enzyme"))
 ```
 
 In case the cleavage site was upstream of the recognition sequence, we would
@@ -114,6 +114,7 @@ recognition sequences for PfaAI:
 
 ```{r}
 PfaAI <- Nuclease("PfaAI",
+                  targetType="DNA",
                   motifs=c("G^GYRCC"),
                   metadata=list(description="PfaAI restriction enzyme"))
 ```
@@ -143,13 +144,16 @@ knitr::include_graphics("./figures/enzymes.svg")
 
 # CrisprNuclease class
 
-CRISPR nucleases are examples of RNA-guided DNA endonucleases. For cleavage, it
-requires two binding components. First, the nuclease needs to recognize a
+CRISPR nucleases are examples of RNA-guided nucleases. For cleavage, it
+requires two binding components. For CRISPR nucleases targeting DNA,
+the nuclease needs to first recognize a
 constant nucleotide motif in the target DNA called the protospacer adjacent 
 motif (PAM) sequence. Second, the guide-RNA (gRNA), which guides the nuclease
 to the target sequence, needs to bind to a complementary sequence adjacent
 to the PAM sequence. The latter can be thought of a variable binding motif 
-that can be specified by designing corresponding gRNA sequences. 
+that can be specified by designing corresponding gRNA sequences.For CRISPR
+nucleases targeting RNA, the equivalent of the PAM sequence is 
+called the Protospacer Flanking Sequence (PFS).
 
 The `CrisprNuclease` class allows to characterize both binding components by
 extending the `Nuclease` class to contain information about the gRNA
@@ -160,16 +164,18 @@ described in the Nuclease section above.
 3 additional fields are required: `spacer_side`, `spacer_length` and
 `spacer_gap`. The `spacer_side` field can only take 2 values, `5prime` and
 `3prime`, and specifies on which side the spacer sequence is located with 
-respect to the PAM sequence. The `spacer_length` specified a default spacer
-length, and the `spacer_gap` specifies a distance (in nucleotides) between 
-the PAM sequence and spacer sequence. For most nucleases,`spacer_gap=0` as
-the spacer sequence is located directly next to the PAM sequence. 
+respect to the PAM or PFS sequence. The `spacer_length` specified a default
+spacer length, and the `spacer_gap` specifies a distance (in nucleotides)
+between the PAM (or PFS) sequence and spacer sequence.
+For most nucleases,`spacer_gap=0` as the spacer sequence is located directly
+next to the PAM/PFS sequence. 
 
 We show how we construct a `CrisprNuclease` object for the commonly-used Cas9
 nuclease (Streptococcus pyogenes Cas9):
 
 ```{r}
 SpCas9 <- CrisprNuclease("SpCas9",
+                         targetType="DNA",
                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
                          weights=c(1, 0.2593, 0.0694),
                          metadata=list(description="Wildtype Streptococcus pyogenes Cas9 (SpCas9) nuclease"),
@@ -183,6 +189,7 @@ extended nucleotide code. SaCas9 serves as a good example:
 
 ```{r}
 SaCas9 <- CrisprNuclease("SaCas9",
+                         targetType="DNA",
                          pams=c("(3/3)NNGRRT"),
                          metadata=list(description="Wildtype Staphylococcus 
                          aureus Cas9 (SaCas9) nuclease"),
@@ -197,6 +204,7 @@ commonly-used Cas12a nuclease (AsCas12a):
 
 ```{r}
 AsCas12a <- CrisprNuclease("AsCas12a",
+                           targetType="DNA",
                            pams="TTTV(18/23)",
                            metadata=list(description="Wildtype Acidaminococcus
                            Cas12a (AsCas12a) nuclease."),
@@ -207,7 +215,8 @@ AsCas12a
 
 ## CrisprNuclease objects provided in CrisprBase
 
-Several already-constructed `crisprNuclease` objects are available in `crisprBase`, see `data(package="crisprBase")`.
+Several already-constructed `crisprNuclease` objects are available 
+in `crisprBase`, see `data(package="crisprBase")`.
 
 
 
@@ -237,7 +246,7 @@ coordinate of N in the NGG PAM sequence. For AsCas12a, this corresponds to the
 genomic coordinate of the first T nucleotide in the TTTV PAM sequence. 
 
 
-```{r, echo=FALSE, fig.cap="Examples of CRISPR nucleases"}
+```{r, echo=FALSE, fig.cap="Examples of DNA-targeting CRISPR nucleases"}
 knitr::include_graphics("./figures/nucleases.svg")
 ```
 
@@ -357,6 +366,23 @@ applications and type of genomic perturbations, the gRNA design remains
 unchanged in terms of spacer sequence search and genomic coordinates. Therefore
 it is convenient to use the fully-active version of the nuclease throughout
 `crisprBase`. 
+
+## Considerations for RNA-targeting CRISPR nucleases
+
+
+```{r}
+CasRx <- CrisprNuclease("CasRx",
+                        targetType="RNA",
+                        pams="N",
+                        metadata=list(description="CasRx nuclease"),
+                        spacer_side="3prime",
+                        spacer_length=22)
+CasRx
+isCutting(CasRx)
+isDnase(CasRx)
+```
+
+
 
 
 

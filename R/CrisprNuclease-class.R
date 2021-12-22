@@ -123,16 +123,27 @@ CrisprNuclease <- function(nucleaseName,
 #' @export
 setMethod("show", "CrisprNuclease", function(object) {
     len <- length(metadata(object))
+    dnase <- isDnase(object)
+    if (dnase){
+        pams.line <- ("  PAMs: ")
+        pams.line.distance <- "    Distance from PAM: "
+    } else {
+        pams.line <- ("  PFS: ")
+        pams.line.distance <- "    Distance from PFS: "
+    }
     cat(paste0("Class: ", is(object)[[1]]), "\n",
         "  Name: ", nucleaseName(object), "\n",
         "  Target type: ", targetType(object), "\n",
         "  Metadata: list of length ", len, "\n",
-        "  Motifs: ", .printVectorNicely(motifs(object)), "\n",
+        pams.line, .printVectorNicely(motifs(object)), "\n",
         "  Weights: ", .printVectorNicely(weights(object)), "\n",
         "  Spacer: \n",
         "    Side: ", spacerSide(object), "\n",
         "    Length: ", spacerLength(object), "\n",
-        "    Distance from PAM: ", spacerGap(object), "\n",
+        pams.line.distance, spacerGap(object), "\n",
+        "  Prototype protospacers: ",
+        .printVectorNicely(prototypeSequence(object, primary=FALSE)),
+        "\n",
         sep = "")
 })
 
