@@ -361,14 +361,20 @@ setMethod("prototypeSequence",
     spacer_len <- spacerLength(object)
     gap_len    <- spacerGap(object)
     pam_side   <- pamSide(object)
+    target <- targetType(object)
+    if (target=="RNA"){
+        pam_side <- ifelse(pam_side=="3prime",
+                           "5prime", "3prime")
+    }
     # Building sequence:
     spacer <- paste0(rep("S", spacer_len), collapse="")
     gap <- paste0(rep("-", gap_len), collapse="")
     pam <- motifs(object, primary=primary)
     if (pam_side=="3prime"){
-        seq <- paste0(spacer, gap, pam)
+        seq <- paste0(spacer, gap, "[" , pam, "]")
     } else {
-        seq <- paste0(pam, gap, spacer)
+        seq <- paste0("[", pam, "]", gap, spacer)
     }
+    seq <- paste0("5'--", seq, "--3'")
     return(seq)
 })  

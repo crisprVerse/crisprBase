@@ -95,7 +95,7 @@ S4Vectors::`metadata<-`
         x <- paste0(x, collapse=", ")
     } else {
         x.last <- x[length(x)]
-        x <- paste0(x[seq_len(3)], collapse=", ")
+        x <- paste0(x[seq_len(2)], collapse=", ")
         x <- paste0(x, ",..., ", x.last)
     }
     return(x)
