@@ -1,5 +1,5 @@
 Package: crisprBase
-Version: 0.99.7
+Version: 0.99.8
 Date: 2021-12-22
 Title: Base functions and classes for CRISPR gRNA design
 Authors@R: person("Jean-Philippe", "Fortin", email = "fortin946@gmail.com", role = c("aut", "cre"))
@@ -23,7 +23,7 @@ Description: Provides S4 classes for general nucleases and CRISPR nucleases.
     Several CRISPR-specific genome arithmetic functions are implemented to
     help extract genomic coordinates of spacer and protospacer sequences. 
     Commonly-used CRISPR nuclease objects are provided that can be readily
-    used in other packages.
+    used in other packages. Both DNA- and RNA-targeting nucleases are supported.
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.1.2
