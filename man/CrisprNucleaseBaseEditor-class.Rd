@@ -11,13 +11,14 @@
 \alias{editingStrand<-}
 \alias{CrisprNucleaseBaseEditor-class}
 \alias{CrisprNucleaseBaseEditor}
+\alias{show,CrisprNucleaseBaseEditor-method}
 \alias{baseEditorName,CrisprNucleaseBaseEditor-method}
 \alias{baseEditorName<-,CrisprNucleaseBaseEditor-method}
 \alias{editingWeights,CrisprNucleaseBaseEditor-method}
 \alias{editingWeights<-,CrisprNucleaseBaseEditor-method}
 \alias{editingStrand,CrisprNucleaseBaseEditor-method}
 \alias{editingStrand<-,CrisprNucleaseBaseEditor-method}
-\title{An S4 class to represent a CRISPR nuclease with base editor.}
+\title{An S4 class to represent a CRISPR nuclease with base editing}
 \usage{
 baseEditorName(object)
 
@@ -37,6 +38,8 @@ CrisprNucleaseBaseEditor(
   editingStrand = c("original", "opposite"),
   editingWeights = NULL
 )
+
+\S4method{show}{CrisprNucleaseBaseEditor}(object)
 
 \S4method{baseEditorName}{CrisprNucleaseBaseEditor}(object)
 
@@ -74,7 +77,7 @@ indicates the row corresponding to C to T editing.}
 A CrisprNucleaseWithBaseEditor object
 }
 \description{
-An S4 class to represent a CRISPR nuclease with base editor.
+An S4 class to represent a CRISPR nuclease with base editing
 }
 \section{Functions}{
 \itemize{
@@ -100,3 +103,39 @@ edited. Must be either "original" or "opposite".
     a CrisprNucleaseBaseEditor object.
 }
 
+\section{Accessors}{
+
+\describe{
+    \item{\code{baseEditorName}:}{To get the name of the base editor.}
+    \item{\code{editingWeights}:}{To return the matrix of editing weights.}
+    \item{\code{editingStrand}:}{To return the editing strand.}
+}
+}
+
+\section{Setters}{
+
+\describe{
+    \item{\code{baseEditorName<-}:}{To change the name of the base editor.}
+    \item{\code{editingWeights<-}:}{To change the matrix of editing weights.}
+    \item{\code{editingStrand<-}:}{To change the editing strand.}
+}
+}
+
+\examples{
+# Creating an object for BE4max (C to T editor)
+# based on experimental weights
+
+ws <- c(0.7, 0.7, 0.8, 1.8, 1, 2, 1.4, 1.2, 2.3, 1.3, 2.4, 2.2, 3.4, 
+      2.2, 2.1, 3.5, 5.8, 16.2, 31.8, 63.2, 90.3, 100, 87, 62, 31.4, 
+      16.3, 10, 5.6, 3.3, 1.9, 1.8, 2.4, 1.7, 0.5, 0.2, 0.1)
+ws <- matrix(ws, nrow=1, ncol=length(ws))
+rownames(ws) <- "C2T"
+colnames(ws) <- -36:-1
+data(SpCas9, package="crisprBase")
+BE4max <- CrisprNucleaseBaseEditor(SpCas9,
+                                   baseEditorName="BE4max",
+                                   editingStrand="original",
+                                   editingWeights=ws)
+metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
+
+}

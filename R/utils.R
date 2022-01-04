@@ -101,6 +101,19 @@ S4Vectors::`metadata<-`
     return(x)
 }
 
+.printMatrixNicely <- function(x){
+    if (length(x)<=3){
+        x <- paste0(x, collapse=", ")
+    } else {
+        x.last <- x[length(x)]
+        x <- paste0(x[seq_len(2)], collapse=", ")
+        x <- paste0(x, ",..., ", x.last)
+    }
+    return(x)
+}
+
+
+
 
 
 

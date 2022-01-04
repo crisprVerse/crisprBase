@@ -1,4 +1,4 @@
-#' An S4 class to represent a CRISPR nuclease with base editor.
+#' An S4 class to represent a CRISPR nuclease with base editing
 #' 
 #' @slot baseEditorName Name of the base editor enzyme.
 #' @slot editingWeights Matrix of editing weights.
@@ -11,7 +11,39 @@
 #'     Use the constructor \code{link{CrisprNucleaseBaseEditor}} to create
 #'     a CrisprNucleaseBaseEditor object.
 #' 
+#' @section Accessors:
+#' \describe{
+#'     \item{\code{baseEditorName}:}{To get the name of the base editor.}
+#'     \item{\code{editingWeights}:}{To return the matrix of editing weights.}
+#'     \item{\code{editingStrand}:}{To return the editing strand.}
+#' }
+#' 
+#' @section Setters:
+#' \describe{
+#'     \item{\code{baseEditorName<-}:}{To change the name of the base editor.}
+#'     \item{\code{editingWeights<-}:}{To change the matrix of editing weights.}
+#'     \item{\code{editingStrand<-}:}{To change the editing strand.}
+#' }
+#' 
+#' @examples
+#' # Creating an object for BE4max (C to T editor)
+#' # based on experimental weights
+#' 
+#' ws <- c(0.7, 0.7, 0.8, 1.8, 1, 2, 1.4, 1.2, 2.3, 1.3, 2.4, 2.2, 3.4, 
+#'       2.2, 2.1, 3.5, 5.8, 16.2, 31.8, 63.2, 90.3, 100, 87, 62, 31.4, 
+#'       16.3, 10, 5.6, 3.3, 1.9, 1.8, 2.4, 1.7, 0.5, 0.2, 0.1)
+#' ws <- matrix(ws, nrow=1, ncol=length(ws))
+#' rownames(ws) <- "C2T"
+#' colnames(ws) <- -36:-1
+#' data(SpCas9, package="crisprBase")
+#' BE4max <- CrisprNucleaseBaseEditor(SpCas9,
+#'                                    baseEditorName="BE4max",
+#'                                    editingStrand="original",
+#'                                    editingWeights=ws)
+#' metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
+#' 
 #' @return A CrisprNucleaseWithBaseEditor object
+#' 
 #' @export
 setClass("CrisprNucleaseBaseEditor",
     contains = "CrisprNuclease",
@@ -53,6 +85,53 @@ CrisprNucleaseBaseEditor <- function(CrisprNuclease,
         editingStrand = editingStrand,
         editingWeights = .buildEditingWeightsMatrix(editingWeights)
     )
+}
+
+
+
+
+
+#' @rdname CrisprNucleaseBaseEditor-class
+#' @export
+setMethod("show", "CrisprNucleaseBaseEditor", function(object) {
+    len <- length(metadata(object))
+    dnase <- isDnase(object)
+    if (dnase){
+        pams.line <- ("      PAMs: ")
+        pams.line.distance <- "        Distance from PAM: "
+        pam.side.line <- "      PAM side: "
+    } else {
+        pams.line <- ("      PFS: ")
+        pams.line.distance <- "        Distance from PFS: "
+        pam.side.line <- "      PFS side: "
+    }
+    cat(paste0("Class: ", is(object)[[1]]), "\n",
+        "  CRISPR Nuclease name: ", nucleaseName(object), "\n",
+        "      Target type: ", targetType(object), "\n",
+        "      Metadata: list of length ", len, "\n",
+        pams.line, .printVectorNicely(motifs(object)), "\n",
+        "      Weights: ", .printVectorNicely(weights(object)), "\n",
+        "      Spacer length: ",  spacerLength(object), "\n",
+        pam.side.line,  pamSide(object), "\n",
+        pams.line.distance, spacerGap(object), "\n",
+        "      Prototype protospacers: ",
+        .printVectorNicely(prototypeSequence(object, primary=FALSE)),
+        "\n",
+        "  Base editor name: ", baseEditorName(object), "\n",
+        "      Editing strand: ", editingStrand(object), "\n",
+        "      Maximum editing weight: ", .getMaxEditingWeight(object), "\n",
+        sep = "")
+})
+
+
+
+.getMaxEditingWeight <- function(object){
+    x <- editingWeights(object)
+    ind <- which.max(x)
+    ind <- arrayInd(ind, .dim=c(nrow(x), ncol(x)))
+    sub <- rownames(x)[ind[1]]
+    pos <- colnames(x)[ind[2]]
+    paste0(sub, " at position ", pos, "")
 }
 
 
@@ -126,7 +205,9 @@ setMethod("editingStrand<-",
 #x <- matrix(1, nrow=1, ncol=5)
 #rownames(x) <- "C2T"
 #colnames(x) <- -18:-14
-.buildEditingWeightsMatrix <- function(x=NULL){
+.buildEditingWeightsMatrix <- function(x=NULL,
+                                       scale=TRUE
+){
     editChoices <- .getComboNames()
     posChoices <- -1000:1000
     if (is.null(x)){
@@ -157,7 +238,9 @@ setMethod("editingStrand<-",
         rownames(out) <- editChoices
         colnames(out) <- seq
         out[rownames(x), colnames(x)] <- x
-
+        if (scale){
+            out <- out/max(out, na.rm=TRUE)
+        }
     } else {
         stop("x must be NULL or a matrix.")
     }
