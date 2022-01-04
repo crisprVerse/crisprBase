@@ -92,6 +92,18 @@
 "CasRx"
 
 
+#' BE4max CrisprNucleaseBaseEditor object
+#'
+#' CrisprNucleaseBaseEditor for the cytosine base editor CRISPR/Cas9 system
+#'     BE4max. Editing weights were obtained from
+#'     https://doi.org/10.1016/j.cell.2020.05.037
+#' 
+#' @format CrisprNucleaseBaseEditor object.
+#' @details  CrisprNucleaseBaseEditor for the cytosine base editor
+#'     CRISPR/Cas9 system BE4max. Editing weights were obtained from
+#'     \url{https://doi.org/10.1016/j.cell.2020.05.037}.
+#' @usage data(BE4max, package="crisprBase")
+"BE4max"
 
 
 

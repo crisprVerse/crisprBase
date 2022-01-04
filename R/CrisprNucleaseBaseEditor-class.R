@@ -11,7 +11,7 @@
 #'     Use the constructor \code{link{CrisprNucleaseBaseEditor}} to create
 #'     a CrisprNucleaseBaseEditor object.
 #' 
-#' @return A CrisprNucleaseWithBaseEdtitor object
+#' @return A CrisprNucleaseWithBaseEditor object
 #' @export
 setClass("CrisprNucleaseBaseEditor",
     contains = "CrisprNuclease",
@@ -28,17 +28,30 @@ setClass("CrisprNucleaseBaseEditor",
 
 
 
+#' @describeIn CrisprNucleaseBaseEditor Create a \linkS4class{CrisprNucleaseBaseEditor} object
+#' @param CrisprNuclease A \linkS4class{CrisprNuclease} object.
+#' @param baseEditorName String specifying base editor name.
+#' @param editingStrand String indicating which strand with
+#'     respect to the target protospacer sequence will be 
+#'     edited. Must be either "original" or "opposite".
+#'     "original" by default.
+#' @param editingWeights Numeric matrix of editing weights.
+#'     Column names must be indicating relative position to the PAM site.
+#'     Row names must be of the form "X2Y" where "X" represents the origin
+#'     base, and "Y" represents the subtituted base. For instance, "C2T"
+#'     indicates the row corresponding to C to T editing. 
+#' @export
 CrisprNucleaseBaseEditor <- function(CrisprNuclease,
                                      baseEditorName = NA_character_,
-                                     editingWeights = NULL,
-                                     editingStrand = c("original", "opposite")
+                                     editingStrand = c("original", "opposite"),
+                                     editingWeights = NULL
 ){
     editingStrand <- match.arg(editingStrand)
     new("CrisprNucleaseBaseEditor",
         CrisprNuclease,
         baseEditorName = as.character(baseEditorName),
-        editingWeights = .buildEditingWeightsMatrix(editingWeights),
-        editingStrand = editingStrand
+        editingStrand = editingStrand,
+        editingWeights = .buildEditingWeightsMatrix(editingWeights)
     )
 }
 

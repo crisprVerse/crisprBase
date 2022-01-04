@@ -173,12 +173,12 @@ setGeneric("editingWeights<-", function(object, value) standardGeneric("editingW
 
 #' @rdname CrisprNucleaseBaseEditor-class
 #' @export
-setGeneric("editingStrand", function(object) standardGeneric("editingWeights"))
+setGeneric("editingStrand", function(object) standardGeneric("editingStrand"))
 
 
 #' @rdname CrisprNucleaseBaseEditor-class
 #' @export
-setGeneric("editingStrand<-", function(object, value) standardGeneric("editingWeights<-"))
+setGeneric("editingStrand<-", function(object, value) standardGeneric("editingStrand<-"))
 
 
 

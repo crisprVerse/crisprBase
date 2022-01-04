@@ -27,7 +27,6 @@ AsCas12a <- CrisprNuclease("AsCas12a",
                            pam_side="5prime",
                            spacer_length=23)
 
-
 CasRx <- CrisprNuclease("CasRx",
                         targetType="RNA",
                         pams="N",
@@ -35,8 +34,6 @@ CasRx <- CrisprNuclease("CasRx",
                                       doi="10.1016/j.cell.2018.02.033"),
                         pam_side="3prime",
                         spacer_length=22)
-
-
 
 
 
@@ -54,6 +51,19 @@ enAsCas12a <- CrisprNuclease("enAsCas12a",
                              spacer_length=23)
 
 
+#Generate base editor
+ws <- t(read.csv("../inst/be/b4max.csv"))
+pos <- ws["Position",]-21
+colnames(ws) <- pos
+ws <- ws[-c(match("Position", rownames(ws))),]
+load("../data/SpCas9.rda")
+BE4max <- CrisprNucleaseBaseEditor(SpCas9,
+                                   baseEditorName="BE4max",
+                                   editingStrand="original",
+                                   editingWeights=ws)
+metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
+
+
 #dir.create("../data")
 use_data(SpCas9,
          SaCas9,
@@ -61,7 +71,11 @@ use_data(SpCas9,
          AsCas12a,
          enAsCas12a,
          CasRx,
+         BE4max,
          compress="xz", internal=FALSE, overwrite=TRUE)
+
+
+
 
 
 # Enzymes:

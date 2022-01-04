@@ -7,11 +7,16 @@
 \alias{baseEditorName<-}
 \alias{editingWeights}
 \alias{editingWeights<-}
+\alias{editingStrand}
+\alias{editingStrand<-}
 \alias{CrisprNucleaseBaseEditor-class}
+\alias{CrisprNucleaseBaseEditor}
 \alias{baseEditorName,CrisprNucleaseBaseEditor-method}
 \alias{baseEditorName<-,CrisprNucleaseBaseEditor-method}
 \alias{editingWeights,CrisprNucleaseBaseEditor-method}
 \alias{editingWeights<-,CrisprNucleaseBaseEditor-method}
+\alias{editingStrand,CrisprNucleaseBaseEditor-method}
+\alias{editingStrand<-,CrisprNucleaseBaseEditor-method}
 \title{An S4 class to represent a CRISPR nuclease with base editor.}
 \usage{
 baseEditorName(object)
@@ -22,6 +27,17 @@ editingWeights(object)
 
 editingWeights(object) <- value
 
+editingStrand(object)
+
+editingStrand(object) <- value
+
+CrisprNucleaseBaseEditor(
+  CrisprNuclease,
+  baseEditorName = NA_character_,
+  editingStrand = c("original", "opposite"),
+  editingWeights = NULL
+)
+
 \S4method{baseEditorName}{CrisprNucleaseBaseEditor}(object)
 
 \S4method{baseEditorName}{CrisprNucleaseBaseEditor}(object) <- value
@@ -29,24 +45,53 @@ editingWeights(object) <- value
 \S4method{editingWeights}{CrisprNucleaseBaseEditor}(object)
 
 \S4method{editingWeights}{CrisprNucleaseBaseEditor}(object) <- value
+
+\S4method{editingStrand}{CrisprNucleaseBaseEditor}(object)
+
+\S4method{editingStrand}{CrisprNucleaseBaseEditor}(object) <- value
 }
 \arguments{
 \item{object}{\linkS4class{CrisprNucleaseBaseEditor} object.}
 
 \item{value}{Value to replaced with.}
+
+\item{CrisprNuclease}{A \linkS4class{CrisprNuclease} object.}
+
+\item{baseEditorName}{String specifying base editor name.}
+
+\item{editingStrand}{String indicating which strand with
+respect to the target protospacer sequence will be 
+edited. Must be either "original" or "opposite".
+"original" by default.}
+
+\item{editingWeights}{Numeric matrix of editing weights.
+Column names must be indicating relative position to the PAM site.
+Row names must be of the form "X2Y" where "X" represents the origin
+base, and "Y" represents the subtituted base. For instance, "C2T"
+indicates the row corresponding to C to T editing.}
 }
 \value{
-A CrisprNucleaseWithBaseEdtitor object
+A CrisprNucleaseWithBaseEditor object
 }
 \description{
 An S4 class to represent a CRISPR nuclease with base editor.
 }
+\section{Functions}{
+\itemize{
+\item \code{CrisprNucleaseBaseEditor}: Create a \linkS4class{CrisprNucleaseBaseEditor} object
+}}
+
 \section{Slots}{
 
 \describe{
 \item{\code{baseEditorName}}{Name of the base editor enzyme.}
 
 \item{\code{editingWeights}}{Matrix of editing weights.}
+
+\item{\code{editingStrand}}{String indicating which strand with
+respect to the target protospacer sequence will be 
+edited. Must be either "original" or "opposite".
+"original" by default.}
 }}
 
 \section{Constructors}{
