@@ -359,7 +359,62 @@ gr_protospacer
 gr_spacer
 ```
 
+# BaseEditor class
 
+Base editors are inactive Cas nucleases coupled with a specific deaminase.
+For instance, the first cytosine base editor (CBE) was obtained by coupling
+a cytidine deaminase with dCas9 to convert Cs to Ts [@komor].
+
+We provide in `crisprBase` a S4 class, `BaseEditor`, to represent base editors.
+It extends the `CrisprNuclase` class with 3 additional fields:
+
+- `baseEditorName`: string specifying the name of the base editor.
+- `editingStrand`: strand where the editing happens with respect to the target
+protospacer sequence ("original" or "opposite").
+- `editingWeights`: a matrix of experimentally-derived editing weights. 
+
+We now show how to build a `BaseEditor` object with the CBE base editor BE4max
+with weights obtained from @behive.
+
+
+We first obtain a matrix of weights for the BE4max editor stored in 
+the package `crisprBase`:
+
+```{r}
+# Creating weight matrix
+weigtsFile <- system.file("be/b4max.csv",
+                          package="crisprBase")
+ws <- t(read.csv(weigtsFile))
+```
+
+The row names of the matrix must correspond to the nucleotide substitutions
+Nucleotide substitutions that are not present in the matrix will have weight
+assigned to 0.
+
+```{r}
+rownames(ws)
+```
+
+The column names must correspond to the relative position with respect
+to the PAM site. 
+
+```{r}
+colnames(ws) <- ws["Position",]
+ws <- ws[-c(match("Position", rownames(ws))),]
+head(ws)
+```
+
+Since BE4max uses Cas9, we can use the SpCas9 `CrisprNuclease` object
+available in `crisprBase` to build the `BaseEditor` object:
+
+```{r}
+data(SpCas9, package="crisprBase")
+BE4max <- BaseEditor(SpCas9,
+                     baseEditorName="BE4max",
+                     editingStrand="original",
+                     editingWeights=ws)
+metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
+```
 
 
 # Additional notes

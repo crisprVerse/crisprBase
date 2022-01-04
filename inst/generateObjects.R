@@ -53,8 +53,7 @@ enAsCas12a <- CrisprNuclease("enAsCas12a",
 
 #Generate base editor
 ws <- t(read.csv("../inst/be/b4max.csv"))
-pos <- ws["Position",]-21
-colnames(ws) <- pos
+colnames(ws) <- ws["Position",]
 ws <- ws[-c(match("Position", rownames(ws))),]
 load("../data/SpCas9.rda")
 BE4max <- BaseEditor(SpCas9,
