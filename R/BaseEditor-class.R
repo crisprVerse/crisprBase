@@ -157,10 +157,23 @@ setMethod("baseEditorName<-",
 
 
 #' @rdname BaseEditor-class
+#' @param substitutions Character vector indicating which substitutions
+#'     should be returned. 
 #' @export
 setMethod("editingWeights",
-          "BaseEditor",function(object){
-    object@editingWeights
+          "BaseEditor",function(object,
+                                substitutions=NULL
+){
+    ws <- object@editingWeights
+    if (is.null(substitutions)){
+        substitutions <- rowname(ws)
+    }
+    diff <- setdiff(substitutions, rownames(ws))
+    if (length(diff)!=0){
+        stop("Some of the substitutions are not found.")
+    }
+    out <- ws[substitutions,,drop=FALSE]
+    return(out)
 })
 
 

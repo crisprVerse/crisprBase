@@ -23,7 +23,7 @@ baseEditorName(object)
 
 baseEditorName(object) <- value
 
-editingWeights(object)
+editingWeights(object, ...)
 
 editingWeights(object) <- value
 
@@ -44,7 +44,7 @@ BaseEditor(
 
 \S4method{baseEditorName}{BaseEditor}(object) <- value
 
-\S4method{editingWeights}{BaseEditor}(object)
+\S4method{editingWeights}{BaseEditor}(object, substitutions = NULL)
 
 \S4method{editingWeights}{BaseEditor}(object) <- value
 
@@ -71,6 +71,9 @@ Column names must be indicating relative position to the PAM site.
 Row names must be of the form "X2Y" where "X" represents the origin
 base, and "Y" represents the subtituted base. For instance, "C2T"
 indicates the row corresponding to C to T editing.}
+
+\item{substitutions}{Character vector indicating which substitutions
+should be returned.}
 }
 \value{
 A BaseEditor object
