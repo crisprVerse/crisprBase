@@ -3,20 +3,20 @@
 \docType{data}
 \name{BE4max}
 \alias{BE4max}
-\title{BE4max CrisprNucleaseBaseEditor object}
+\title{BE4max BaseEditor object}
 \format{
-CrisprNucleaseBaseEditor object.
+BaseEditor object.
 }
 \usage{
 data(BE4max, package="crisprBase")
 }
 \description{
-CrisprNucleaseBaseEditor for the cytosine base editor CRISPR/Cas9 system
+BaseEditor for the cytosine base editor CRISPR/Cas9 system
     BE4max. Editing weights were obtained from
     https://doi.org/10.1016/j.cell.2020.05.037
 }
 \details{
-CrisprNucleaseBaseEditor for the cytosine base editor
+BaseEditor for the cytosine base editor
     CRISPR/Cas9 system BE4max. Editing weights were obtained from
     \url{https://doi.org/10.1016/j.cell.2020.05.037}.
 }

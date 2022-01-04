@@ -150,33 +150,33 @@ setGeneric("prototypeSequence",
 
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setGeneric("baseEditorName", function(object) standardGeneric("baseEditorName"))
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setGeneric("baseEditorName<-", function(object, value) standardGeneric("baseEditorName<-"))
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setGeneric("editingWeights", function(object) standardGeneric("editingWeights"))
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setGeneric("editingWeights<-", function(object, value) standardGeneric("editingWeights<-"))
 
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setGeneric("editingStrand", function(object) standardGeneric("editingStrand"))
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setGeneric("editingStrand<-", function(object, value) standardGeneric("editingStrand<-"))
 

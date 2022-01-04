@@ -1,6 +1,6 @@
-#' An S4 class to represent a CRISPR nuclease with base editing
+#' An S4 class to represent a base editor
 #' 
-#' @slot baseEditorName Name of the base editor enzyme.
+#' @slot baseEditorName Name of the base editor. 
 #' @slot editingWeights Matrix of editing weights.
 #' @slot editingStrand String indicating which strand with
 #'     respect to the target protospacer sequence will be 
@@ -8,8 +8,8 @@
 #'     "original" by default.
 #' 
 #' @section Constructors:
-#'     Use the constructor \code{link{CrisprNucleaseBaseEditor}} to create
-#'     a CrisprNucleaseBaseEditor object.
+#'     Use the constructor \code{link{BaseEditor}} to create
+#'     a BaseEditor object.
 #' 
 #' @section Accessors:
 #' \describe{
@@ -36,16 +36,16 @@
 #' rownames(ws) <- "C2T"
 #' colnames(ws) <- -36:-1
 #' data(SpCas9, package="crisprBase")
-#' BE4max <- CrisprNucleaseBaseEditor(SpCas9,
-#'                                    baseEditorName="BE4max",
-#'                                    editingStrand="original",
-#'                                    editingWeights=ws)
+#' BE4max <- BaseEditor(SpCas9,
+#'                      baseEditorName="BE4max",
+#'                      editingStrand="original",
+#'                      editingWeights=ws)
 #' metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
 #' 
-#' @return A CrisprNucleaseWithBaseEditor object
+#' @return A BaseEditor object
 #' 
 #' @export
-setClass("CrisprNucleaseBaseEditor",
+setClass("BaseEditor",
     contains = "CrisprNuclease",
     slots = c(
         baseEditorName = "character", 
@@ -60,7 +60,7 @@ setClass("CrisprNucleaseBaseEditor",
 
 
 
-#' @describeIn CrisprNucleaseBaseEditor Create a \linkS4class{CrisprNucleaseBaseEditor} object
+#' @describeIn BaseEditor Create a \linkS4class{BaseEditor} object
 #' @param CrisprNuclease A \linkS4class{CrisprNuclease} object.
 #' @param baseEditorName String specifying base editor name.
 #' @param editingStrand String indicating which strand with
@@ -73,13 +73,13 @@ setClass("CrisprNucleaseBaseEditor",
 #'     base, and "Y" represents the subtituted base. For instance, "C2T"
 #'     indicates the row corresponding to C to T editing. 
 #' @export
-CrisprNucleaseBaseEditor <- function(CrisprNuclease,
-                                     baseEditorName = NA_character_,
-                                     editingStrand = c("original", "opposite"),
-                                     editingWeights = NULL
+BaseEditor <- function(CrisprNuclease,
+                       baseEditorName = NA_character_,
+                       editingStrand = c("original", "opposite"),
+                       editingWeights = NULL
 ){
     editingStrand <- match.arg(editingStrand)
-    new("CrisprNucleaseBaseEditor",
+    new("BaseEditor",
         CrisprNuclease,
         baseEditorName = as.character(baseEditorName),
         editingStrand = editingStrand,
@@ -91,9 +91,9 @@ CrisprNucleaseBaseEditor <- function(CrisprNuclease,
 
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
-setMethod("show", "CrisprNucleaseBaseEditor", function(object) {
+setMethod("show", "BaseEditor", function(object) {
     len <- length(metadata(object))
     dnase <- isDnase(object)
     if (dnase){
@@ -136,56 +136,56 @@ setMethod("show", "CrisprNucleaseBaseEditor", function(object) {
 
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
-#' @param object \linkS4class{CrisprNucleaseBaseEditor} object.
+#' @rdname BaseEditor-class
+#' @param object \linkS4class{BaseEditor} object.
 #' @export
 setMethod("baseEditorName",
-          "CrisprNucleaseBaseEditor",function(object){
+          "BaseEditor",function(object){
     object@baseEditorName
 })
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @param value Value to replaced with.
 #' @export
 setMethod("baseEditorName<-",
-          "CrisprNucleaseBaseEditor",function(object, value){
+          "BaseEditor",function(object, value){
     value <- as.character(value)
     object@baseEditorName <- value
     return(object)
 })
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setMethod("editingWeights",
-          "CrisprNucleaseBaseEditor",function(object){
+          "BaseEditor",function(object){
     object@editingWeights
 })
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setMethod("editingWeights<-",
-          "CrisprNucleaseBaseEditor",function(object, value){
+          "BaseEditor",function(object, value){
     value <- .buildEditingWeightsMatrix(value)
     object@editingWeights <- value
     return(object)
 })
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setMethod("editingStrand",
-          "CrisprNucleaseBaseEditor",function(object){
+          "BaseEditor",function(object){
     object@editingStrand
 })
 
 
-#' @rdname CrisprNucleaseBaseEditor-class
+#' @rdname BaseEditor-class
 #' @export
 setMethod("editingStrand<-",
-          "CrisprNucleaseBaseEditor",function(object, value){
+          "BaseEditor",function(object, value){
     value <- as.character(value)
     if (value %in% c("original", "oppposite")){
         stop("value must be either 'original' or 'opposite'.")

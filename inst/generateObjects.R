@@ -57,10 +57,10 @@ pos <- ws["Position",]-21
 colnames(ws) <- pos
 ws <- ws[-c(match("Position", rownames(ws))),]
 load("../data/SpCas9.rda")
-BE4max <- CrisprNucleaseBaseEditor(SpCas9,
-                                   baseEditorName="BE4max",
-                                   editingStrand="original",
-                                   editingWeights=ws)
+BE4max <- BaseEditor(SpCas9,
+                     baseEditorName="BE4max",
+                     editingStrand="original",
+                     editingWeights=ws)
 metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
 
 
