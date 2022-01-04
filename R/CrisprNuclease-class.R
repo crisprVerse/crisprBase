@@ -92,7 +92,6 @@ setClass("CrisprNuclease",
 #' @param spacer_gap Integer specifying the length (in nucleotides) between
 #'     the spacer sequence and the PAM sequence (e.g. 0 for Cas9 and Cas12a).
 #' @export
-#' @export
 CrisprNuclease <- function(nucleaseName,
                            targetType=c("DNA", "RNA"),
                            pams = NA_character_,

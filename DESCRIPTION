@@ -34,6 +34,7 @@ Collate:
     'AllGenerics.R'
     'Nuclease-class.R'    
     'CrisprNuclease-class.R'
+    'CrisprNucleaseBaseEditor-class.R'
     'arithmetics.R'
     'data.R'
     'utils.R'
