@@ -166,7 +166,7 @@ setMethod("editingWeights",
 ){
     ws <- object@editingWeights
     if (is.null(substitutions)){
-        substitutions <- rowname(ws)
+        substitutions <- rownames(ws)
     }
     diff <- setdiff(substitutions, rownames(ws))
     if (length(diff)!=0){

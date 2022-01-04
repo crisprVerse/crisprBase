@@ -57,6 +57,8 @@ BaseEditor(
 
 \item{value}{Value to replaced with.}
 
+\item{...}{Additional arguments for class-specific methods}
+
 \item{CrisprNuclease}{A \linkS4class{CrisprNuclease} object.}
 
 \item{baseEditorName}{String specifying base editor name.}

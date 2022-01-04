@@ -161,6 +161,7 @@ setGeneric("baseEditorName<-", function(object, value) standardGeneric("baseEdit
 
 
 #' @rdname BaseEditor-class
+#' @param ... Additional arguments for class-specific methods
 #' @export
 setGeneric("editingWeights", function(object, ...) standardGeneric("editingWeights"))
 
