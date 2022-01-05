@@ -261,6 +261,11 @@ setMethod("editingStrand<-",
 } 
 
 
+.getReducedEditingMatrix <- function(ws){
+    good <- rowSums(ws==0, na.rm=TRUE)!=ncol(ws)
+    ws[good,,drop=FALSE]
+}
+
 
 .getComboNames <- function(){
     dnaLetters <- c("A", "C", "G", "T")
@@ -282,14 +287,70 @@ setMethod("editingStrand<-",
 
 
 
+#' Quick plot to visualize editing weights 
+#' 
+#' Quick plot to visualize editing weights from a 
+#' BaseEditor object. 
+#' 
+#' @param baseEditor A \code{\linkS4class{BaseEditor}} object. 
+#' @param discardEmptyRows Should rows that have all weight equal
+#'     to 0 be discarded? TRUE by default. 
+#' @param substitutions Character vector specifying substitutions
+#'     to be plotted. If NULL (default), all substitutions are shown.
+#' @param ... Additional arguments to be passed to \code{plot}
+#' 
+#' @return Nothing. A plot is generated as a side effect. 
+#' 
+#' @examples
+#' if (interactive()){
+#'     data(BE4max, package="crisprBase")
+#'     plotEditingWeights(BE4max)
+#' }
+#' @importFrom graphics legend lines
+#' @export
+plotEditingWeights <- function(baseEditor,
+                               discardEmptyRows=TRUE,
+                               substitutions=NULL,
+                               ...
+){
+    .isBaseEditorOrStop(baseEditor)
+    choices <- .getComboNames()
+    if (is.null(substitutions)){
+        substitutions <- choices
+    } else {
+        diff <- setdiff(substitutions, choices)
+        if (length(diff)!=0){
+            diff <- paste0(diff, collapse=",")
+            stop("The following substitutions are not valid: ",
+                 diff, ".")
+        }
+    }
+    ws <- editingWeights(baseEditor,
+                         substitutions=substitutions)
+    if (discardEmptyRows){
+        ws <- .getReducedEditingMatrix(ws)
+    }
+    x <- as.numeric(colnames(ws))
+    top <- max(ws, na.rm=TRUE)
+    ylim <- c(0,top)
+    plot(x, ws[1,], col="white",
+         xlab="Position relative to PAM site",
+         ylab="Relative weight",
+         ylim=ylim,
+         ...)
+    ns <- nrow(ws)
+    col <- seq_len(ns)
+    for (k in seq_len(ns)){
+        lines(x, ws[k,], col=col[k])
+    }
+    legend("topleft",
+           legend=rownames(ws),
+           col=col,
+           lty=1, cex=0.75)
+}
 
-#combs <- .getComboNames()
-#.getOriginBase(combs)
-#.getTargetBase(combs)
 
 
-#data(SpCas9, package="crisprBase")
-#nuc <- CrisprNucleaseBaseEditor(SpCas9)
 
 
 

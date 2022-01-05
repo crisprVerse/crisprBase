@@ -39,13 +39,21 @@ S4Vectors::`metadata<-`
 }
 
 
-.isCrisprNuclease <- function(object){
-    is(object, "CrisprNuclease")
-}
+
 
 .isNuclease <- function(object){
     is(object, "Nuclease")
 }
+
+.isCrisprNuclease <- function(object){
+    is(object, "CrisprNuclease")
+}
+
+
+.isBaseEditor <- function(object){
+    is(object, "BaseEditor")
+}
+
 
 .isNucleaseOrStop <- function(object) {
     if (!is(object, "Nuclease")) {
@@ -58,6 +66,13 @@ S4Vectors::`metadata<-`
     if (!is(object, "CrisprNuclease")) {
         stop("object is of class '", class(object), "', but needs to be of ",
              "class 'CrisprNuclease'")
+    } 
+}
+
+.isBaseEditorOrStop <- function(object) {
+    if (!is(object, "BaseEditor")) {
+        stop("object is of class '", class(object), "', but needs to be of ",
+             "class 'BaseEditor'")
     } 
 }
 
