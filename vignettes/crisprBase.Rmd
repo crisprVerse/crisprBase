@@ -414,8 +414,16 @@ BE4max <- BaseEditor(SpCas9,
                      editingStrand="original",
                      editingWeights=ws)
 metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
+BE4max
 ```
 
+
+One can quickly visualize the editing weights using the function 
+`plotEditingWeights`:
+
+```{r}
+plotEditingWeights(BE4max)
+```
 
 # Additional notes
 

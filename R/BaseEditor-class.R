@@ -339,7 +339,7 @@ plotEditingWeights <- function(baseEditor,
          ylim=ylim,
          ...)
     ns <- nrow(ws)
-    col <- seq_len(ns)
+    col <- .subColors()[seq_len(ns)]
     for (k in seq_len(ns)){
         lines(x, ws[k,], col=col[k])
     }
@@ -352,6 +352,12 @@ plotEditingWeights <- function(baseEditor,
 
 
 
+.subColors <- function(){
+    c("gold3", "firebrick2", "burlywood3",
+      "darkolivegreen3", "steelblue", "green",
+      "darkmagenta", "tomato3", "hotpink4",
+      "blue", "darkslateblue", "lightgoldenrod3")
+}
 
 
 
