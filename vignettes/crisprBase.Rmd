@@ -365,6 +365,12 @@ Base editors are inactive Cas nucleases coupled with a specific deaminase.
 For instance, the first cytosine base editor (CBE) was obtained by coupling
 a cytidine deaminase with dCas9 to convert Cs to Ts [@komor].
 
+
+```{r, echo=FALSE, fig.cap="Examples of base editors."}
+knitr::include_graphics("./figures/nucleasesBaseEditor.svg")
+```
+
+
 We provide in `crisprBase` a S4 class, `BaseEditor`, to represent base editors.
 It extends the `CrisprNuclase` class with 3 additional fields:
 
@@ -424,6 +430,9 @@ One can quickly visualize the editing weights using the function
 ```{r}
 plotEditingWeights(BE4max)
 ```
+
+
+
 
 # Additional notes
 
