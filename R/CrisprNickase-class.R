@@ -1,4 +1,4 @@
-#' An S4 class to represent a CRISPR nuclease.
+#' An S4 class to represent a CRISPR nickase.
 #' 
 #' @slot pam_side String specifying the side of the PAM sequence
 #'     with respect to the protospacer sequence. Must be either 
@@ -10,12 +10,12 @@
 #'     (e.g. 0 for SpCas9 and AsCas12a).
 #' 
 #' @section Constructors:
-#'     Use the constructor \code{link{CrisprNuclease}} to create
-#'         a CrisprNuclease object.
+#'     Use the constructor \code{link{CrisprNickase}} to create
+#'         a CrisprNickase object.
 #' 
 #' @section Accessors:
 #' \describe{
-#'     \item{\code{nucleaseName}:}{To get the name of the CRISPR nuclease.} 
+#'     \item{\code{nickaseName}:}{To get the name of the CRISPR nickase.} 
 #'     \item{\code{spacerLength}:}{To return the length of the
 #'         spacer sequence.}
 #'     \item{\code{protospacerLength}:}{To return the length of the
@@ -46,19 +46,19 @@
 #'         the spacer sequence within the protospacer sequence.}
 #' }
 #' @examples
-#' SpCas9 <- CrisprNuclease("SpCas9",
-#'                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
-#'                          weights=c(1, 0.2593, 0.0694),
-#'                          metadata=list(description="Wildtype Streptococcus
-#'                                        pyogenes Cas9 (SpCas9) nuclease"),
-#'                          pam_side="3prime",
-#'                          spacer_length=20)
+#' SpCas9 <- CrisprNickase("SpCas9",
+#'                         pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
+#'                         weights=c(1, 0.2593, 0.0694),
+#'                         metadata=list(description="Wildtype Streptococcus
+#'                                       pyogenes Cas9 (SpCas9) nickase"),
+#'                         pam_side="3prime",
+#'                         spacer_length=20)
 #' 
-#' @return A CrisprNuclease object
+#' @return A CrisprNickase object
 #' 
 #' @export
-setClass("CrisprNuclease", 
-    contains = "Nuclease", 
+setClass("CrisprNickase", 
+    contains = "Nickase", 
     slots = c(
         pam_side = "character",
         spacer_gap = "integer",
@@ -72,14 +72,16 @@ setClass("CrisprNuclease",
 
 
 
-#' @describeIn CrisprNuclease Create a \linkS4class{CrisprNuclease} object
-#' @param nucleaseName Name of the CRISPR nuclease.
-#' @param targetType String specifying target type ("DNA" or "RNA").
+#' @describeIn CrisprNickase Create a \linkS4class{CrisprNickase} object
+#' @param nickaseName Name of the CRISPR nickase.
+#' @param nickingStrand String specifying with strand with respect
+#'     to the motif sequence (5' to 3') is nicked.
+#'     Must be either "original" (default) or "opposite".
 #' @param pams Character vector of PAM sequence motifs
 #'           written from 5' to 3. If the point of cleavage has
 #'           been determined, the precise site is marked with ^.
 #'           Only letters in the IUPAC code are accepted.
-#'           For nucleases that cleave away from their
+#'           For nickases that cleave away from their
 #'           recognition sequence, the cleavage sites are indicated
 #'           in parentheses. See details for more information.
 #' @param weights Optional numeric vector specifying relative weights
@@ -92,23 +94,23 @@ setClass("CrisprNuclease",
 #' @param spacer_gap Integer specifying the length (in nucleotides) between
 #'     the spacer sequence and the PAM sequence (e.g. 0 for Cas9 and Cas12a).
 #' @export
-CrisprNuclease <- function(nucleaseName,
-                           targetType=c("DNA", "RNA"),
-                           pams = NA_character_,
-                           weights = rep(1, length(pams)),
-                           metadata = list(),
-                           pam_side = NA_character_,
-                           spacer_gap = 0L,
-                           spacer_length = NA_integer_
+CrisprNickase <- function(nickaseName,
+                          nickingStrand = c("original", "opposite"),
+                          pams = NA_character_,
+                          weights = rep(1, length(pams)),
+                          metadata = list(),
+                          pam_side = NA_character_,
+                          spacer_gap = 0L,
+                          spacer_length = NA_integer_
 ){
-
-    nuc <- Nuclease(nucleaseName=nucleaseName,
-                    targetType=targetType,
+    nickingStrand <- match.arg(nickingStrand)
+    nick <- Nickase(nickaseName=nickaseName,
+                    nickingStrand=nickingStrand,
                     motifs=pams,
                     weights=weights,
                     metadata=metadata)
-    new("CrisprNuclease",
-        nuc,
+    new("CrisprNickase",
+        nick,
         pam_side = as.character(pam_side),
         spacer_gap = as.integer(spacer_gap),
         spacer_length = as.integer(spacer_length))
@@ -116,23 +118,17 @@ CrisprNuclease <- function(nucleaseName,
 
 
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
-setMethod("show", "CrisprNuclease", function(object) {
+setMethod("show", "CrisprNickase", function(object) {
     len <- length(metadata(object))
-    dnase <- isDnase(object)
-    if (dnase){
-        pams.line <- ("  PAMs: ")
-        pams.line.distance <- "    Distance from PAM: "
-        pam.side.line <- "  PAM side: "
-    } else {
-        pams.line <- ("  PFS: ")
-        pams.line.distance <- "    Distance from PFS: "
-        pam.side.line <- "  PFS side: "
-    }
+    pams.line <- ("  PAMs: ")
+    pams.line.distance <- "    Distance from PAM: "
+    pam.side.line <- "  PAM side: "
+    
     cat(paste0("Class: ", is(object)[[1]]), "\n",
-        "  Name: ", nucleaseName(object), "\n",
-        "  Target type: ", targetType(object), "\n",
+        "  Name: ", nickaseName(object), "\n",
+        "  Nicking strand: ", nickingStrand(object), "\n",
         "  Metadata: list of length ", len, "\n",
         pams.line, .printVectorNicely(motifs(object)), "\n",
         "  Weights: ", .printVectorNicely(weights(object)), "\n",
@@ -150,7 +146,7 @@ setMethod("show", "CrisprNuclease", function(object) {
 
 
 
-setValidity("CrisprNuclease", function(object) {
+setValidity("CrisprNickase", function(object) {
     out <- TRUE
     if (length(pamSide(object))!=1){
         out <- "Slot pam_side must be a character vector of length 1."
@@ -179,48 +175,52 @@ setValidity("CrisprNuclease", function(object) {
 
 
 
+
+
+
+
 ############################################################
 ##############       Getter and setters   ##################
-#' @rdname CrisprNuclease-class
-#' @param object \linkS4class{CrisprNuclease} object.
+#' @rdname CrisprNickase-class
+#' @param object \linkS4class{CrisprNickase} object.
 #' @export
 setMethod("pamLength",
-          "CrisprNuclease",function(object){
+          "CrisprNickase",function(object){
     len <- motifLength(object)[1]
     names(len) <- NULL
     return(len)
 })
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
-setMethod("spacerLength", "CrisprNuclease", function(object){
+setMethod("spacerLength", "CrisprNickase", function(object){
     return(object@spacer_length)
 })
 
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @param value For \code{spacerLength<-} and \code{gapLength<-}, must be 
 #'     a non-negative integer. For \code{pamSide}, must be either
 #'     '5prime' or '3prime'.
 #' 
 #' @export
-setMethod("spacerLength<-", "CrisprNuclease", function(object, value){
+setMethod("spacerLength<-", "CrisprNickase", function(object, value){
     value <- .validateNonNegativeInteger(value)
     object@spacer_length <- value
     return(object)
 })
 
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
 setMethod("pamSide",
-          "CrisprNuclease",function(object){
+          "CrisprNickase",function(object){
     return(object@pam_side)
 })
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
-setMethod("pamSide<-", "CrisprNuclease", function(object, value){
+setMethod("pamSide<-", "CrisprNickase", function(object, value){
     if (!value %in% c("5prime", "3prime")){
         stop("value must be either '5prime' or '3prime'")
     }
@@ -232,36 +232,36 @@ setMethod("pamSide<-", "CrisprNuclease", function(object, value){
 
 
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
 setMethod("spacerGap",
-          "CrisprNuclease",function(object){
+          "CrisprNickase",function(object){
     return(object@spacer_gap)
 })
 
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
-setMethod("spacerGap<-", "CrisprNuclease", function(object, value){
+setMethod("spacerGap<-", "CrisprNickase", function(object, value){
     value <- .validateNonNegativeInteger(value)
     object@spacer_gap <- value
     return(object)
 })
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
 setMethod("hasSpacerGap",
-          "CrisprNuclease",function(object){
+          "CrisprNickase",function(object){
     object@spacer_gap>0
 })
 
 
 
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
 setMethod("protospacerLength",
-          "CrisprNuclease",function(object){
+          "CrisprNickase",function(object){
     pamLength(object) + spacerLength(object) + spacerGap(object)
 })
 
@@ -270,18 +270,18 @@ setMethod("protospacerLength",
 
 
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @param primary Should only the PAM sequence with the heighest weight
 #'     be returned? If no cleavage weights are stored in the
-#'     \linkS4class{CrisprNuclease} object, all sequences are returned.
+#'     \linkS4class{CrisprNickase} object, all sequences are returned.
 #'     TRUE by default.
 #' @param ignore_pam Should all possible k-mer sequences for a given PAM length
 #'     be returned, irrespetively of the PAM sequence motifs stored in the
-#'     \linkS4class{CrisprNuclease} object? FALSE by default.
+#'     \linkS4class{CrisprNickase} object? FALSE by default.
 #' @param as.character Should the PAM sequences be returned as a 
 #'     character vector? FALSE by default.
 #' @export
-setMethod("pams", "CrisprNuclease",
+setMethod("pams", "CrisprNickase",
     function(object,
              primary=TRUE,
              ignore_pam=FALSE,
@@ -312,9 +312,9 @@ setMethod("pams", "CrisprNuclease",
 
 ############################################################
 ##############        Coordinates         ##################
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
-setMethod("pamIndices", "CrisprNuclease",
+setMethod("pamIndices", "CrisprNickase",
     function(object){
     indices  <- seq_len(protospacerLength(object))
     pam_len  <- pamLength(object)
@@ -328,9 +328,9 @@ setMethod("pamIndices", "CrisprNuclease",
 })
 
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
-setMethod("spacerIndices", "CrisprNuclease", 
+setMethod("spacerIndices", "CrisprNickase", 
     function(object){
     indices <- seq_len(protospacerLength(object))
     spacer_len <- spacerLength(object)
@@ -343,10 +343,10 @@ setMethod("spacerIndices", "CrisprNuclease",
     return(indices)
 })
 
-#' @rdname CrisprNuclease-class
+#' @rdname CrisprNickase-class
 #' @export
 setMethod("prototypeSequence",
-          "CrisprNuclease",
+          "CrisprNickase",
           function(object, primary=TRUE){
     pam_len    <- pamLength(object)
     spacer_len <- spacerLength(object)

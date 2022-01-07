@@ -183,6 +183,32 @@ setGeneric("editingStrand<-", function(object, value) standardGeneric("editingSt
 
 
 
+### For Nickase object #####
+
+
+
+#' @rdname Nickase-class
+#' @export
+setGeneric("nickaseName", function(object) standardGeneric("nickaseName"))
+
+
+#' @rdname Nickase-class
+#' @export
+setGeneric("nickaseName<-", function(object, value) standardGeneric("nickaseName<-"))
+
+
+#' @rdname Nickase-class
+#' @export
+setGeneric("nickingStrand", function(object) standardGeneric("nickingStrand"))
+
+
+#' @rdname Nickase-class
+#' @export
+setGeneric("nickingStrand<-", function(object, value) standardGeneric("nickingStrand<-"))
+
+
+
+
 
 
 

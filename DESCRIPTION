@@ -11,6 +11,7 @@ Imports:
     BiocGenerics,
     Biostrings,
     GenomicRanges,
+    graphics,
     IRanges,
     S4Vectors,
     stringr
@@ -32,9 +33,13 @@ BugReports: https://github.com/Jfortin1/crisprBase/issues
 URL: https://github.com/Jfortin1/crisprBase
 Collate: 
     'AllGenerics.R'
+    'rebase.R'
     'Nuclease-class.R'    
+    'Nickase-class.R'
     'CrisprNuclease-class.R'
+    'CrisprNickase-class.R'
     'BaseEditor-class.R'
     'arithmetics.R'
     'data.R'
     'utils.R'
+    'converters.R'
