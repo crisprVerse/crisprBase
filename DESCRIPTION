@@ -1,6 +1,6 @@
 Package: crisprBase
-Version: 0.99.9
-Date: 2022-01-06
+Version: 0.99.10
+Date: 2022-03-02
 Title: Base functions and classes for CRISPR gRNA design
 Authors@R: person("Jean-Philippe", "Fortin", email = "fortin946@gmail.com", role = c("aut", "cre"))
 Depends: 
@@ -38,3 +38,4 @@ Collate:
     'arithmetics.R'
     'data.R'
     'utils.R'
+LazyData: true

@@ -472,7 +472,7 @@ CasRx <- CrisprNuclease("CasRx",
                         pams="N",
                         metadata=list(description="CasRx nuclease"),
                         pam_side="3prime",
-                        spacer_length=22)
+                        spacer_length=23)
 CasRx
 ```
 
