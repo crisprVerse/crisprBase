@@ -84,7 +84,6 @@ the first nucleotide, which is specified using the `^` below:
 
 ```{r, warning=FALSE, message=FALSE}
 library(crisprBase)
-data(crisprBase)
 
 EcoRI <- Nuclease("EcoRI",
                   targetType="DNA",
