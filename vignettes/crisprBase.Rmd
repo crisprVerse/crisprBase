@@ -387,9 +387,10 @@ the package `crisprBase`:
 
 ```{r}
 # Creating weight matrix
-weigtsFile <- system.file("be/b4max.csv",
-                          package="crisprBase")
-ws <- t(read.csv(weigtsFile))
+weightsFile <- system.file("be/b4max.csv",
+                           package="crisprBase")
+ws <- t(read.csv(weightsFile))
+ws <- as.data.frame(ws)
 ```
 
 The row names of the matrix must correspond to the nucleotide substitutions
@@ -405,7 +406,8 @@ to the PAM site.
 
 ```{r}
 colnames(ws) <- ws["Position",]
-ws <- ws[-c(match("Position", rownames(ws))),]
+ws <- ws[-c(match("Position", rownames(ws))),,drop=FALSE]
+ws <- as.matrix(ws)
 head(ws)
 ```
 
