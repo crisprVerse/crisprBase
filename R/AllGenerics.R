@@ -85,8 +85,8 @@ setGeneric("spacerLength", function(object) standardGeneric("spacerLength"))
 
 #' @rdname CrisprNuclease-class
 #' @export
-setGeneric("protospacerLength",
-           function(object) standardGeneric("protospacerLength"))
+setGeneric("targetLength",
+           function(object) standardGeneric("targetLength"))
 
 #' @rdname CrisprNuclease-class
 #' @export

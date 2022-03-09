@@ -30,10 +30,12 @@ Ignored if \code{gr} is not NULL.}
 \item{nuclease}{CrisprNuclease object.}
 
 \item{spacer_len}{Non-negative integer to overwrite the default spacer
-length stored in the CrisprNuclease object.}
+    length stored in the CrisprNuclease object.
+s}
 }
 \value{
-GRanges object representing genomic coordinates of spacer sequences.
+GRanges object representing genomic coordinates of
+    protospacer sequences.
 }
 \description{
 Construct a protospacer GRanges from a list of PAM sites
@@ -41,13 +43,13 @@ Construct a protospacer GRanges from a list of PAM sites
 }
 \examples{
 data(SpCas9, AsCas12a, package="crisprBase")
-library(GenomicRanges)
+if (require(GenomicRanges)){
 gr <- GRanges("chr10",
               IRanges(start=c(100,120), width=1),
               strand=c("+","-"))
 getProtospacerRanges(gr, nuclease=SpCas9)
 getProtospacerRanges(gr, nuclease=AsCas12a)
-
+}
 
 }
 \author{
