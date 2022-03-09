@@ -71,8 +71,8 @@ gr_target_cas12a_long <- GenomicRanges::GRanges(chr,
 
 
 test_that('Extraction functions', {
-    expect_equal(extractSpacerFromTarget(targets_cas9, SpCas9), spacers_cas9)
-    expect_equal(extractSpacerFromTarget(targets_cas12a, AsCas12a), spacers_cas12a)
+    expect_equal(extractProtospacerFromTarget(targets_cas9, SpCas9), spacers_cas9)
+    expect_equal(extractProtospacerFromTarget(targets_cas12a, AsCas12a), spacers_cas12a)
     expect_equal(extractPamFromTarget(targets_cas9, SpCas9), pams_cas9)
     expect_equal(extractPamFromTarget(targets_cas12a, AsCas12a), pams_cas12a)
 })
