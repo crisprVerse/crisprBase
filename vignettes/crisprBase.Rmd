@@ -379,7 +379,8 @@ the package `crisprBase`:
 ```{r}
 # Creating weight matrix
 weightsFile <- system.file("be/b4max.csv",
-                           package="crisprBase")
+                           package="crisprBase",
+                           mustWork=TRUE)
 ws <- t(read.csv(weightsFile))
 ws <- as.data.frame(ws)
 ```
