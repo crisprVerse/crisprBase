@@ -81,16 +81,16 @@ setGeneric("isDnase", function(object) standardGeneric("isDnase"))
 #### Generics for CrisprNuclease
 #' @rdname CrisprNuclease-class
 #' @export
-setGeneric("spacerLength", function(object) standardGeneric("spacerLength"))
+setGeneric("spacerLength", function(object, ...) standardGeneric("spacerLength"))
 
 #' @rdname CrisprNuclease-class
 #' @export
 setGeneric("targetLength",
-           function(object) standardGeneric("targetLength"))
+           function(object, ...) standardGeneric("targetLength"))
 
 #' @rdname CrisprNuclease-class
 #' @export
-setGeneric("pamLength", function(object) standardGeneric("pamLength"))
+setGeneric("pamLength", function(object, ...) standardGeneric("pamLength"))
 
 
 
@@ -120,7 +120,7 @@ setGeneric("spacerLength<-",
 
 #' @rdname CrisprNuclease-class
 #' @export
-setGeneric("pamSide", function(object) standardGeneric("pamSide"))
+setGeneric("pamSide", function(object, ...) standardGeneric("pamSide"))
 
 
 #' @rdname CrisprNuclease-class
@@ -174,7 +174,7 @@ setGeneric("editingWeights<-", function(object, value) standardGeneric("editingW
 
 #' @rdname BaseEditor-class
 #' @export
-setGeneric("editingStrand", function(object) standardGeneric("editingStrand"))
+setGeneric("editingStrand", function(object, ...) standardGeneric("editingStrand"))
 
 
 #' @rdname BaseEditor-class
