@@ -3,7 +3,7 @@
 \docType{class}
 \name{spacerLength}
 \alias{spacerLength}
-\alias{protospacerLength}
+\alias{targetLength}
 \alias{pamLength}
 \alias{spacerGap}
 \alias{hasSpacerGap}
@@ -26,7 +26,7 @@
 \alias{spacerGap,CrisprNuclease-method}
 \alias{spacerGap<-,CrisprNuclease-method}
 \alias{hasSpacerGap,CrisprNuclease-method}
-\alias{protospacerLength,CrisprNuclease-method}
+\alias{targetLength,CrisprNuclease-method}
 \alias{pams,CrisprNuclease-method}
 \alias{pamIndices,CrisprNuclease-method}
 \alias{spacerIndices,CrisprNuclease-method}
@@ -35,7 +35,7 @@
 \usage{
 spacerLength(object)
 
-protospacerLength(object)
+targetLength(object)
 
 pamLength(object)
 
@@ -88,7 +88,7 @@ CrisprNuclease(
 
 \S4method{hasSpacerGap}{CrisprNuclease}(object)
 
-\S4method{protospacerLength}{CrisprNuclease}(object)
+\S4method{targetLength}{CrisprNuclease}(object)
 
 \S4method{pams}{CrisprNuclease}(object, primary = TRUE, ignore_pam = FALSE, as.character = FALSE)
 
@@ -183,8 +183,8 @@ between the spacer sequence and the PAM sequence
     \item{\code{nucleaseName}:}{To get the name of the CRISPR nuclease.} 
     \item{\code{spacerLength}:}{To return the length of the
         spacer sequence.}
-    \item{\code{protospacerLength}:}{To return the length of the
-        protospacer sequence.}
+    \item{\code{targetLength}:}{To return the length of the
+        target sequence (protospacer + pam).}
     \item{\code{pamLength}:}{To return the length of the PAM sequence.}
     \item{\code{pamSide}:}{To return the side of the PAM sequence with
         respect to the spacer sequence.}
@@ -210,9 +210,9 @@ between the spacer sequence and the PAM sequence
 
 \describe{
     \item{\code{pamIndices}:}{To return the relative coordinates of the
-        PAM sequence within the protospacer sequence.}
+        PAM sequence within the target sequence.}
     \item{\code{spacerIndices}:}{To return the relatiive coordinates of
-        the spacer sequence within the protospacer sequence.}
+        the spacer sequence within the target sequence.}
 }
 }
 

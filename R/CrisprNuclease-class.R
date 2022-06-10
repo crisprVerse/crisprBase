@@ -18,8 +18,8 @@
 #'     \item{\code{nucleaseName}:}{To get the name of the CRISPR nuclease.} 
 #'     \item{\code{spacerLength}:}{To return the length of the
 #'         spacer sequence.}
-#'     \item{\code{protospacerLength}:}{To return the length of the
-#'         protospacer sequence.}
+#'     \item{\code{targetLength}:}{To return the length of the
+#'         target sequence (protospacer + pam).}
 #'     \item{\code{pamLength}:}{To return the length of the PAM sequence.}
 #'     \item{\code{pamSide}:}{To return the side of the PAM sequence with
 #'         respect to the spacer sequence.}
@@ -41,9 +41,9 @@
 #' @section Utility functions for genomic arithmetics:
 #' \describe{
 #'     \item{\code{pamIndices}:}{To return the relative coordinates of the
-#'         PAM sequence within the protospacer sequence.}
+#'         PAM sequence within the target sequence.}
 #'     \item{\code{spacerIndices}:}{To return the relatiive coordinates of
-#'         the spacer sequence within the protospacer sequence.}
+#'         the spacer sequence within the target sequence.}
 #' }
 #' @examples
 #' SpCas9 <- CrisprNuclease("SpCas9",
@@ -260,7 +260,7 @@ setMethod("hasSpacerGap",
 
 #' @rdname CrisprNuclease-class
 #' @export
-setMethod("protospacerLength",
+setMethod("targetLength",
           "CrisprNuclease",function(object){
     pamLength(object) + spacerLength(object) + spacerGap(object)
 })
@@ -316,7 +316,7 @@ setMethod("pams", "CrisprNuclease",
 #' @export
 setMethod("pamIndices", "CrisprNuclease",
     function(object){
-    indices  <- seq_len(protospacerLength(object))
+    indices  <- seq_len(targetLength(object))
     pam_len  <- pamLength(object)
     pam_side <- pamSide(object)
     if (pam_side=="5prime"){
@@ -332,7 +332,7 @@ setMethod("pamIndices", "CrisprNuclease",
 #' @export
 setMethod("spacerIndices", "CrisprNuclease", 
     function(object){
-    indices <- seq_len(protospacerLength(object))
+    indices <- seq_len(targetLength(object))
     spacer_len <- spacerLength(object)
     pam_side <- pamSide(object)
     if (pam_side=="3prime"){

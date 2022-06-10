@@ -84,7 +84,6 @@ the first nucleotide, which is specified using the `^` below:
 
 ```{r, warning=FALSE, message=FALSE}
 library(crisprBase)
-data(crisprBase)
 
 EcoRI <- Nuclease("EcoRI",
                   targetType="DNA",
@@ -150,7 +149,7 @@ the nuclease needs to first recognize a
 constant nucleotide motif in the target DNA called the protospacer adjacent 
 motif (PAM) sequence. Second, the guide-RNA (gRNA), which guides the nuclease
 to the target sequence, needs to bind to a complementary sequence adjacent
-to the PAM sequence. The latter can be thought of a variable binding motif 
+to the PAM sequence (protospacer sequence). The latter can be thought of a variable binding motif 
 that can be specified by designing corresponding gRNA sequences. For CRISPR
 nucleases targeting RNA, the equivalent of the PAM sequence is 
 called the Protospacer Flanking Sequence (PFS). We use the terms PAM and PFS
@@ -235,10 +234,8 @@ in `crisprBase`, see `data(package="crisprBase")`.
 The terms **spacer** and **protospacer** are not interchangeable. **spacer**
 refers to the sequence used in the gRNA construct to guide the Cas nuclease to
 the target **protospacer** sequence in the host genome / transcriptome.
-Therefore, the spacer sequence does not contain a PAM sequence (which prevents
-the nuclease from cutting the gRNA itself).
-By convention, when we refer to the protospacer sequence
-in the target DNA or target RNA, it includes the PAM/PFS sequence.
+The **protospacer** sequence is adjacent to the PAM sequence /  PFS sequence.
+We use the terminology **target** sequence to refer to the protospacer and PAM sequence taken together. For DNA-targeting nucleases such as Cas9 and Cas12a, the spacer and protospacer sequences are identical from a nucleotide point of view. For RNA-targeting nucleases such as Cas13d, the spacer and protospacer sequences are the reverse complement of each other. 
 
 An gRNA spacer sequence does not always uniquely target the host genome 
 (a given sgRNA spacer can map to multiple protospacers in the genome). 
@@ -290,33 +287,25 @@ knitr::include_graphics("./figures/cut_sites.svg")
 
 
 
-## Obtaining spacer and PAM sequences from protospacer sequences
+## Obtaining spacer and PAM sequences from target sequences
 
-Given a list of protospacer sequences and a `CrisprNuclease` object, one can
-extract spacer and PAM sequences using the functions
-`extractSpacerFromProtospacer` and `extractPamFromProtospacer`, respectively.
+Given a list of target sequences (protospacer + PAM) and a `CrisprNuclease` object, one can extract protospacer and PAM sequences using the functions
+`extractProtospacerFromTarget` and `extractPamFromTarget`, respectively.
 
 ```{r}
-protospacers <- c("AGGTGCTGATTGTAGTGCTGCGG",
-                  "AGGTGCTGATTGTAGTGCTGAGG")
-extractPamFromProtospacer(protospacers, SpCas9)
-extractSpacerFromProtospacer(protospacers, SpCas9)
+targets <- c("AGGTGCTGATTGTAGTGCTGCGG",
+             "AGGTGCTGATTGTAGTGCTGAGG")
+extractPamFromTarget(targets, SpCas9)
+extractProtospacerFromTarget(targets, SpCas9)
 ```
 
 
 ## Obtaining genomic coordinates of protospacer sequences using PAM site coordinates
 
-For a given CRISPR nuclease, every protospacer sequence in the genome can be
-uniquely identified using the genomic coordinates of the PAM sequence. By
-convention, we use the genomic coordinate of the first nucleotide of the PAM
-sequence as the representative coordinate of the corresponding protospacer
-sequence; this is encoded using a combination of 3 fields: `chr`, `pam_site` 
-and `strand`. 
 
-Given the PAM coordinate, there are several functions in `crisprBase` that 
-allows to get get coordinates of the full PAM sequence, protospacer sequence
-of spacer sequence: `getPamRanges`, `getProtospacerRanges`, and
-`getSpacerRanges`, respectively. The output objects are `GRanges`:
+Given a PAM coordinate, there are several functions in `crisprBase` that 
+allows to get get coordinates of the full PAM sequence, protospacer sequence, and target sequence: `getPamRanges`, `getTargetRanges`, and
+`getProtospacerRanges`, respectively. The output objects are `GRanges`:
 
 ```{r}
 chr      <- rep("chr7",2)
@@ -330,15 +319,16 @@ gr_protospacer <- getProtospacerRanges(seqnames=chr,
                                        pam_site=pam_site,
                                        strand=strand,
                                        nuclease=SpCas9)
-gr_spacer <- getSpacerRanges(seqnames=chr,
+gr_target <- getTargetRanges(seqnames=chr,
                              pam_site=pam_site,
                              strand=strand,
                              nuclease=SpCas9)
 gr_pam
 gr_protospacer
-gr_spacer
+gr_target
 ```
 
+and for AsCas12a:
 
 
 ```{r}
@@ -350,13 +340,13 @@ gr_protospacer <- getProtospacerRanges(seqnames=chr,
                                        pam_site=pam_site,
                                        strand=strand,
                                        nuclease=AsCas12a)
-gr_spacer <- getSpacerRanges(seqnames=chr,
+gr_target <- getTargetRanges(seqnames=chr,
                              pam_site=pam_site,
                              strand=strand,
                              nuclease=AsCas12a)
 gr_pam
 gr_protospacer
-gr_spacer
+gr_target
 ```
 
 # BaseEditor class
@@ -388,9 +378,11 @@ the package `crisprBase`:
 
 ```{r}
 # Creating weight matrix
-weigtsFile <- system.file("be/b4max.csv",
-                          package="crisprBase")
-ws <- t(read.csv(weigtsFile))
+weightsFile <- system.file("be/b4max.csv",
+                           package="crisprBase",
+                           mustWork=TRUE)
+ws <- t(read.csv(weightsFile))
+ws <- as.data.frame(ws)
 ```
 
 The row names of the matrix must correspond to the nucleotide substitutions
@@ -406,7 +398,8 @@ to the PAM site.
 
 ```{r}
 colnames(ws) <- ws["Position",]
-ws <- ws[-c(match("Position", rownames(ws))),]
+ws <- ws[-c(match("Position", rownames(ws))),,drop=FALSE]
+ws <- as.matrix(ws)
 head(ws)
 ```
 
@@ -458,7 +451,7 @@ Protospacer Flanking Sequence (PFS).
 For RNA-targeting CRISPR nucleases, the spacer sequence is 
 the reverse complement of the protospacer sequence. This differs from 
 DNA-targeting CRISPR nucleases, for which the spacer and 
-protospacer sequences are identical (minus the PAM sequence). 
+protospacer sequences are identical.
 
 We can construct an RNA-targeting nuclease in way similar to a 
 DNA-targeting nuclease by specifying `target="RNA"`. As an example,
@@ -472,7 +465,7 @@ CasRx <- CrisprNuclease("CasRx",
                         pams="N",
                         metadata=list(description="CasRx nuclease"),
                         pam_side="3prime",
-                        spacer_length=22)
+                        spacer_length=23)
 CasRx
 ```
 

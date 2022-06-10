@@ -1,36 +1,38 @@
-#' @title Extract PAM sequences from protospacer sequences
-#' @description Extract PAM sequences from protospacer sequences using
-#'     information stored in a CrisprNuclease object. 
+#' @title Extract PAM sequences from target sequences
+#' @description Extract PAM sequences from target sequences
+#'     (protospacer + PAM) using information stored in a
+#'     CrisprNuclease object.
+#'  
 #'     
 #' 
-#' @param protospacers Character vector of protospacer sequences. 
-#' @param object \code{CrisprNuclease} corresponding to the protospacer 
+#' @param targets Character vector of target sequences. 
+#' @param object \code{CrisprNuclease} corresponding to the target 
 #'     sequences.
 #' 
 #' @return Character vector of PAM sequences of length equal to that of the 
-#'     \code{protospacers} character vector. 
+#'     \code{targets} character vector. 
 #' 
 #' @author Jean-Philippe Fortin
 #'
 #' @examples
 #' data(SpCas9, AsCas12a, package="crisprBase")
 #' # Extracting PAM sequences from Cas9 protospacers:
-#' protospacers <- c("AGGTGCTGATTGTAGTGCTGCGG",
-#'                   "AGGTGCTGATTGTAGTGCTGAGG")
-#' extractPamFromProtospacer(protospacers, SpCas9)
-#' # Extracting PAM sequences from Cas12a protospacers:
-#' protospacers <- c("TTTAAGGTGCTGATTGTAGTGCTGTGT",
-#'                   "TTTCAGGTGCTGATTGTAGTGCTGAAA")
-#' extractPamFromProtospacer(protospacers, AsCas12a)
+#' targets <- c("AGGTGCTGATTGTAGTGCTGCGG",
+#'               "AGGTGCTGATTGTAGTGCTGAGG")
+#' extractPamFromTarget(targets, SpCas9)
+#' # Extracting PAM sequences from Cas12a targets:
+#' targets <- c("TTTAAGGTGCTGATTGTAGTGCTGTGT",
+#'              "TTTCAGGTGCTGATTGTAGTGCTGAAA")
+#' extractPamFromTarget(targets, AsCas12a)
 #' 
 #' @export
-extractPamFromProtospacer <- function(protospacers,
-                                      object
+extractPamFromTarget <- function(targets,
+                                 object
 ){
     .isCrisprNucleaseOrStop(object)
-    .validateProtospacers(protospacers, object)
+    .validateTargets(targets, object)
     wh <- pamIndices(object)
-    pams <- substr(protospacers,
+    pams <- substr(targets,
                    wh[1],
                    wh[length(wh)])
     return(pams)
@@ -38,52 +40,55 @@ extractPamFromProtospacer <- function(protospacers,
 
 
 
-#' @title Extract spacer sequences from protospacer sequences
-#' @description Extract spacer sequences from protospacer sequences using
-#'     information stored in a CrisprNuclease object. 
+#' @title Extract protospacer sequences from target sequences
+#' @description Extract protospacer sequences from target sequences
+#'     (protospacer + PAM) using information stored in a
+#'     CrisprNuclease object. 
 #'     
 #' 
-#' @param protospacers Character vector of protospacer sequences. 
-#' @param object \code{CrisprNuclease} corresponding to the protospacer 
+#' @param targets Character vector of targets sequences. 
+#' @param object \code{CrisprNuclease} corresponding to the targets 
 #'     sequences.
 #' 
-#' @return Character vector of spacer sequences of length equal to that of the 
-#'     \code{protospacers} character vector. 
+#' @return Character vector of protospacer sequences of 
+#'     length equal to that of the 
+#'     \code{targets} character vector. 
 #' 
 #' @author Jean-Philippe Fortin
 #'
 #' @examples
 #' data(SpCas9, AsCas12a, package="crisprBase")
-#' # Extracting spacer sequences from Cas9 protospacers:
-#' protospacers <- c("AGGTGCTGATTGTAGTGCTGCGG",
-#'                   "AGGTGCTGATTGTAGTGCTGAGG")
-#' extractSpacerFromProtospacer(protospacers, SpCas9)
-#' # Extracting spacer sequences from Cas12a protospacers:
-#' protospacers <- c("TTTAAGGTGCTGATTGTAGTGCTGTGT",
-#'                   "TTTCAGGTGCTGATTGTAGTGCTGAAA")
-#' extractSpacerFromProtospacer(protospacers, AsCas12a)
+#' # Extracting protospacer sequences from Cas9 targets:
+#' targets <- c("AGGTGCTGATTGTAGTGCTGCGG",
+#'              "AGGTGCTGATTGTAGTGCTGAGG")
+#' extractProtospacerFromTarget(targets, SpCas9)
+#' # Extracting protospacer sequences from Cas12a targets:
+#' targets <- c("TTTAAGGTGCTGATTGTAGTGCTGTGT",
+#'              "TTTCAGGTGCTGATTGTAGTGCTGAAA")
+#' extractProtospacerFromTarget(targets, AsCas12a)
 #' 
 #' @export
-extractSpacerFromProtospacer <- function(protospacers,
+extractProtospacerFromTarget <- function(targets,
                                          object
 ){
     .isCrisprNucleaseOrStop(object)
-    .validateProtospacers(protospacers, object)
+    .validateTargets(targets, object)
     wh <- spacerIndices(object)
-    spacers <- substr(protospacers,
-                      wh[1],
-                      wh[length(wh)])
-    return(spacers)
+    out <- substr(targets,
+                  wh[1],
+                  wh[length(wh)])
+    return(out)
 }
 
 
 
 
 
-#' @title Construct a protospacer GRanges from a list of PAM sites 
+#' @title Construct a target GRanges from a list of PAM sites 
 #' 
-#' @description Construct a protospacer GRanges from a list of PAM sites
-#'     using information stored in a CrisprNuclease object. 
+#' @description Construct a target (protospacer + PAM) GRanges
+#'     from a list of PAM sites using information stored in a
+#'     CrisprNuclease object. 
 #'     
 #' @param gr GRanges object of width 1 specifying the coordinates
 #'     of the first nucleotide of the PAM sequences. 
@@ -91,14 +96,15 @@ extractSpacerFromProtospacer <- function(protospacers,
 #'     Ignored if \code{gr} is not NULL.
 #' @param pam_site Numeric vector specifying the coordinates of the
 #'     first nucleotide of the PAM sequences corresponding to the
-#'     protospacers. Ignored if \code{gr} is not NULL.
-#' @param strand Character vector specifying the strand of the protospacer. 
+#'     targets. Ignored if \code{gr} is not NULL.
+#' @param strand Character vector specifying the strand of the target. 
 #'     Ignored if \code{gr} is not NULL.
 #' @param nuclease CrisprNuclease object.
 #' @param spacer_len Non-negative integer to overwrite the default spacer
 #'     length stored in the CrisprNuclease object.
 #' 
-#' @return GRanges object representing genomic coordinates of spacer sequences.
+#' @return GRanges object representing genomic coordinates of
+#'     the target sequences.
 #' 
 #' @author Jean-Philippe Fortin
 #' 
@@ -108,18 +114,18 @@ extractSpacerFromProtospacer <- function(protospacers,
 #' gr <- GRanges("chr10",
 #'               IRanges(start=c(100,120), width=1),
 #'               strand=c("+","-"))
-#' getProtospacerRanges(gr, nuclease=SpCas9)
-#' getProtospacerRanges(gr, nuclease=AsCas12a)
+#' getTargetRanges(gr, nuclease=SpCas9)
+#' getTargetRanges(gr, nuclease=AsCas12a)
 #' 
 #' 
 #' @export
 #' @importFrom BiocGenerics start end start<- end<- strand
-getProtospacerRanges <- function(gr=NULL,
-                                 seqnames=NULL,
-                                 pam_site=NULL,
-                                 strand=NULL,
-                                 nuclease=NULL,
-                                 spacer_len=NULL
+getTargetRanges <- function(gr=NULL,
+                            seqnames=NULL,
+                            pam_site=NULL,
+                            strand=NULL,
+                            nuclease=NULL,
+                            spacer_len=NULL
 ){
     .isCrisprNucleaseOrStop(nuclease)
     if (!is.null(spacer_len)){
@@ -167,9 +173,9 @@ getProtospacerRanges <- function(gr=NULL,
 
 
 
-#' @title Construct a spacer GRanges from a list of PAM sites 
+#' @title Construct a protospacer GRanges from a list of PAM sites 
 #' 
-#' @description Construct a spacer GRanges from a list of PAM sites
+#' @description Construct a protospacer GRanges from a list of PAM sites
 #'     using information stored in a CrisprNuclease object. 
 #'     
 #' @param gr GRanges object of width 1 specifying the coordinates
@@ -185,7 +191,8 @@ getProtospacerRanges <- function(gr=NULL,
 #' @param spacer_len Non-negative integer to overwrite the default spacer
 #'     length stored in the CrisprNuclease object.
 #' s
-#' @return GRanges object representing genomic coordinates of spacer sequences.
+#' @return GRanges object representing genomic coordinates of
+#'     protospacer sequences.
 #' 
 #' @author Jean-Philippe Fortin
 #' 
@@ -195,17 +202,17 @@ getProtospacerRanges <- function(gr=NULL,
 #' gr <- GRanges("chr10",
 #'               IRanges(start=c(100,120), width=1),
 #'               strand=c("+","-"))
-#' getSpacerRanges(gr, nuclease=SpCas9)
-#' getSpacerRanges(gr, nuclease=AsCas12a)
+#' getProtospacerRanges(gr, nuclease=SpCas9)
+#' getProtospacerRanges(gr, nuclease=AsCas12a)
 #' }
 #' 
 #' @export
-getSpacerRanges <- function(gr=NULL,
-                            seqnames=NULL,
-                            pam_site=NULL,
-                            strand=NULL,
-                            nuclease=NULL,
-                            spacer_len=NULL
+getProtospacerRanges <- function(gr=NULL,
+                                 seqnames=NULL,
+                                 pam_site=NULL,
+                                 strand=NULL,
+                                 nuclease=NULL,
+                                 spacer_len=NULL
 ){
     .isCrisprNucleaseOrStop(nuclease)
     if (!is.null(spacer_len)){
@@ -312,18 +319,18 @@ getPamRanges <- function(gr=NULL,
 
 
 
-.validateProtospacers <- function(protospacers,
-                                  object
+.validateTargets <- function(targets,
+                             object
 ){
     .isCrisprNucleaseOrStop(object)
-    protospacer.len <- protospacerLength(object)
-    n <- unique(nchar(protospacers))
-    if (n!=protospacer.len){
-        stop("provided protospacers are of length ",n,
-             ", but it should be ", protospacer.len, 
+    target.len <- targetLength(object)
+    n <- unique(nchar(targets))
+    if (n!=target.len){
+        stop("provided targets are of length ",n,
+             ", but it should be ", target.len, 
              " for the provided ", nucleaseName(object))  
     } 
-    return(protospacers)
+    return(targets)
 }
 
 

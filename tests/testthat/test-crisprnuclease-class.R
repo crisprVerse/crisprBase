@@ -33,9 +33,9 @@ test_that('Spacer', {
     expect_true(pamSide(AsCas12a)=="5prime")
 })
 
-test_that('Protospacer', {
-    expect_true(protospacerLength(SpCas9)==23)
-    expect_true(protospacerLength(AsCas12a)==27)
+test_that('Target', {
+    expect_true(targetLength(SpCas9)==23)
+    expect_true(targetLength(AsCas12a)==27)
 })
 
 
