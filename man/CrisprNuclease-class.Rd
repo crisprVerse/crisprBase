@@ -33,11 +33,11 @@
 \alias{prototypeSequence,CrisprNuclease-method}
 \title{An S4 class to represent a CRISPR nuclease.}
 \usage{
-spacerLength(object)
+spacerLength(object, ...)
 
-targetLength(object)
+targetLength(object, ...)
 
-pamLength(object)
+pamLength(object, ...)
 
 spacerGap(object)
 
@@ -47,7 +47,7 @@ spacerGap(object) <- value
 
 spacerLength(object) <- value
 
-pamSide(object)
+pamSide(object, ...)
 
 pamSide(object) <- value
 
@@ -101,11 +101,11 @@ CrisprNuclease(
 \arguments{
 \item{object}{\linkS4class{CrisprNuclease} object.}
 
+\item{...}{Additional arguments for class-specific methods}
+
 \item{value}{For \code{spacerLength<-} and \code{gapLength<-}, must be 
 a non-negative integer. For \code{pamSide}, must be either
 '5prime' or '3prime'.}
-
-\item{...}{Additional arguments for class-specific methods}
 
 \item{nucleaseName}{Name of the CRISPR nuclease.}
 

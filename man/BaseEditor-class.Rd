@@ -27,7 +27,7 @@ editingWeights(object, ...)
 
 editingWeights(object) <- value
 
-editingStrand(object)
+editingStrand(object, ...)
 
 editingStrand(object) <- value
 
