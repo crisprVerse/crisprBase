@@ -18,8 +18,8 @@
 #'     \item{\code{nickaseName}:}{To get the name of the CRISPR nickase.} 
 #'     \item{\code{spacerLength}:}{To return the length of the
 #'         spacer sequence.}
-#'     \item{\code{protospacerLength}:}{To return the length of the
-#'         protospacer sequence.}
+#'     \item{\code{targetLength}:}{To return the length of the
+#'         target sequence (protospacer + pam).}
 #'     \item{\code{pamLength}:}{To return the length of the PAM sequence.}
 #'     \item{\code{pamSide}:}{To return the side of the PAM sequence with
 #'         respect to the spacer sequence.}
@@ -46,13 +46,23 @@
 #'         the spacer sequence within the protospacer sequence.}
 #' }
 #' @examples
-#' SpCas9 <- CrisprNickase("SpCas9",
-#'                         pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
-#'                         weights=c(1, 0.2593, 0.0694),
-#'                         metadata=list(description="Wildtype Streptococcus
-#'                                       pyogenes Cas9 (SpCas9) nickase"),
-#'                         pam_side="3prime",
-#'                         spacer_length=20)
+#' Cas9D10A <- CrisprNickase("Cas9D10A",
+#'                           nickingStrand="opposite",
+#'                           pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
+#'                           weights=c(1, 0.2593, 0.0694),
+#'                           metadata=list(description="D10A-mutated  Streptococcus
+#'                                         pyogenes Cas9 (SpCas9) nickase"),
+#'                           pam_side="3prime",
+#'                           spacer_length=20)
+#' 
+#' Cas9H840A <- CrisprNickase("Cas9H840A",
+#'                            nickingStrand="original",
+#'                            pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
+#'                            weights=c(1, 0.2593, 0.0694),
+#'                            metadata=list(description="H840A-mutated  Streptococcus
+#'                                          pyogenes Cas9 (SpCas9) nickase"),
+#'                            pam_side="3prime",
+#'                            spacer_length=20)
 #' 
 #' @return A CrisprNickase object
 #' 
@@ -260,7 +270,7 @@ setMethod("hasSpacerGap",
 
 #' @rdname CrisprNickase-class
 #' @export
-setMethod("protospacerLength",
+setMethod("targetLength",
           "CrisprNickase",function(object){
     pamLength(object) + spacerLength(object) + spacerGap(object)
 })
@@ -316,7 +326,7 @@ setMethod("pams", "CrisprNickase",
 #' @export
 setMethod("pamIndices", "CrisprNickase",
     function(object){
-    indices  <- seq_len(protospacerLength(object))
+    indices  <- seq_len(targetLength(object))
     pam_len  <- pamLength(object)
     pam_side <- pamSide(object)
     if (pam_side=="5prime"){
@@ -332,7 +342,7 @@ setMethod("pamIndices", "CrisprNickase",
 #' @export
 setMethod("spacerIndices", "CrisprNickase", 
     function(object){
-    indices <- seq_len(protospacerLength(object))
+    indices <- seq_len(targetLength(object))
     spacer_len <- spacerLength(object)
     pam_side <- pamSide(object)
     if (pam_side=="3prime"){

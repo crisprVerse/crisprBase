@@ -1,26 +1,18 @@
 ---
 title: "Base functions and classes for CRISPR gRNA design"
-author: 
-- name: Jean-Philippe Fortin
-  affiliation: Department of Data Science and Statistical Computing, gRED,
-   Genentech
-  email: fortin946@gmail.com
-date: "`r Sys.Date()`"
 output: 
-  BiocStyle::html_document:
-    toc_float: true
-    theme: paper
-    number_sections: true
-vignette: >
-  %\VignetteIndexEntry{Introduction to crisprBase}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
-bibliography: references.bib
+  github_document:
+    toc: true
+bibliography: vignettes/references.bib
 ---
 
 ```{r, echo=FALSE, results="hide"}
 options("knitr.graphics.auto_pdf"=TRUE, eval=TRUE)
 ```
+
+Authors: Jean-Philippe Fortin
+
+Date: July 5, 2022
 
 # Overview
 
@@ -158,7 +150,7 @@ motifs(PfaAI, expand=TRUE)
 
 
 ```{r, echo=FALSE, fig.cap="Examples of restriction enzymes"}
-knitr::include_graphics("./figures/enzymes.svg")
+knitr::include_graphics("vignettes/figures/enzymes.svg")
 ```
 
 
@@ -274,7 +266,7 @@ the PFS (we do not use `pfs_site` for simplicity).
 
 
 ```{r, echo=FALSE, fig.cap="Examples of CRISPR nucleases"}
-knitr::include_graphics("./figures/nucleases.svg")
+knitr::include_graphics("vignettes/figures/nucleases.svg")
 ```
 
 ## Cut site
@@ -303,7 +295,7 @@ Below is an illustration of how different motif sequences and cut patterns
 translate into cut site coordinates with respect to a PAM sequence NGG:
 
 ```{r, echo=FALSE, fig.cap="Examples of cut site coordinates"}
-knitr::include_graphics("./figures/cut_sites.svg")
+knitr::include_graphics("vignettes/figures/cut_sites.svg")
 ```
 
 
@@ -378,7 +370,7 @@ a cytidine deaminase with dCas9 to convert Cs to Ts [@komor].
 
 
 ```{r, echo=FALSE, fig.cap="Examples of base editors."}
-knitr::include_graphics("./figures/nucleasesBaseEditor.svg")
+knitr::include_graphics("vignettes/figures/nucleasesBaseEditor.svg")
 ```
 
 
@@ -459,7 +451,7 @@ HNN domain, and the resulting CRISPR nickase (Cas9H840A) cleaves only
 the strand that contains the protospacer sequence. See Figure below.
 
 ```{r, echo=FALSE, fig.cap="Examples of CRISPR nickases."}
-knitr::include_graphics("./figures/nickases.svg")
+knitr::include_graphics("vignettes/figures/nickases.svg")
 ```
 
 The `CrisprNickase` class in `crisprBase` works similar to the `CrisprNuclease`

@@ -13,7 +13,7 @@
 \alias{spacerGap,CrisprNickase-method}
 \alias{spacerGap<-,CrisprNickase-method}
 \alias{hasSpacerGap,CrisprNickase-method}
-\alias{protospacerLength,CrisprNickase-method}
+\alias{targetLength,CrisprNickase-method}
 \alias{pams,CrisprNickase-method}
 \alias{pamIndices,CrisprNickase-method}
 \alias{spacerIndices,CrisprNickase-method}
@@ -49,7 +49,7 @@ CrisprNickase(
 
 \S4method{hasSpacerGap}{CrisprNickase}(object)
 
-\S4method{protospacerLength}{CrisprNickase}(object)
+\S4method{targetLength}{CrisprNickase}(object)
 
 \S4method{pams}{CrisprNickase}(object, primary = TRUE, ignore_pam = FALSE, as.character = FALSE)
 
@@ -144,8 +144,8 @@ between the spacer sequence and the PAM sequence
     \item{\code{nickaseName}:}{To get the name of the CRISPR nickase.} 
     \item{\code{spacerLength}:}{To return the length of the
         spacer sequence.}
-    \item{\code{protospacerLength}:}{To return the length of the
-        protospacer sequence.}
+    \item{\code{targetLength}:}{To return the length of the
+        target sequence (protospacer + pam).}
     \item{\code{pamLength}:}{To return the length of the PAM sequence.}
     \item{\code{pamSide}:}{To return the side of the PAM sequence with
         respect to the spacer sequence.}
@@ -178,12 +178,22 @@ between the spacer sequence and the PAM sequence
 }
 
 \examples{
-SpCas9 <- CrisprNickase("SpCas9",
-                        pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
-                        weights=c(1, 0.2593, 0.0694),
-                        metadata=list(description="Wildtype Streptococcus
-                                      pyogenes Cas9 (SpCas9) nickase"),
-                        pam_side="3prime",
-                        spacer_length=20)
+Cas9D10A <- CrisprNickase("Cas9D10A",
+                          nickingStrand="opposite",
+                          pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
+                          weights=c(1, 0.2593, 0.0694),
+                          metadata=list(description="Wildtype Streptococcus
+                                        pyogenes Cas9 (SpCas9) nickase"),
+                          pam_side="3prime",
+                          spacer_length=20)
+
+Cas9H840A <- CrisprNickase("Cas9H840A",
+                           nickingStrand="original",
+                           pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
+                           weights=c(1, 0.2593, 0.0694),
+                           metadata=list(description="Wildtype Streptococcus
+                                         pyogenes Cas9 (SpCas9) nickase"),
+                           pam_side="3prime",
+                           spacer_length=20)
 
 }

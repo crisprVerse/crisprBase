@@ -165,7 +165,7 @@ for the motifs corresponding to cleavage probabilities.}
 \examples{
 Nb.BsmI <- Nickase("Nb.BsmI",
                    motifs=c("GAATG^C"),
-                   nickingStrand="original",
+                   nickingStrand="opposite",
                    metadata=list(description="Nb.BsmI nicking enzyme."))
 
 }
