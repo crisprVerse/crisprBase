@@ -156,9 +156,9 @@ Return length of the recognition sites sequences.
 }
 \section{Functions}{
 \itemize{
-\item \code{Nuclease}: Create a \linkS4class{Nuclease} object
-}}
+\item \code{Nuclease()}: Create a \linkS4class{Nuclease} object
 
+}}
 \section{Slots}{
 
 \describe{

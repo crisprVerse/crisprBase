@@ -114,9 +114,9 @@ An S4 class to represent a CRISPR nickase.
 }
 \section{Functions}{
 \itemize{
-\item \code{CrisprNickase}: Create a \linkS4class{CrisprNickase} object
-}}
+\item \code{CrisprNickase()}: Create a \linkS4class{CrisprNickase} object
 
+}}
 \section{Slots}{
 
 \describe{
@@ -182,7 +182,7 @@ Cas9D10A <- CrisprNickase("Cas9D10A",
                           nickingStrand="opposite",
                           pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
                           weights=c(1, 0.2593, 0.0694),
-                          metadata=list(description="Wildtype Streptococcus
+                          metadata=list(description="D10A-mutated  Streptococcus
                                         pyogenes Cas9 (SpCas9) nickase"),
                           pam_side="3prime",
                           spacer_length=20)
@@ -191,7 +191,7 @@ Cas9H840A <- CrisprNickase("Cas9H840A",
                            nickingStrand="original",
                            pams=c("(3)NGG", "(3)NAG", "(3)NGA"),
                            weights=c(1, 0.2593, 0.0694),
-                           metadata=list(description="Wildtype Streptococcus
+                           metadata=list(description="H840A-mutated  Streptococcus
                                          pyogenes Cas9 (SpCas9) nickase"),
                            pam_side="3prime",
                            spacer_length=20)

@@ -153,9 +153,9 @@ An S4 class to represent a CRISPR nuclease.
 }
 \section{Functions}{
 \itemize{
-\item \code{CrisprNuclease}: Create a \linkS4class{CrisprNuclease} object
-}}
+\item \code{CrisprNuclease()}: Create a \linkS4class{CrisprNuclease} object
 
+}}
 \section{Slots}{
 
 \describe{

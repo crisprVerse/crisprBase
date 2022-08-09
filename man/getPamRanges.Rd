@@ -37,13 +37,12 @@ Construct a PAM GRanges from a list of PAM sites
 }
 \examples{
 data(SpCas9, AsCas12a, package="crisprBase")
-if (require(GenomicRanges)){
+library(GenomicRanges)
 gr <- GRanges("chr10",
               IRanges(start=c(100,120), width=1),
               strand=c("+","-"))
 getPamRanges(gr, nuclease=SpCas9)
 getPamRanges(gr, nuclease=AsCas12a)
-}
 
 }
 \author{

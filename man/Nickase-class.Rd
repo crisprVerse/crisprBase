@@ -119,9 +119,9 @@ An S4 class to represent a nickase
 }
 \section{Functions}{
 \itemize{
-\item \code{Nickase}: Create a \linkS4class{Nickase} object
-}}
+\item \code{Nickase()}: Create a \linkS4class{Nickase} object
 
+}}
 \section{Slots}{
 
 \describe{

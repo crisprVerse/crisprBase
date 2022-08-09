@@ -198,13 +198,12 @@ getTargetRanges <- function(gr=NULL,
 #' 
 #' @examples 
 #' data(SpCas9, AsCas12a, package="crisprBase")
-#' if (require(GenomicRanges)){
+#' library(GenomicRanges)
 #' gr <- GRanges("chr10",
 #'               IRanges(start=c(100,120), width=1),
 #'               strand=c("+","-"))
 #' getProtospacerRanges(gr, nuclease=SpCas9)
 #' getProtospacerRanges(gr, nuclease=AsCas12a)
-#' }
 #' 
 #' @export
 getProtospacerRanges <- function(gr=NULL,
@@ -278,13 +277,12 @@ getProtospacerRanges <- function(gr=NULL,
 #' 
 #' @examples
 #' data(SpCas9, AsCas12a, package="crisprBase")
-#' if (require(GenomicRanges)){
+#' library(GenomicRanges)
 #' gr <- GRanges("chr10",
 #'               IRanges(start=c(100,120), width=1),
 #'               strand=c("+","-"))
 #' getPamRanges(gr, nuclease=SpCas9)
 #' getPamRanges(gr, nuclease=AsCas12a)
-#' }
 #'
 #' @export
 getPamRanges <- function(gr=NULL,
@@ -307,8 +305,8 @@ getPamRanges <- function(gr=NULL,
     r <-  as.character(BiocGenerics::strand(gr))=='-'
     pam_len  <- pamLength(nuclease)
     start    <- start(gr)     
-    end      <- start(gr) + pam_len - 1             
-    start[r] <- start(gr)[r] - pam_len + 1           
+    end      <- start(gr) + pam_len - 1 
+    start[r] <- start(gr)[r] - pam_len + 1 
     end[r]   <- start(gr)[r]
   
     gr.new <- .resetGRCoordinates(gr)
@@ -316,6 +314,108 @@ getPamRanges <- function(gr=NULL,
     start(gr.new) <- start
     return(gr.new)
 }
+
+
+
+
+#' @title Construct a cut site GRanges from a list of PAM sites 
+#' 
+#' @description Construct a cut site GRanges from a list of PAM sites 
+#'     using information stored in a CrisprNuclease object. 
+#'     
+#' @param gr GRanges object of width 1 specifying the coordinates
+#'     of the first nucleotide of the PAM sequences. 
+#' @param seqnames Character vector of genomic sequence names.
+#'     Ignored if \code{gr} is not NULL.
+#' @param pam_site Numeric vector specifying the coordinates of the
+#'     first nucleotide of the PAM sequences corresponding to the
+#'     PAM sequences. Ignored if \code{gr} is not NULL.
+#' @param strand Character vector specifying the strand of the PAM. 
+#'     Ignored if \code{gr} is not NULL.
+#' @param nuclease CrisprNuclease object.
+#' 
+#' @return GRanges object representing genomic coordinates of the cut sites.
+#' 
+#' @author Jean-Philippe Fortin
+#' 
+#' @examples
+#' data(SpCas9, AsCas12a, package="crisprBase")
+#' library(GenomicRanges)
+#' gr <- GRanges("chr10",
+#'               IRanges(start=c(100,120), width=1),
+#'               strand=c("+","-"))
+#' getCutSiteRanges(gr, nuclease=SpCas9)
+#' getCutSiteRanges(gr, nuclease=AsCas12a)
+#'
+#' @export
+getCutSiteRanges <- function(gr=NULL,
+                             seqnames=NULL,
+                             pam_site=NULL,
+                             strand=NULL,
+                             nuclease=NULL
+){
+    .isCrisprNucleaseOrStop(nuclease)
+    gr <- .validatePosGrOrNull(gr)
+    if (is.null(gr) & 
+        (is.null(seqnames) | is.null(pam_site) | is.null(strand))){
+        stop("seqnames, pam_site, and strand must be provided if gr=NULL")
+    }
+    if (is.null(gr)){
+        gr <- .buildGRFromPamSite(seqnames=seqnames,
+                                  pam_site=pam_site,
+                                  strand=strand)
+    }
+    pamSites <- BiocGenerics::start(gr)
+    strand <- as.character(strand(gr))
+    cutSites <- getCutSiteFromPamSite(pam_site=pamSites,
+                                      strand=strand,
+                                      nuclease=nuclease)
+
+    gr.new <- .resetGRCoordinates(gr)
+    BiocGenerics::start(gr.new) <- BiocGenerics::end(gr.new) <- cutSites
+    return(gr.new)
+}
+
+
+
+
+
+
+
+
+#' @title Return cut site coordinates from PAM site coordinates
+#' 
+#' @description Return cut site coordinates from PAM site coordinates.
+#'     
+#' @param pam_site Coordinate of the first nucleotide of the PAM sequence.
+#' @param strand Either "+" or "-".
+#' @param nuclease A \linkS4class{CrisprNuclease} object.
+#' 
+#' @return numeric vector of cut sites
+#' 
+#' @author Jean-Philippe Fortin
+#' 
+#' @examples
+#' data(SpCas9, package="crisprBase")
+#' getCutSiteFromPamSite(pam_site=100, strand="+", nuclease=SpCas9)
+#' getCutSiteFromPamSite(pam_site=100, strand="-", nuclease=SpCas9)
+#' 
+#' @export
+getCutSiteFromPamSite <- function(pam_site,
+                                  strand,
+                                  nuclease=NULL
+){
+    .isCrisprNucleaseOrStop(nuclease)
+    strand <- .validateStrand(strand)
+    stopifnot(length(pam_site)==length(strand))
+    cut_offset <- cutSites(nuclease, middle=TRUE)
+    cut_site <- pam_site
+    cut_site[strand=='+'] <- pam_site[strand=='+'] + cut_offset
+    cut_site[strand=='-'] <- pam_site[strand=='-'] - cut_offset
+    return(cut_site)
+}
+
+
 
 
 

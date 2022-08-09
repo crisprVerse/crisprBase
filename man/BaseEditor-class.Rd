@@ -85,9 +85,9 @@ An S4 class to represent a base editor
 }
 \section{Functions}{
 \itemize{
-\item \code{BaseEditor}: Create a \linkS4class{BaseEditor} object
-}}
+\item \code{BaseEditor()}: Create a \linkS4class{BaseEditor} object
 
+}}
 \section{Slots}{
 
 \describe{
