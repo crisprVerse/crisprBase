@@ -66,9 +66,10 @@ developed and tested on R version 4.2.
 an R session:
 
 ``` r
-install.packages("devtools")
-library(devtools)
-install_github("Jfortin1/crisprBase")
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("crisprBase")
 ```
 
 ### Getting started
@@ -721,19 +722,19 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] crisprBase_1.1.2
+    ## [1] crisprBase_1.1.5
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] rstudioapi_0.13        knitr_1.37             XVector_0.35.0        
-    ##  [4] magrittr_2.0.2         GenomicRanges_1.47.6   BiocGenerics_0.41.2   
-    ##  [7] zlibbioc_1.41.0        IRanges_2.29.1         rlang_1.0.2           
+    ##  [4] magrittr_2.0.2         GenomicRanges_1.48.0   BiocGenerics_0.42.0   
+    ##  [7] zlibbioc_1.41.0        IRanges_2.30.0         rlang_1.0.4           
     ## [10] fastmap_1.1.0          highr_0.9              stringr_1.4.0         
-    ## [13] GenomeInfoDb_1.31.6    tools_4.2.0            xfun_0.30             
+    ## [13] GenomeInfoDb_1.32.2    tools_4.2.0            xfun_0.30             
     ## [16] cli_3.3.0              htmltools_0.5.2        yaml_2.3.5            
     ## [19] digest_0.6.29          crayon_1.5.0           GenomeInfoDbData_1.2.7
     ## [22] S4Vectors_0.33.11      bitops_1.0-7           RCurl_1.98-1.6        
     ## [25] evaluate_0.15          rmarkdown_2.13         stringi_1.7.6         
-    ## [28] compiler_4.2.0         Biostrings_2.63.2      stats4_4.2.0
+    ## [28] compiler_4.2.0         Biostrings_2.64.0      stats4_4.2.0
 
 # References
 

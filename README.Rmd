@@ -45,9 +45,10 @@ It was developed and tested on R version 4.2.
 following commands inside of an R session:
 
 ```r
-install.packages("devtools")
-library(devtools)
-install_github("Jfortin1/crisprBase")
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("crisprBase")
 ```
 
 
