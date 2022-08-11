@@ -1,5 +1,5 @@
 Package: crisprBase
-Version: 1.1.4
+Version: 1.1.5
 Date: 2022-08-09
 Title: Base functions and classes for CRISPR gRNA design
 Authors@R: person("Jean-Philippe", "Fortin", email = "fortin946@gmail.com", role = c("aut", "cre"))
@@ -30,8 +30,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.2.1
 VignetteBuilder: knitr
-BugReports: https://github.com/Jfortin1/crisprBase/issues
-URL: https://github.com/Jfortin1/crisprBase
+BugReports: https://github.com/crisprVerse/crisprBase/issues
+URL: https://github.com/crisprVerse/crisprBase
 Collate: 
     'AllGenerics.R'
     'rebase.R'
