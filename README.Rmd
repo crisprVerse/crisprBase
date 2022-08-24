@@ -37,11 +37,11 @@ described in our recent bioRxiv preprint:
 ### OS Requirements
 
 This package is supported for macOS, Linux and Windows machines.
-It was developed and tested on R version 4.2.
+It was developed and tested on R version 4.2.1
 
 ## Installation
 
-`crisprBase` can be installed by typing the
+`crisprBase` can be installed from Bioconductor by typing the
 following commands inside of an R session:
 
 ```r

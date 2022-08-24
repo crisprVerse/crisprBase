@@ -1,35 +1,49 @@
 Base functions and classes for CRISPR gRNA design
 ================
 
--   [Overview](#overview)
--   [Installation](#installation)
-    -   [Software requirements](#software-requirements)
-        -   [OS Requirements](#os-requirements)
-    -   [Installation](#installation-1)
-        -   [Getting started](#getting-started)
--   [Nuclease class](#nuclease-class)
-    -   [Examples](#examples)
-    -   [Accessor functions](#accessor-functions)
--   [CrisprNuclease class](#crisprnuclease-class)
-    -   [CrisprNuclease objects provided in
-        CrisprBase](#crisprnuclease-objects-provided-in-crisprbase)
--   [CRISPR arithmetics](#crispr-arithmetics)
-    -   [CRISPR terminology](#crispr-terminology)
-    -   [Cut site](#cut-site)
-    -   [Obtaining spacer and PAM sequences from target
-        sequences](#obtaining-spacer-and-pam-sequences-from-target-sequences)
-    -   [Obtaining genomic coordinates of protospacer sequences using
-        PAM site
-        coordinates](#obtaining-genomic-coordinates-of-protospacer-sequences-using-pam-site-coordinates)
--   [BaseEditor class](#baseeditor-class)
--   [CrisprNickase class](#crisprnickase-class)
--   [RNA-targeting nucleases](#rna-targeting-nucleases)
--   [Additional notes](#additional-notes)
-    -   [dCas9 and other “dead”
-        nucleases](#dcas9-and-other-dead-nucleases)
--   [License](#license)
--   [Reproducibility](#reproducibility)
--   [References](#references)
+-   <a href="#overview" id="toc-overview">Overview</a>
+-   <a href="#installation" id="toc-installation">Installation</a>
+    -   <a href="#software-requirements" id="toc-software-requirements">Software
+        requirements</a>
+        -   <a href="#os-requirements" id="toc-os-requirements">OS Requirements</a>
+    -   <a href="#installation-1" id="toc-installation-1">Installation</a>
+        -   <a href="#getting-started" id="toc-getting-started">Getting started</a>
+-   <a href="#nuclease-class" id="toc-nuclease-class">Nuclease class</a>
+    -   <a href="#examples" id="toc-examples">Examples</a>
+    -   <a href="#accessor-functions" id="toc-accessor-functions">Accessor
+        functions</a>
+-   <a href="#crisprnuclease-class"
+    id="toc-crisprnuclease-class">CrisprNuclease class</a>
+    -   <a href="#crisprnuclease-objects-provided-in-crisprbase"
+        id="toc-crisprnuclease-objects-provided-in-crisprbase">CrisprNuclease
+        objects provided in CrisprBase</a>
+-   <a href="#crispr-arithmetics" id="toc-crispr-arithmetics">CRISPR
+    arithmetics</a>
+    -   <a href="#crispr-terminology" id="toc-crispr-terminology">CRISPR
+        terminology</a>
+    -   <a href="#cut-site" id="toc-cut-site">Cut site</a>
+    -   <a href="#obtaining-spacer-and-pam-sequences-from-target-sequences"
+        id="toc-obtaining-spacer-and-pam-sequences-from-target-sequences">Obtaining
+        spacer and PAM sequences from target sequences</a>
+    -   <a
+        href="#obtaining-genomic-coordinates-of-protospacer-sequences-using-pam-site-coordinates"
+        id="toc-obtaining-genomic-coordinates-of-protospacer-sequences-using-pam-site-coordinates">Obtaining
+        genomic coordinates of protospacer sequences using PAM site
+        coordinates</a>
+-   <a href="#baseeditor-class" id="toc-baseeditor-class">BaseEditor
+    class</a>
+-   <a href="#crisprnickase-class"
+    id="toc-crisprnickase-class">CrisprNickase class</a>
+-   <a href="#rna-targeting-nucleases"
+    id="toc-rna-targeting-nucleases">RNA-targeting nucleases</a>
+-   <a href="#additional-notes" id="toc-additional-notes">Additional
+    notes</a>
+    -   <a href="#dcas9-and-other-dead-nucleases"
+        id="toc-dcas9-and-other-dead-nucleases">dCas9 and other “dead”
+        nucleases</a>
+-   <a href="#license" id="toc-license">License</a>
+-   <a href="#reproducibility" id="toc-reproducibility">Reproducibility</a>
+-   <a href="#references" id="toc-references">References</a>
 
 Authors: Jean-Philippe Fortin
 
@@ -58,12 +72,12 @@ technologies”](https://www.biorxiv.org/content/10.1101/2022.04.21.488824v2)
 ### OS Requirements
 
 This package is supported for macOS, Linux and Windows machines. It was
-developed and tested on R version 4.2.
+developed and tested on R version 4.2.1
 
 ## Installation
 
-`crisprBase` can be installed by typing the following commands inside of
-an R session:
+`crisprBase` can be installed from Bioconductor by typing the following
+commands inside of an R session:
 
 ``` r
 if (!require("BiocManager", quietly = TRUE))
@@ -707,7 +721,7 @@ The project as a whole is covered by the MIT license.
 sessionInfo()
 ```
 
-    ## R Under development (unstable) (2022-03-21 r81954)
+    ## R version 4.2.1 (2022-06-23)
     ## Platform: x86_64-apple-darwin17.0 (64-bit)
     ## Running under: macOS Catalina 10.15.7
     ## 
@@ -725,16 +739,16 @@ sessionInfo()
     ## [1] crisprBase_1.1.5
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] rstudioapi_0.13        knitr_1.37             XVector_0.35.0        
-    ##  [4] magrittr_2.0.2         GenomicRanges_1.48.0   BiocGenerics_0.42.0   
-    ##  [7] zlibbioc_1.41.0        IRanges_2.30.0         rlang_1.0.4           
-    ## [10] fastmap_1.1.0          highr_0.9              stringr_1.4.0         
-    ## [13] GenomeInfoDb_1.32.2    tools_4.2.0            xfun_0.30             
-    ## [16] cli_3.3.0              htmltools_0.5.2        yaml_2.3.5            
-    ## [19] digest_0.6.29          crayon_1.5.0           GenomeInfoDbData_1.2.7
-    ## [22] S4Vectors_0.33.11      bitops_1.0-7           RCurl_1.98-1.6        
-    ## [25] evaluate_0.15          rmarkdown_2.13         stringi_1.7.6         
-    ## [28] compiler_4.2.0         Biostrings_2.64.0      stats4_4.2.0
+    ##  [1] rstudioapi_0.14        knitr_1.40             XVector_0.37.0        
+    ##  [4] magrittr_2.0.3         GenomicRanges_1.49.1   BiocGenerics_0.43.1   
+    ##  [7] zlibbioc_1.43.0        IRanges_2.31.2         rlang_1.0.4           
+    ## [10] fastmap_1.1.0          highr_0.9              stringr_1.4.1         
+    ## [13] GenomeInfoDb_1.33.5    tools_4.2.1            xfun_0.32             
+    ## [16] cli_3.3.0              htmltools_0.5.3        yaml_2.3.5            
+    ## [19] digest_0.6.29          crayon_1.5.1           GenomeInfoDbData_1.2.8
+    ## [22] S4Vectors_0.35.1       bitops_1.0-7           RCurl_1.98-1.8        
+    ## [25] evaluate_0.16          rmarkdown_2.15         stringi_1.7.8         
+    ## [28] compiler_4.2.1         Biostrings_2.65.2      stats4_4.2.1
 
 # References
 
