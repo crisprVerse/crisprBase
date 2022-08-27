@@ -86,6 +86,9 @@ if (!require("BiocManager", quietly = TRUE))
 BiocManager::install("crisprBase")
 ```
 
+The complete documentation for the package can be found
+[here](https://bioconductor.org/packages/devel/bioc/manuals/crisprBase/man/crisprBase.pdf).
+
 ### Getting started
 
 We load `crisprBase` in the usual way:
@@ -747,7 +750,7 @@ sessionInfo()
     ## [16] cli_3.3.0              htmltools_0.5.3        yaml_2.3.5            
     ## [19] digest_0.6.29          crayon_1.5.1           GenomeInfoDbData_1.2.8
     ## [22] S4Vectors_0.35.1       bitops_1.0-7           RCurl_1.98-1.8        
-    ## [25] evaluate_0.16          rmarkdown_2.15         stringi_1.7.8         
+    ## [25] evaluate_0.16          rmarkdown_2.15.2       stringi_1.7.8         
     ## [28] compiler_4.2.1         Biostrings_2.65.2      stats4_4.2.1
 
 # References

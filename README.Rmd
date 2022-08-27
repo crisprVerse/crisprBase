@@ -51,6 +51,7 @@ if (!require("BiocManager", quietly = TRUE))
 BiocManager::install("crisprBase")
 ```
 
+The complete documentation for the package can be found [here](https://bioconductor.org/packages/devel/bioc/manuals/crisprBase/man/crisprBase.pdf).
 
 ### Getting started
 
