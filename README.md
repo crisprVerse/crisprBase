@@ -76,13 +76,14 @@ developed and tested on R version 4.2.1
 
 ## Installation
 
-`crisprBase` can be installed from Bioconductor by typing the following
-commands inside of an R session:
+`crisprBase` can be installed from the Bioconductor devel branch by
+typing the following commands inside of an R session:
 
 ``` r
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
+BiocManager::install(version="devel")
 BiocManager::install("crisprBase")
 ```
 
