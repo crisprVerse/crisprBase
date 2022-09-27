@@ -418,6 +418,61 @@ getCutSiteFromPamSite <- function(pam_site,
 
 
 
+#' @title Return optimal editing site coordinates from PAM site coordinates
+#' 
+#' @description Return optimal editing site coordinates from PAM 
+#'     site coordinates. 
+#'     
+#' @param pam_site Coordinate of the first nucleotide of the PAM sequence.
+#' @param strand Either "+" or "-".
+#' @param baseEditor A \linkS4class{BaseEditor} object.
+#' @param substitution String indicating which substitution
+#'     should be used to estimate the optimal editing position. 
+#'     E.g. "C2T" will return the optimal editing position for C to T
+#'     editing. 
+#' 
+#' @return numeric vector of editing sites.
+#' 
+#' @author Jean-Philippe Fortin
+#' 
+#' @examples
+#' data(BE4max, package="crisprBase")
+#' getEditingSiteFromPamSite(pam_site=100, strand="+", baseEditor=BE4max, "C2T")
+#' 
+#' @export
+getEditingSiteFromPamSite <- function(pam_site,
+                                      strand,
+                                      baseEditor=NULL,
+                                      substitution=NULL
+){
+    .isBaseEditorOrStop(baseEditor)
+    strand <- .validateStrand(strand)
+    stopifnot(length(pam_site)==length(strand))
+    if (is.null(substitution)){
+        stop("[getEditingSiteFromPamSite] 'substitution' must be specified. ")
+    }
+    if (length(substitution)!=1){
+        stop("[getEditingSiteFromPamSite] 'substitution' must have length 1.")
+    }
+    ws <- editingWeights(baseEditor)
+    if (!substitution %in% rownames(ws)){
+        stop("[getEditingSiteFromPamSite] 'substitution' not found in the",
+             " matrix of editing weights.")
+    }
+    ws <- ws[substitution,,drop=FALSE]
+    maxEditing <- colnames(ws)[which.max(ws)]
+    editing_offset <- as.integer(maxEditing)
+    editing_site <- pam_site
+    editing_site[strand=='+'] <- editing_site[strand=='+'] + editing_offset
+    editing_site[strand=='-'] <- editing_site[strand=='-'] - editing_offset
+    return(editing_site)
+}
+
+
+
+
+
+
 
 .validateTargets <- function(targets,
                              object
