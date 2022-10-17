@@ -51,19 +51,21 @@ Date: July 5, 2022
 
 # Overview
 
-`crisprBase` provides S4 classes to represent nucleases, and more
-specifically CRISPR nucleases. It also provides arithmetic functions to
-extract genomic ranges to help with the design and manipulation of
-CRISPR guide-RNAs (gRNAs). The classes and functions are designed to
-work with a broad spectrum of nucleases and applications, including
-PAM-free CRISPR nucleases, RNA-targeting nucleases, and the more general
-class of restriction enzymes. It also includes functionalities for
-CRISPR nickases.
+The `crisprBase` package is a core package of the [crisprVerse
+ecosystem](https://github.com/crisprVerse) that provides S4 classes for
+representing CRISPR nucleases and base editors. It also provides
+arithmetic functions to extract genomic ranges to help with the design
+and manipulation of CRISPR guide-RNAs (gRNAs). The classes and functions
+are designed to work with a broad spectrum of nucleases and
+applications, including PAM-free CRISPR nucleases, RNA-targeting
+nucleases, and the more general class of restriction enzymes. It also
+includes functionalities for CRISPR nickases.
 
 It provides a language and convention for our gRNA design ecosystem
-described in our recent bioRxiv preprint: [“A comprehensive Bioconductor
-ecosystem for the design of CRISPR guide RNAs across nucleases and
-technologies”](https://www.biorxiv.org/content/10.1101/2022.04.21.488824v2)
+described in our recent bioRxiv preprint: [“The crisprVerse: a
+comprehensive Bioconductor ecosystem for the design of CRISPR guide RNAs
+across nucleases and
+technologies”](https://www.biorxiv.org/content/10.1101/2022.04.21.488824v3)
 
 # Installation
 
@@ -740,19 +742,19 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] crisprBase_1.1.5
+    ## [1] crisprBase_1.1.6
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] rstudioapi_0.14        knitr_1.40             XVector_0.37.0        
-    ##  [4] magrittr_2.0.3         GenomicRanges_1.49.1   BiocGenerics_0.43.1   
-    ##  [7] zlibbioc_1.43.0        IRanges_2.31.2         rlang_1.0.4           
+    ##  [1] rstudioapi_0.14        knitr_1.40             XVector_0.37.1        
+    ##  [4] magrittr_2.0.3         GenomicRanges_1.49.1   BiocGenerics_0.43.4   
+    ##  [7] zlibbioc_1.43.0        IRanges_2.31.2         rlang_1.0.5           
     ## [10] fastmap_1.1.0          highr_0.9              stringr_1.4.1         
-    ## [13] GenomeInfoDb_1.33.5    tools_4.2.1            xfun_0.32             
-    ## [16] cli_3.3.0              htmltools_0.5.3        yaml_2.3.5            
+    ## [13] GenomeInfoDb_1.33.7    tools_4.2.1            xfun_0.32             
+    ## [16] cli_3.4.0              htmltools_0.5.3        yaml_2.3.5            
     ## [19] digest_0.6.29          crayon_1.5.1           GenomeInfoDbData_1.2.8
-    ## [22] S4Vectors_0.35.1       bitops_1.0-7           RCurl_1.98-1.8        
-    ## [25] evaluate_0.16          rmarkdown_2.15.2       stringi_1.7.8         
-    ## [28] compiler_4.2.1         Biostrings_2.65.2      stats4_4.2.1
+    ## [22] S4Vectors_0.35.3       bitops_1.0-7           RCurl_1.98-1.8        
+    ## [25] evaluate_0.16          rmarkdown_2.16         stringi_1.7.8         
+    ## [28] compiler_4.2.1         Biostrings_2.65.3      stats4_4.2.1
 
 # References
 

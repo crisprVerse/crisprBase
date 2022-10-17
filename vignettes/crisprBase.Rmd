@@ -24,8 +24,8 @@ options("knitr.graphics.auto_pdf"=TRUE, eval=TRUE)
 
 # Overview
 
-`crisprBase` provides S4 classes to represent nucleases, and more 
-specifically CRISPR nucleases. It also provides arithmetic 
+The `crisprBase` package is a core package of the [crisprVerse ecosystem](https://github.com/crisprVerse) that provides S4 classes for
+representing CRISPR nucleases and base editors. It also provides arithmetic 
 functions to extract genomic ranges to help with the design and manipulation 
 of CRISPR guide-RNAs (gRNAs). The classes and functions are designed to work 
 with a broad spectrum of nucleases and applications, including 
@@ -35,7 +35,7 @@ CRISPR nickases.
 
 It provides a language and convention for our gRNA design ecosystem 
 described in our recent bioRxiv preprint:
-["A comprehensive Bioconductor ecosystem for the design of CRISPR guide RNAs across nucleases and technologies"](https://www.biorxiv.org/content/10.1101/2022.04.21.488824v2)
+["The crisprVerse: a comprehensive Bioconductor ecosystem for the design of CRISPR guide RNAs across nucleases and technologies"](https://www.biorxiv.org/content/10.1101/2022.04.21.488824v3)
 
 
 # Installation
