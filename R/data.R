@@ -80,6 +80,22 @@
 
 
 
+
+
+#' MAD7 CrisprNuclease object
+#'
+#' CrisprNuclease object for the MAD7 nuclease (Cas12a-like nuclease)
+#' 
+#' @format CrisprNuclease object.
+#' @details The MAD7 nuclease recognizes YTTV PAM sequences. Spacer
+#'     sequences must be located downstream of PAM sequences.
+#' @usage data(MAD7, package="crisprBase")
+"MAD7"
+
+
+
+
+
 #' CasRx CrisprNuclease object
 #'
 #' CrisprNuclease object for the Cas13d-NLS from Ruminococcus

@@ -36,6 +36,13 @@ CasRx <- CrisprNuclease("CasRx",
                         spacer_length=23)
 
 
+MAD7 <- CrisprNuclease("MAD7",
+                       pams="YTTV(18/23)",
+                       metadata=list(description="MAD7 nuclease (Cas12a-like family)."),
+                       pam_side="5prime",
+                       spacer_length=23)
+
+
 
 load("pams/cas12a/cas12a.pams.rda")
 pams <- cas12a.pams[, c("PAM", "Score_Doench")]
@@ -69,6 +76,7 @@ use_data(SpCas9,
          SpGCas9,
          AsCas12a,
          enAsCas12a,
+         MAD7,
          CasRx,
          BE4max,
          compress="xz", internal=FALSE, overwrite=TRUE)
