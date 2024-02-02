@@ -2,6 +2,11 @@
 \title{crisprBase News}
 \encoding{UTF-8}
 
+
+\section{Version 1.7.1}{\itemize{
+\item Updated weights in the SaCas9 nuclease.
+}}
+
 \section{Version 1.3.3}{\itemize{
 \item Added BiocStyle to Suggests.
 }}

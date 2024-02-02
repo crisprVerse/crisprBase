@@ -34,7 +34,9 @@
 #' @format CrisprNuclease object.
 #' 
 #' @details The AsCas9 nuclease recognizes NNGRRT PAM sequences. Spacer
-#'     sequences must be located upstream of PAM sequences.
+#'     sequences must be located upstream of PAM sequences. Editing weights 
+#'     were obtained from \url{doi:10.1038/nature14299}.
+#' 
 #' @usage data(SaCas9, package="crisprBase")
 "SaCas9"
 

@@ -16,6 +16,7 @@ CrisprNuclease object for the wildtype Staphylococcus aureus Cas9 (SaCas9)
 }
 \details{
 The AsCas9 nuclease recognizes NNGRRT PAM sequences. Spacer
-    sequences must be located upstream of PAM sequences.
+    sequences must be located upstream of PAM sequences. Editing weights 
+    were obtained from \url{doi:10.1038/nature14299}.
 }
 \keyword{datasets}

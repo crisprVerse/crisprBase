@@ -1,7 +1,6 @@
 library(crisprBase)
 library(devtools)
 
-
 SpCas9 <- CrisprNuclease("SpCas9",
                          pams=c("(3/3)NGG", "(3/3)NAG", "(3/3)NGA"),
                          weights=c(1, 0.2593, 0.0694),
@@ -9,11 +8,14 @@ SpCas9 <- CrisprNuclease("SpCas9",
                          pam_side="3prime",
                          spacer_length=20)
 
+
 SaCas9 <- CrisprNuclease("SaCas9",
-                         pams=c("(3/3)NNGRRT"),
+                         pams=c("(3/3)NNGRRA","(3/3)NNGRRC", "(3/3)NNGRRG", "(3/3)NNGRRT"),
+                         weights=c(0.1666, 0.1666, 0.1666, 0.5),
                          metadata=list(description="Wildtype Staphylococcus aureus Cas9 (SaCas9) nuclease"),
                          pam_side="3prime",
                          spacer_length=21)
+
 
 SpGCas9 <- CrisprNuclease("SpGCas9",
                           pams=c("(3/3)NGN"),
@@ -34,7 +36,6 @@ CasRx <- CrisprNuclease("CasRx",
                                       doi="10.1016/j.cell.2018.02.033"),
                         pam_side="3prime",
                         spacer_length=23)
-
 
 MAD7 <- CrisprNuclease("MAD7",
                        pams="YTTV(18/23)",
