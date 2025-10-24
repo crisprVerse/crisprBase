@@ -434,10 +434,16 @@ data(SpCas9, package="crisprBase")
 BE4max <- BaseEditor(SpCas9,
                      baseEditorName="BE4max",
                      editingStrand="original",
-                     editingWeights=ws)
+                     editingWeights=ws,
+                     scale=TRUE)
 metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
 BE4max
 ```
+
+The `scale=TRUE` forces the editing weights to be scaled
+between 0 and 1 by dividing all weights by the largest weight value. 
+This can be set to `FALSE` if the editing weights are already representing
+true editing probabilities, for instance. 
 
 
 One can quickly visualize the editing weights using the function 

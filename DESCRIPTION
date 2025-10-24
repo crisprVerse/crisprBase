@@ -1,5 +1,5 @@
 Package: crisprBase
-Version: 1.9.1
+Version: 1.9.2
 Date: 2024-07-23
 Title: Base functions and classes for CRISPR gRNA design
 Authors@R: person("Jean-Philippe", "Fortin", email = "fortin946@gmail.com", role = c("aut", "cre"))
@@ -29,7 +29,7 @@ Description: Provides S4 classes for general nucleases, CRISPR nucleases,
     Both DNA- and RNA-targeting nucleases are supported.
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 BugReports: https://github.com/crisprVerse/crisprBase/issues
 URL: https://github.com/crisprVerse/crisprBase

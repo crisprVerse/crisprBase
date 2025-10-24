@@ -72,18 +72,22 @@ setClass("BaseEditor",
 #'     Row names must be of the form "X2Y" where "X" represents the origin
 #'     base, and "Y" represents the subtituted base. For instance, "C2T"
 #'     indicates the row corresponding to C to T editing. 
+#' @param scale Logical indicating if weights should be scaled to have a maximum of 1.
+#'     TRUE by default. Should be set to FALSE if editing weights are 
+#'     already representing editing probabilities. 
 #' @export
 BaseEditor <- function(CrisprNuclease,
                        baseEditorName = NA_character_,
                        editingStrand = c("original", "opposite"),
-                       editingWeights = NULL
+                       editingWeights = NULL,
+                       scale=TRUE
 ){
     editingStrand <- match.arg(editingStrand)
     new("BaseEditor",
         CrisprNuclease,
         baseEditorName = as.character(baseEditorName),
         editingStrand = editingStrand,
-        editingWeights = .buildEditingWeightsMatrix(editingWeights)
+        editingWeights = .buildEditingWeightsMatrix(editingWeights, scale=scale)
     )
 }
 
@@ -177,14 +181,24 @@ setMethod("editingWeights",
 })
 
 
+# #' @rdname BaseEditor-class
+# #' @export
+# setMethod("editingWeights<-",
+#           "BaseEditor",function(object, value, ...){
+#     value <- .buildEditingWeightsMatrix(value, ...)
+#     object@editingWeights <- value
+#     return(object)
+# })
+
+
 #' @rdname BaseEditor-class
 #' @export
-setMethod("editingWeights<-",
-          "BaseEditor",function(object, value){
-    value <- .buildEditingWeightsMatrix(value)
+setEditingWeights <- function(object, value, scale=TRUE) {
+    value <- .buildEditingWeightsMatrix(value, scale=scale)
     object@editingWeights <- value
     return(object)
-})
+}
+
 
 
 #' @rdname BaseEditor-class
@@ -335,7 +349,7 @@ plotEditingWeights <- function(baseEditor,
     ylim <- c(0,top)
     plot(x, ws[1,], col="white",
          xlab="Position relative to PAM site",
-         ylab="Relative weight",
+         ylab="Editing weight",
          ylim=ylim,
          ...)
     ns <- nrow(ws)
