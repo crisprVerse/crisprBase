@@ -8,6 +8,7 @@ plotEditingWeights(
   baseEditor,
   discardEmptyRows = TRUE,
   substitutions = NULL,
+  ylim = c(0, 1),
   ...
 )
 }
@@ -19,6 +20,8 @@ to 0 be discarded? TRUE by default.}
 
 \item{substitutions}{Character vector specifying substitutions
 to be plotted. If NULL (default), all substitutions are shown.}
+
+\item{ylim}{Vector of length 2 specifying the y plot limits.}
 
 \item{...}{Additional arguments to be passed to \code{plot}}
 }
