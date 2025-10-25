@@ -72,18 +72,22 @@ setClass("BaseEditor",
 #'     Row names must be of the form "X2Y" where "X" represents the origin
 #'     base, and "Y" represents the subtituted base. For instance, "C2T"
 #'     indicates the row corresponding to C to T editing. 
+#' @param scale Logical indicating if weights should be scaled to have a maximum of 1.
+#'     TRUE by default. Should be set to FALSE if editing weights are 
+#'     already representing editing probabilities. 
 #' @export
 BaseEditor <- function(CrisprNuclease,
                        baseEditorName = NA_character_,
                        editingStrand = c("original", "opposite"),
-                       editingWeights = NULL
+                       editingWeights = NULL,
+                       scale=TRUE
 ){
     editingStrand <- match.arg(editingStrand)
     new("BaseEditor",
         CrisprNuclease,
         baseEditorName = as.character(baseEditorName),
         editingStrand = editingStrand,
-        editingWeights = .buildEditingWeightsMatrix(editingWeights)
+        editingWeights = .buildEditingWeightsMatrix(editingWeights, scale=scale)
     )
 }
 
@@ -177,14 +181,24 @@ setMethod("editingWeights",
 })
 
 
+# #' @rdname BaseEditor-class
+# #' @export
+# setMethod("editingWeights<-",
+#           "BaseEditor",function(object, value, ...){
+#     value <- .buildEditingWeightsMatrix(value, ...)
+#     object@editingWeights <- value
+#     return(object)
+# })
+
+
 #' @rdname BaseEditor-class
 #' @export
-setMethod("editingWeights<-",
-          "BaseEditor",function(object, value){
-    value <- .buildEditingWeightsMatrix(value)
+setEditingWeights <- function(object, value, scale=TRUE) {
+    value <- .buildEditingWeightsMatrix(value, scale=scale)
     object@editingWeights <- value
     return(object)
-})
+}
+
 
 
 #' @rdname BaseEditor-class
@@ -297,6 +311,7 @@ setMethod("editingStrand<-",
 #'     to 0 be discarded? TRUE by default. 
 #' @param substitutions Character vector specifying substitutions
 #'     to be plotted. If NULL (default), all substitutions are shown.
+#' @param ylim Vector of length 2 specifying the y plot limits.
 #' @param ... Additional arguments to be passed to \code{plot}
 #' 
 #' @return Nothing. A plot is generated as a side effect. 
@@ -311,6 +326,7 @@ setMethod("editingStrand<-",
 plotEditingWeights <- function(baseEditor,
                                discardEmptyRows=TRUE,
                                substitutions=NULL,
+                               ylim=c(0,1),
                                ...
 ){
     .isBaseEditorOrStop(baseEditor)
@@ -331,11 +347,9 @@ plotEditingWeights <- function(baseEditor,
         ws <- .getReducedEditingMatrix(ws)
     }
     x <- as.numeric(colnames(ws))
-    top <- max(ws, na.rm=TRUE)
-    ylim <- c(0,top)
     plot(x, ws[1,], col="white",
          xlab="Position relative to PAM site",
-         ylab="Relative weight",
+         ylab="Editing weight",
          ylim=ylim,
          ...)
     ns <- nrow(ws)

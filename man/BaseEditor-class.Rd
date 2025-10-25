@@ -5,7 +5,6 @@
 \alias{baseEditorName}
 \alias{baseEditorName<-}
 \alias{editingWeights}
-\alias{editingWeights<-}
 \alias{editingStrand}
 \alias{editingStrand<-}
 \alias{BaseEditor-class}
@@ -14,7 +13,7 @@
 \alias{baseEditorName,BaseEditor-method}
 \alias{baseEditorName<-,BaseEditor-method}
 \alias{editingWeights,BaseEditor-method}
-\alias{editingWeights<-,BaseEditor-method}
+\alias{setEditingWeights}
 \alias{editingStrand,BaseEditor-method}
 \alias{editingStrand<-,BaseEditor-method}
 \title{An S4 class to represent a base editor}
@@ -25,8 +24,6 @@ baseEditorName(object) <- value
 
 editingWeights(object, ...)
 
-editingWeights(object) <- value
-
 editingStrand(object, ...)
 
 editingStrand(object) <- value
@@ -35,7 +32,8 @@ BaseEditor(
   CrisprNuclease,
   baseEditorName = NA_character_,
   editingStrand = c("original", "opposite"),
-  editingWeights = NULL
+  editingWeights = NULL,
+  scale = TRUE
 )
 
 \S4method{show}{BaseEditor}(object)
@@ -46,7 +44,7 @@ BaseEditor(
 
 \S4method{editingWeights}{BaseEditor}(object, substitutions = NULL)
 
-\S4method{editingWeights}{BaseEditor}(object) <- value
+setEditingWeights(object, value, scale = TRUE)
 
 \S4method{editingStrand}{BaseEditor}(object)
 
@@ -73,6 +71,10 @@ Column names must be indicating relative position to the PAM site.
 Row names must be of the form "X2Y" where "X" represents the origin
 base, and "Y" represents the subtituted base. For instance, "C2T"
 indicates the row corresponding to C to T editing.}
+
+\item{scale}{Logical indicating if weights should be scaled to have a maximum of 1.
+TRUE by default. Should be set to FALSE if editing weights are 
+already representing editing probabilities.}
 
 \item{substitutions}{Character vector indicating which substitutions
 should be returned.}

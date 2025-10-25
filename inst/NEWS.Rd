@@ -2,6 +2,10 @@
 \title{crisprBase News}
 \encoding{UTF-8}
 
+\section{Version 1.13.1}{\itemize{
+\item Added the option of not scaling editing weights in BaseEditor function
+}}
+
 
 \section{Version 1.9.1}{\itemize{
 \item Added Csm complex RNA-targeting nuclease.

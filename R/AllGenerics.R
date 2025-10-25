@@ -166,9 +166,9 @@ setGeneric("baseEditorName<-", function(object, value) standardGeneric("baseEdit
 setGeneric("editingWeights", function(object, ...) standardGeneric("editingWeights"))
 
 
-#' @rdname BaseEditor-class
-#' @export
-setGeneric("editingWeights<-", function(object, value) standardGeneric("editingWeights<-"))
+# #' @rdname BaseEditor-class
+# #' @export
+# setGeneric("editingWeights<-", function(object, value, ...) standardGeneric("editingWeights<-"))
 
 
 
