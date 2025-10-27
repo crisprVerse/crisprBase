@@ -2,8 +2,15 @@
 \title{crisprBase News}
 \encoding{UTF-8}
 
+
+\section{Version 1.13.2}{\itemize{
+\item Added PAM weights to the SPG nuclease. 
+}}
+
+
+
 \section{Version 1.13.1}{\itemize{
-\item Added the option of not scaling editing weights in BaseEditor function
+\item Added the option of not scaling editing weights in BaseEditor function.
 }}
 
 

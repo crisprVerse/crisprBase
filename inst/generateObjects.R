@@ -17,12 +17,6 @@ SaCas9 <- CrisprNuclease("SaCas9",
                          spacer_length=21)
 
 
-SpGCas9 <- CrisprNuclease("SpGCas9",
-                          pams=c("(3/3)NGN"),
-                          metadata=list(description="Engineered Streptococcus pyogenes Cas9 (SpCas9) nuclease named SpG"),
-                          pam_side="3prime",
-                          spacer_length=20)
-
 AsCas12a <- CrisprNuclease("AsCas12a",
                            pams="TTTV(18/23)",
                            metadata=list(description="Wildtype Acidaminococcus Cas12a (AsCas12a) nuclease."),
@@ -54,8 +48,17 @@ Csm <- CrisprNuclease("Csm",
                       spacer_length=32)
 
 
-
-
+# SpG nuclease:
+load("pams/spg/spg.pams.rda")
+pams <- spg.pams[, c("PAM", "Score")]
+pams <- pams[order(-pams$Score),,]
+motifs <- paste0("(3/3)", pams$PAM)
+SpG <- CrisprNuclease("SpG",
+                             pams=motifs,
+                             weights=pams$Score,
+                             metadata=list(description="Engineered Streptococcus pyogenes Cas9 nuclease SpCas9-NG (SpG)."),
+                             pam_side="3prime",
+                             spacer_length=20)
 
 
 load("pams/cas12a/cas12a.pams.rda")
@@ -87,7 +90,7 @@ metadata(BE4max)$description_base_editor <- "BE4max cytosine base editor."
 #dir.create("../data")
 use_data(SpCas9,
          SaCas9,
-         SpGCas9,
+         SpG,
          AsCas12a,
          enAsCas12a,
          MAD7,

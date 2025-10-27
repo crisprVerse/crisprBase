@@ -41,17 +41,18 @@
 "SaCas9"
 
 
-#' SpGCas9 CrisprNuclease object
+#' SpG CrisprNuclease object
 #'
 #' CrisprNuclease object for the engineered Streptococcus pyogenes Cas9
 #'     SpG nuclease.
 #' 
 #' @format CrisprNuclease object.
 #' 
-#' @details The SpGCas9 nuclease recognizes NGN PAM sequences. Spacer
-#'     sequences must be located upstream of PAM sequences.
-#' @usage data(SpGCas9, package="crisprBase")
-"SpGCas9"
+#' @details The SpG nuclease recognizes NGN PAM sequences. Spacer
+#'     sequences must be located upstream of PAM sequences. Editing weights 
+#'     were obtained from \url{doi:10.1038/s41467-022-28884-7}.
+#' @usage data(SpG, package="crisprBase")
+"SpG"
 
 
 #' AsCas12a CrisprNuclease object
